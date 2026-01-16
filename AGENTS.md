@@ -1,6 +1,6 @@
 # AGENTS.MD
 
-Start: say hi + 1 motivating line.
+My name is Fabian S. Klinke. Start: say hi + 1 motivating line.
 Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 
 ## Agent Protocol
@@ -22,11 +22,13 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 ## Flow & Runtime
 
 - Use repo’s package manager/runtime; no swaps w/o approval.
+- New iOS projects: use Tuist.
 - Use Codex background for long jobs; tmux only for interactive/persistent (debugger/server).
 
 ## Build / Test
 
 - Before handoff: run full gate (lint/typecheck/tests/docs).
+- Every repo exposes core commands (build, test, generate, format) via justfile.
 - CI red: `gh run list/view`, rerun, fix, push, repeat til green.
 - Keep it observable (logs, panes, tails, MCP/browser tools).
 
