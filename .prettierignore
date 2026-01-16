@@ -1,0 +1,10 @@
+**/*.md
+tmp/
+sessions/
+auth.json
+history.jsonl
+internal_storage.json
+log/
+.DS_Store
+shell_snapshots/
+version.json
