@@ -2,6 +2,7 @@ model = "gpt-5.2-codex"
 model_reasoning_effort = "high"
 
 sandbox_mode = "danger-full-access"
+file_opener = "vscode"
 
 [sandbox_workspace_write]
 network_access = true
@@ -14,8 +15,6 @@ shell_snapshot = true
 unified_exec = true
 rmcp_client = true
 steer = true
-
-file_opener = "vscode"
 
 [tui]
 notifications = true
