@@ -1,0 +1,32 @@
+model = "gpt-5.2-codex"
+model_reasoning_effort = "high"
+
+sandbox_mode = "danger-full-access"
+
+[sandbox_workspace_write]
+network_access = true
+
+[features]
+web_search_request = true
+parallel = true
+apply_patch_freeform = true
+shell_snapshot = true
+unified_exec = true
+rmcp_client = true
+steer = true
+
+file_opener = "vscode"
+
+[tui]
+notifications = true
+
+[mcp_servers.playwright]
+command = "bunx"
+args = ["@playwright/mcp@latest"]
+
+[mcp_servers.sentry]
+command = "bunx"
+args = ["-y", "mcp-remote@latest", "https://mcp.sentry.dev/mcp"]
+
+[mcp_servers.linear]
+url = "https://mcp.linear.app/mcp"
