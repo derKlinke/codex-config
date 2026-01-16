@@ -65,5 +65,7 @@ Do:
 - Theme: commit to a palette; use CSS vars; bold accents > timid gradients.
 - Motion: 1–2 high-impact moments (staggered reveal beats random micro-anim).
 - Native: use platform native components/styles where possible, only customize purposefully.
+- Focus on clarity, hierarchy, whitespace.
+- Use emotional design principles.
 
 Avoid: purple-on-white clichés, generic component grids, predictable layouts. Avoid gradients and shadows unless purposeful.
