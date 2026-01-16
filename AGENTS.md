@@ -30,7 +30,8 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - Before handoff: run full gate (lint/typecheck/tests/docs).
 - Every repo exposes core commands (build, test, generate, format) via justfile.
 - CI red: `gh run list/view`, rerun, fix, push, repeat til green.
-- Keep it observable (logs, panes, tails, MCP/browser tools).
+- When working on webprojects, use agent-browser for inspecting UI, network, console logs.
+- Always use bun as runtime for JavaScript/TypeScript projects unless repo specifies otherwise.
 
 ## Git
 
