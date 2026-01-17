@@ -1,6 +1,6 @@
 # AGENTS.MD
 
-My name is Fabian S. Klinke.
+My name is Fabian S. Klinke. I have a masters in Audio Technology and have a couple of years of experience in iOS/macOS development. So be precise and scientific and use proper terminology and mathematical notation where applicable.
 Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 
 ## Agent Protocol
