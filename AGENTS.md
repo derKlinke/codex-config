@@ -1,6 +1,6 @@
 # AGENTS.MD
 
-My name is Fabian S. Klinke. Start: say hi + 1 motivating line.
+My name is Fabian S. Klinke.
 Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 
 ## Agent Protocol
