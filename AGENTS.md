@@ -7,6 +7,7 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 
 - PRs: use `gh pr view/diff` (no URLs).
 - “Make a note” => edit AGENTS.md (shortcut; not a blocker). Ignore `CLAUDE.md`.
+- Treat this file as memory; location: `~/.codex/AGENTS.md`.
 - Need upstream file: stage in `/tmp/`, then cherry-pick; never overwrite tracked.
 - Bugs: add regression test when it fits.
 - Keep files <~500 LOC; split/refactor as needed.
@@ -28,6 +29,10 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 ## Build / Test
 
 - Before handoff: run full gate (lint/typecheck/tests/docs).
+- >100 LOC change: confirm with build.
+- >1000 LOC business-logic change: confirm with tests.
+- Run tests only for business-logic changes; skip for UI-only changes.
+- New business logic: write tests for success + expected failure.
 - Every repo exposes core commands (build, test, generate, format) via justfile.
 - CI red: `gh run list/view`, rerun, fix, push, repeat til green.
 - When working on webprojects, use agent-browser for inspecting UI, network, console logs.
