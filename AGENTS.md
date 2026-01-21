@@ -32,6 +32,7 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - >100 LOC change: confirm with build.
 - >1000 LOC business-logic change: confirm with tests.
 - Run tests only for business-logic changes; skip for UI-only changes.
+- Linear issues workflow: per issue, run full gate (`just lint`, `just test`, `just build`) unless user says skip; always record run/skip + reason.
 - New business logic: write tests for success + expected failure.
 - Every repo exposes core commands (build, test, generate, format) via justfile.
 - CI red: `gh run list/view`, rerun, fix, push, repeat til green.
