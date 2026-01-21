@@ -25,3 +25,6 @@ args = ["-y", "mcp-remote@latest", "https://mcp.sentry.dev/mcp"]
 
 [mcp_servers.linear]
 url = "https://mcp.linear.app/mcp"
+
+[mcp_servers.supabase]
+url = "https://mcp.supabase.com/mcp?project_ref=wesvzzzxicieygbvrlwh&read_only=true"
