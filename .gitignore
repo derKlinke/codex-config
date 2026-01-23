@@ -3,6 +3,7 @@ sessions/
 auth.json
 history.jsonl
 internal_storage.json
+models_cache.json
 log/
 .DS_Store
 shell_snapshots/
