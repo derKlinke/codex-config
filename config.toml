@@ -1,5 +1,5 @@
 model = "gpt-5.2-codex"
-model_reasoning_effort = "xhigh"
+model_reasoning_effort = "high"
 
 sandbox_mode = "danger-full-access"
 file_opener = "vscode"
@@ -27,13 +27,8 @@ args = ["-y", "mcp-remote@latest", "https://mcp.sentry.dev/mcp"]
 [mcp_servers.linear]
 url = "https://mcp.linear.app/mcp"
 
-[mcp_servers.supabase]
-url = "https://mcp.supabase.com/mcp?project_ref=wesvzzzxicieygbvrlwh&read_only=true"
 
 [mcp_servers.context7]
 args = ["-y", "@upstash/context7-mcp"]
 command = "npx"
 startup_timeout_ms = 20_000
-
-[mcp_servers.sketch]
-url = "http://localhost:31126/mcp"
