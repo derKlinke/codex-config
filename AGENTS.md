@@ -7,6 +7,8 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 
 - PRs: use `gh pr view/diff` (no URLs).
 - “Make a note” => edit AGENTS.md (shortcut; not a blocker). Ignore `CLAUDE.md`.
+- AGENTS.md is living memory. Always update any AGENTS.md when repo facts change or new constraints learned.
+- After deep research / tricky fix, feel free to create a new skill to capture reusable workflow.
 - Treat this file as memory; location: `~/.codex/AGENTS.md`.
 - Need upstream file: stage in `/tmp/`, then cherry-pick; never overwrite tracked.
 - Bugs: add regression test when it fits.
@@ -26,12 +28,22 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - New iOS projects: use Tuist.
 - Use Codex background for long jobs; tmux only for interactive/persistent (debugger/server).
 
+## Tools
+
+- `peekaboo`: UI automation + screenshots. `peekaboo image` / `capture`; `peekaboo list` / `permissions`.
+- `gh`: GitHub CLI. PRs `gh pr view/diff`; Actions `gh run list/view`; issues `gh issue`.
+- `tuist`: Xcode project tooling. Prefer `just` if available; else `tuist generate/test/run`.
+- `bun`: JS runtime/PM. `bun install/add/remove`, `bun run`, `bun test`, `bunx`.
+- `prek`: pre-commit hooks. `prek install`, `prek run`, `prek run -a`, `prek auto-update`.
+- `trash`: safe delete to system Trash. `trash <files>`.
+
 ## Build / Test
 
 - Before handoff: run full gate (lint/typecheck/tests/docs).
 - >100 LOC change: confirm with build.
 - >1000 LOC business-logic change: confirm with tests.
 - Run tests only for business-logic changes; skip for UI-only changes.
+- Formatter bootstrap: always run `npx @derklinke/miedinger --force` to install formatter config, commit hooks, justfiles, workflow dispatch sync.
 - Linear issues workflow: per issue, run full gate (`just lint`, `just test`, `just build`) unless user says skip; always record run/skip + reason.
 - New business logic: write tests for success + expected failure.
 - Every repo exposes core commands (build, test, generate, format) via justfile.
