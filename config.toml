@@ -3,6 +3,7 @@ model_reasoning_effort = "high"
 
 sandbox_mode = "danger-full-access"
 file_opener = "vscode"
+suppress_unstable_features_warning = true
 
 [sandbox_workspace_write]
 network_access = true
@@ -16,6 +17,7 @@ unified_exec = true
 rmcp_client = true
 steer = true
 collab = true
+collaboration_modes = true
 
 [tui]
 notifications = true
@@ -32,3 +34,6 @@ url = "https://mcp.linear.app/mcp"
 args = ["-y", "@upstash/context7-mcp"]
 command = "npx"
 startup_timeout_ms = 20_000
+
+[notice]
+hide_rate_limit_model_nudge = true
