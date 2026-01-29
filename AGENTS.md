@@ -1,15 +1,13 @@
 # AGENTS.MD
-
 My name is Fabian S. Klinke. I have a masters in Audio Technology and have a couple of years of experience in iOS/macOS development. So be precise and scientific and use proper terminology and mathematical notation where applicable.
 Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 
 ## Agent Protocol
-
 - PRs: use `gh pr view/diff` (no URLs).
 - “Make a note” => edit AGENTS.md (shortcut; not a blocker). Ignore `CLAUDE.md`.
 - AGENTS.md is living memory. Always update any AGENTS.md when repo facts change or new constraints learned.
 - After deep research / tricky fix, feel free to create a new skill to capture reusable workflow.
-- Treat this file as memory; location: `~/.codex/AGENTS.md`.
+- Treat this file as global memory; location: `~/.codex/AGENTS.md`. Keep project-specific memories in the project’s `AGENTS.md`.
 - Need upstream file: stage in `/tmp/`, then cherry-pick; never overwrite tracked.
 - Bugs: add regression test when it fits.
 - Keep files <~500 LOC; split/refactor as needed.
@@ -23,13 +21,11 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - Style: telegraph. Drop filler/grammar. Min tokens (global AGENTS + replies).
 
 ## Flow & Runtime
-
-- Use repo’s package manager/runtime; no swaps w/o approval.
+- Use repo’s package manager/runtime; no swaps w/o approval. Prefer bun.
 - New iOS projects: use Tuist.
 - Use Codex background for long jobs; tmux only for interactive/persistent (debugger/server).
 
 ## Tools
-
 - `peekaboo`: UI automation + screenshots. `peekaboo image` / `capture`; `peekaboo list` / `permissions`.
 - `gh`: GitHub CLI. PRs `gh pr view/diff`; Actions `gh run list/view`; issues `gh issue`.
 - `tuist`: Xcode project tooling. Prefer `just` if available; else `tuist generate/test/run`.
@@ -38,10 +34,9 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - `trash`: safe delete to system Trash. `trash <files>`.
 
 ## Build / Test
-
 - Before handoff: run full gate (lint/typecheck/tests/docs).
-- >100 LOC change: confirm with build.
-- >1000 LOC business-logic change: confirm with tests.
+- > 100 LOC change: confirm with build.
+- > 1000 LOC business-logic change: confirm with tests.
 - Run tests only for business-logic changes; skip for UI-only changes.
 - Formatter bootstrap: always run `npx @derklinke/miedinger --force` to install formatter config, commit hooks, justfiles, workflow dispatch sync.
 - Linear issues workflow: per issue, run full gate (`just lint`, `just test`, `just build`) unless user says skip; always record run/skip + reason.
@@ -52,12 +47,12 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - Always use bun as runtime for JavaScript/TypeScript projects unless repo specifies otherwise.
 
 ## Git
-
 - Safe by default: `git status/diff/log`. Push only when user asks.
 - `git checkout` ok for PR review / explicit request.
 - Branch changes require user consent.
 - Destructive ops forbidden unless explicit (`reset --hard`, `clean`, `restore`, `rm`, …).
 - Remotes under `~/Developer`: prefer HTTPS; flip SSH->HTTPS before pull/push.
+- Safe default: `git pull --rebase` before push (assumed ok).
 - Don’t delete/rename unexpected stuff; stop + ask.
 - No repo-wide S/R scripts; keep edits small/reviewable.
 - Avoid manual `git stash`; if Git auto-stashes during pull/rebase, that’s fine (hint, not hard guardrail).
@@ -67,7 +62,6 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - Multi-agent: check `git status/diff` before edits; ship small commits.
 
 ## Critical Thinking
-
 - Fix root cause (not band-aid).
 - Unsure: read more code; if still stuck, ask w/ short options.
 - Conflicts: call out; pick safer path.
@@ -75,16 +69,16 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - Leave breadcrumb notes in thread.
 
 ## Frontend Aesthetics
-
 Avoid “AI slop” UI. Be opinionated + distinctive.
 
 Do:
-
 - Typography: use system fonts or Helvetica Neue; only use other fonts with strong purpose.
 - Theme: commit to a palette; use CSS vars; bold accents > timid gradients.
 - Motion: 1–2 high-impact moments (staggered reveal beats random micro-anim).
 - Native: use platform native components/styles where possible, only customize purposefully.
 - Focus on clarity, hierarchy, whitespace.
 - Use emotional design principles.
-
 Avoid: purple-on-white clichés, generic component grids, predictable layouts. Avoid gradients and shadows unless purposeful.
+
+## Skills Index
+- `agent-browser`, `algorithmic-art`, `commit-conventions`, `copy-editing`, `copywriting`, `dispatching-parallel-agents`, `emotional-design-norman`, `frontend-design`, `ios-avfoundation-ref`, `ios-background-processing`, `ios-camera-capture`, `ios-cloud-sync`, `ios-core-location`, `ios-deep-link-debugging`, `ios-energy`, `ios-grdb`, `ios-haptics`, `ios-hig`, `ios-networking`, `ios-photo-library`, `ios-privacy-ux`, `ios-storekit-ref`, `ios-swift-concurrency-expert`, `ios-swift-performance`, `ios-swift-testing`, `ios-swiftdata`, `ios-swiftui-26-ref`, `ios-swiftui-animation-ref`, `ios-swiftui-gestures`, `ios-swiftui-liquid-glass`, `ios-swiftui-nav`, `ios-swiftui-performance`, `ios-swiftui-view-refactor`, `ios-synchronization`, `ios-textkit-ref`, `ios-typography-ref`, `ios-ui-testing`, `ios-ux-design`, `justfile-authoring`, `marketing-psychology`, `motion`, `seo-audit`, `supabase-postgres-best-practices`, `tuist-best-practices`, `vercel-deploy`, `vercel-react-best-practices`, `web-design-guidelines`
