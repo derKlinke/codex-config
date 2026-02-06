@@ -1,0 +1,9 @@
+version = 1
+id = "sentry"
+name = "Sentry"
+prompt = "Look for crashes in sentry with MCP and propose fixes for each error that affects at leats more than one user or is marked high priority."
+status = "ACTIVE"
+rrule = "RRULE:FREQ=WEEKLY;BYHOUR=9;BYMINUTE=0;BYDAY=SU,MO,TU,WE,TH,FR,SA"
+cwds = ["/Users/fabianklinke/Developer/b90-industries/b90hq"]
+created_at = 1770070235185
+updated_at = 1770370407108
