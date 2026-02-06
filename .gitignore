@@ -8,3 +8,8 @@ log/
 .DS_Store
 shell_snapshots/
 version.json
+sqlite/
+archived_sessions/
+vendor_imports/
+worktrees/
+.codex-global-state.json
