@@ -8,17 +8,20 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - AGENTS.md is living memory. Always update any AGENTS.md when repo facts change or new constraints learned.
 - After deep research / tricky fix, feel free to create a new skill to capture reusable workflow.
 - Treat this file as global memory; location: `~/.codex/AGENTS.md`. Keep project-specific memories in the project’s `AGENTS.md`.
+- When working on Linear issues: set status to In Progress at start.
+- Skills: use when applicable; open SKILL.md first; follow workflow.
 - Need upstream file: stage in `/tmp/`, then cherry-pick; never overwrite tracked.
-- Bugs: add regression test when it fits.
+- Bug report: first write failing repro test. Then subagents fix; prove via passing test.
 - Keep files <~500 LOC; split/refactor as needed.
 - Commits: Conventional Commits (`feat|fix|refactor|build|ci|chore|docs|style|perf|test`).
 - Editor: `code <path>`.
 - CI: `gh run list/view` (rerun/fix til green).
-- Prefer end-to-end verify; if blocked, say what’s missing.
+- Prefer end-to-end verify when feasible; otherwise at least build. If blocked, say what’s missing.
 - New deps: quick health check (recent releases/commits, adoption).
 - Slash cmds: `~/.codex/prompts/`.
-- Web: search early; quote exact errors; prefer 2024–2026 sources; fallback Firecrawl (`pnpm mcp:*`) / `mcporter`.
+- Web: search early; quote exact errors; prefer 2024–2026 sources; fallback Firecrawl / `mcporter`.
 - Style: telegraph. Drop filler/grammar. Min tokens (global AGENTS + replies).
+- Comments: allow/encourage concise why-comments in hard-to-reason code (DSP/RT/concurrency/math). Avoid what-comments.
 
 ## Flow & Runtime
 - Use repo’s package manager/runtime; no swaps w/o approval. Prefer bun.
@@ -32,14 +35,14 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - `bun`: JS runtime/PM. `bun install/add/remove`, `bun run`, `bun test`, `bunx`.
 - `prek`: pre-commit hooks. `prek install`, `prek run`, `prek run -a`, `prek auto-update`.
 - `trash`: safe delete to system Trash. `trash <files>`.
+- `sentry-cli`: Sentry CLI (replacement for MCP). Auth `sentry-cli login` or `SENTRY_AUTH_TOKEN`. Common env: `SENTRY_ORG`, `SENTRY_PROJECT`. Primary use: issue inspection (`sentry-cli issues list|info|events`).
 
 ## Build / Test
-- Before handoff: run full gate (lint/typecheck/tests/docs).
-- > 100 LOC change: confirm with build.
-- > 1000 LOC business-logic change: confirm with tests.
-- Run tests only for business-logic changes; skip for UI-only changes.
+- Default verify: run build for any code change. Builds encouraged, not optional.
+- Tests: run targeted tests for logic changes, bug fixes, or risky refactors. UI-only changes: build is enough unless behavior changes.
+- Full gate (lint/typecheck/tests/docs) preferred before handoff; ok to skip if time/blocked, but record what ran.
 - Formatter bootstrap: always run `npx @derklinke/miedinger --force` to install formatter config, commit hooks, justfiles, workflow dispatch sync.
-- Linear issues workflow: per issue, run full gate (`just lint`, `just test`, `just build`) unless user says skip; always record run/skip + reason.
+- Linear issues workflow: prefer full gate per issue; if skipping, run at least build and record run/skip + reason.
 - New business logic: write tests for success + expected failure.
 - Every repo exposes core commands (build, test, generate, format) via justfile.
 - CI red: `gh run list/view`, rerun, fix, push, repeat til green.
@@ -66,6 +69,7 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - Unsure: read more code; if still stuck, ask w/ short options.
 - Conflicts: call out; pick safer path.
 - Unrecognized changes: assume other agent; keep going; focus your changes. If it causes issues, stop + ask user.
+- Unrelated changes: assume Fabian or another Codex instance; ignore unless clearly weird/unintended.
 - Leave breadcrumb notes in thread.
 
 ## Frontend Aesthetics
@@ -80,5 +84,10 @@ Do:
 - Use emotional design principles.
 Avoid: purple-on-white clichés, generic component grids, predictable layouts. Avoid gradients and shadows unless purposeful.
 
-## Skills Index
+## Repo notes: zerre
+- Web UI embed build uses esbuild IIFE + Tailwind output (not Vite) for plugin assets; Vite only for dev.
+- Embedded assets zip at `web_ui/dist/web_ui.zip`, served via JUCE resource provider.
+
+## Sources
+Prefer retrieval-led reasoning over pre-training-led reasoning.
 - `agent-browser`, `algorithmic-art`, `commit-conventions`, `copy-editing`, `copywriting`, `dispatching-parallel-agents`, `emotional-design-norman`, `frontend-design`, `ios-avfoundation-ref`, `ios-background-processing`, `ios-camera-capture`, `ios-cloud-sync`, `ios-core-location`, `ios-deep-link-debugging`, `ios-energy`, `ios-grdb`, `ios-haptics`, `ios-hig`, `ios-networking`, `ios-photo-library`, `ios-privacy-ux`, `ios-storekit-ref`, `ios-swift-concurrency-expert`, `ios-swift-performance`, `ios-swift-testing`, `ios-swiftdata`, `ios-swiftui-26-ref`, `ios-swiftui-animation-ref`, `ios-swiftui-gestures`, `ios-swiftui-liquid-glass`, `ios-swiftui-nav`, `ios-swiftui-performance`, `ios-swiftui-view-refactor`, `ios-synchronization`, `ios-textkit-ref`, `ios-typography-ref`, `ios-ui-testing`, `ios-ux-design`, `justfile-authoring`, `marketing-psychology`, `motion`, `seo-audit`, `supabase-postgres-best-practices`, `tuist-best-practices`, `vercel-deploy`, `vercel-react-best-practices`, `web-design-guidelines`
