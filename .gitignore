@@ -13,3 +13,4 @@ archived_sessions/
 vendor_imports/
 worktrees/
 .codex-global-state.json
+__pycache__

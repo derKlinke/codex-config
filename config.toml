@@ -37,6 +37,7 @@ startup_timeout_sec = 20.0
 
 [mcp_servers.supabase]
 url = "https://mcp.supabase.com/mcp?read_only=true"
+enabled = false
 
 [mcp_servers.linear]
 url = "https://mcp.linear.app/mcp"
@@ -47,6 +48,7 @@ url = "https://mcp.figma.com/mcp"
 [mcp_servers.xcode]
 command = "xcrun"
 args = ["mcpbridge"]
+enabled = false
 
 [notice]
 hide_rate_limit_model_nudge = true
