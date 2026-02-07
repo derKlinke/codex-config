@@ -11,3 +11,4 @@ Cross-project memory ledger. Durable findings only.
 - For research/design insights worth long-term retention: add note in vault using existing style (wiki-links, LaTeX math where useful, images when useful).
 - Priority raised: research tasks should proactively consult notes vault first (targeted scan), then external sources if needed.
 - Write-back expectation: durable research outputs should be captured in vault notes.
+- Screen Time API boundary reliability: `DeviceActivitySchedule` callbacks are boundary-driven but not real-time; use monitor-extension callbacks as source of truth; enforce schedulable window `>= 15 min`; use `BGAppRefreshTask` as reconciliation watchdog; track boundary jitter via `Δt = t_actual - t_expected`.
