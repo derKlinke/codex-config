@@ -6,21 +6,24 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - PRs: use `gh pr view/diff` (no URLs).
 - “Make a note” => edit AGENTS.md (shortcut; not a blocker). Ignore `CLAUDE.md`.
 - AGENTS.md is living memory. Always update any AGENTS.md when repo facts change or new constraints learned.
-- After deep research / tricky fix, feel free to create a new skill to capture reusable workflow.
-- Treat this file as global memory; location: `~/.codex/AGENTS.md`. Keep project-specific memories in the project’s `AGENTS.md`.
+- Memory hierarchy:
+- `~/.codex/AGENTS.md`: global operating protocol + stable preferences.
+- `~/.codex/memory.md`: cross-project memory ledger (bugs, preferred code patterns, workflows, tool choices, reusable findings).
+- Project-specific memory: keep in that project’s `AGENTS.md` and local memory markdowns.
+- Long-term knowledge/research notes: Obsidian vault at `/Users/fabianklinke/Developer/klinke/klinke.studio/content/notes`; strong default = use proactively.
+- Research-task rule: start with targeted scan of relevant notes in that vault; integrate findings into reasoning before external/web lookup when applicable.
+- Research-output rule: if outcome is durable (new concept, bug class, design/workflow pattern, tradeoff analysis), write/update a vault note in existing Obsidian style (wiki-links, LaTeX, images as needed).
+- Keep vault content knowledge-centric; no private/project-confidential details.
 - When working on Linear issues: set status to In Progress at start.
-- Skills: use when applicable; open SKILL.md first; follow workflow.
 - Need upstream file: stage in `/tmp/`, then cherry-pick; never overwrite tracked.
 - Bug report: first write failing repro test. Then subagents fix; prove via passing test.
 - Keep files <~500 LOC; split/refactor as needed.
 - Commits: Conventional Commits (`feat|fix|refactor|build|ci|chore|docs|style|perf|test`).
-- Editor: `code <path>`.
 - CI: `gh run list/view` (rerun/fix til green).
 - Prefer end-to-end verify when feasible; otherwise at least build. If blocked, say what’s missing.
 - New deps: quick health check (recent releases/commits, adoption).
 - Slash cmds: `~/.codex/prompts/`.
 - Web: search early; quote exact errors; prefer 2024–2026 sources; fallback Firecrawl / `mcporter`.
-- Style: telegraph. Drop filler/grammar. Min tokens (global AGENTS + replies).
 - Comments: allow/encourage concise why-comments in hard-to-reason code (DSP/RT/concurrency/math). Avoid what-comments.
 
 ## Flow & Runtime
@@ -35,7 +38,6 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - `bun`: JS runtime/PM. `bun install/add/remove`, `bun run`, `bun test`, `bunx`.
 - `prek`: pre-commit hooks. `prek install`, `prek run`, `prek run -a`, `prek auto-update`.
 - `trash`: safe delete to system Trash. `trash <files>`.
-- `sentry-cli`: Sentry CLI (replacement for MCP). Auth `sentry-cli login` or `SENTRY_AUTH_TOKEN`. Common env: `SENTRY_ORG`, `SENTRY_PROJECT`. Primary use: issue inspection (`sentry-cli issues list|info|events`).
 
 ## Build / Test
 - Default verify: run build for any code change. Builds encouraged, not optional.
@@ -57,11 +59,8 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - Remotes under `~/Developer`: prefer HTTPS; flip SSH->HTTPS before pull/push.
 - Safe default: `git pull --rebase` before push (assumed ok).
 - Don’t delete/rename unexpected stuff; stop + ask.
-- No repo-wide S/R scripts; keep edits small/reviewable.
 - Avoid manual `git stash`; if Git auto-stashes during pull/rebase, that’s fine (hint, not hard guardrail).
 - If user types a command (“pull and push”), that’s consent for that command.
-- No amend unless asked.
-- Big review: `git --no-pager diff --color=never`.
 - Multi-agent: check `git status/diff` before edits; ship small commits.
 
 ## Critical Thinking
@@ -83,10 +82,6 @@ Do:
 - Focus on clarity, hierarchy, whitespace.
 - Use emotional design principles.
 Avoid: purple-on-white clichés, generic component grids, predictable layouts. Avoid gradients and shadows unless purposeful.
-
-## Repo notes: zerre
-- Web UI embed build uses esbuild IIFE + Tailwind output (not Vite) for plugin assets; Vite only for dev.
-- Embedded assets zip at `web_ui/dist/web_ui.zip`, served via JUCE resource provider.
 
 ## Sources
 Prefer retrieval-led reasoning over pre-training-led reasoning.
