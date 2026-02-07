@@ -1,0 +1,4 @@
+interface:
+  display_name: "Notes Knowledge Graph"
+  short_description: "Build and maintain graph-style notes with PlantUML and matplotlib visuals."
+  default_prompt: "Create, revise, and connect notes in an Obsidian-style knowledge graph with precise structure, citation discipline, and visuals only when explanatory. Use PlantUML for diagrams and matplotlib for quantitative graphs."
