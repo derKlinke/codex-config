@@ -1,0 +1,1 @@
+- 2026-02-08 13:14:13 +0100: Added Skills Index to AGENTS.md with 63 skills (name, short description, when-to-use). Runtime: ~10 min.

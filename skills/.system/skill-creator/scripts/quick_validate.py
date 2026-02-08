@@ -7,13 +7,18 @@ import re
 import sys
 from pathlib import Path
 
-import yaml
+try:
+    import yaml
+except ModuleNotFoundError:
+    yaml = None
 
 MAX_SKILL_NAME_LENGTH = 64
 
 
 def validate_skill(skill_path):
     """Basic validation of a skill"""
+    if yaml is None:
+        return False, "Missing dependency: PyYAML (install with: python -m pip install pyyaml)"
     skill_path = Path(skill_path)
 
     skill_md = skill_path / "SKILL.md"

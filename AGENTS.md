@@ -83,6 +83,67 @@ Do:
 - Use emotional design principles.
 Avoid: purple-on-white clichés, generic component grids, predictable layouts. Avoid gradients and shadows unless purposeful.
 
-## Sources
-Prefer retrieval-led reasoning over pre-training-led reasoning.
-- `agent-browser`, `algorithmic-art`, `commit-conventions`, `copy-editing`, `copywriting`, `dispatching-parallel-agents`, `emotional-design-norman`, `frontend-design`, `ios-avfoundation-ref`, `ios-background-processing`, `ios-camera-capture`, `ios-cloud-sync`, `ios-core-location`, `ios-deep-link-debugging`, `ios-energy`, `ios-grdb`, `ios-haptics`, `ios-hig`, `ios-networking`, `ios-photo-library`, `ios-privacy-ux`, `ios-storekit-ref`, `ios-swift-concurrency-expert`, `ios-swift-performance`, `ios-swift-testing`, `ios-swiftdata`, `ios-swiftui-26-ref`, `ios-swiftui-animation-ref`, `ios-swiftui-gestures`, `ios-swiftui-liquid-glass`, `ios-swiftui-nav`, `ios-swiftui-performance`, `ios-swiftui-view-refactor`, `ios-synchronization`, `ios-textkit-ref`, `ios-typography-ref`, `ios-ui-testing`, `ios-ux-design`, `justfile-authoring`, `marketing-psychology`, `motion`, `notes-knowledge-graph`, `seo-audit`, `supabase-postgres-best-practices`, `tuist-best-practices`, `vercel-deploy`, `vercel-react-best-practices`, `web-design-guidelines`
+## Skills Index
+- `agent-browser` — Browser UI automation + screenshots. Use when navigating/testing web UIs or capturing screenshots.
+- `algorithmic-art` — Generative p5.js art with seeded randomness. Use when creating algorithmic or generative art.
+- `atlas` — AppleScript control of ChatGPT Atlas app. Use only for Atlas tab/bookmark/history control on macOS.
+- `cloudflare-deploy` — Deploy Workers/Pages/apps to Cloudflare. Use when publishing to Cloudflare.
+- `commit-conventions` — Conventional commits planning/messages. Use when committing or organizing commits.
+- `copy-editing` — Marketing copy editing passes. Use when polishing or proofreading existing copy.
+- `copywriting` — Marketing copy writing/rewriting. Use when creating or rewriting product/marketing pages.
+- `emotional-design-norman` — Emotional design framework (visceral/behavioral/reflective). Use when tuning UX affect.
+- `figma` — Figma MCP design context/assets. Use when working with Figma URLs/nodes or design-to-code.
+- `figma-implement-design` — 1:1 Figma-to-code implementation. Use when implementing a specific Figma node/spec.
+- `frontend-design` — Distinctive, high-quality web UI. Use when building frontend pages/components.
+- `gh-fix-ci` — Diagnose GitHub Actions failures. Use when fixing failing PR checks; approval required before changes.
+- `imagegen` — OpenAI Image API via CLI. Use when generating/editing images.
+- `ios-avfoundation-ref` — AVFoundation audio reference. Use for audio session/engine/spatial capture guidance.
+- `ios-background-processing` — BGTaskScheduler patterns. Use for background task scheduling/debugging.
+- `ios-camera-capture` — AVCapture camera capture patterns. Use for custom camera/photo/video capture issues.
+- `ios-cloud-sync` — CloudKit/iCloud sync architecture. Use for sync design and data-loss prevention.
+- `ios-core-location` — Core Location authorization/monitoring. Use for location features and background location.
+- `ios-deep-link-debugging` — Debug-only deep links. Use for internal deep link testing workflows.
+- `ios-energy` — iOS energy diagnostics. Use when addressing battery/thermal issues.
+- `ios-haptics` — Haptics patterns. Use for UIFeedback/Core Haptics/audio-haptic sync.
+- `ios-hig` — Apple HIG decision support. Use for design compliance checks.
+- `ios-networking` — Network.framework patterns. Use for connection/migration/debugging networking.
+- `ios-photo-library` — Photos/PHPicker/PhotosPicker. Use for photo selection and permissions.
+- `ios-privacy-ux` — Privacy manifests/ATT UX. Use for permission UX and Required Reason APIs.
+- `ios-storekit-ref` — StoreKit 2 reference. Use for IAP/subscription implementations.
+- `ios-swift-concurrency-expert` — Swift Concurrency remediation. Use for Swift 6 concurrency errors/reviews.
+- `ios-swift-performance` — Swift performance optimization. Use for memory/CPU/COW/ARC tuning.
+- `ios-swift-testing` — Swift Testing framework. Use for unit tests/migration from XCTest.
+- `ios-swiftdata` — SwiftData patterns. Use for models/queries/CloudKit integration.
+- `ios-swiftui-26-ref` — iOS 26 SwiftUI reference. Use for Liquid Glass/3D/scene bridging, etc.
+- `ios-swiftui-animation-ref` — SwiftUI animation reference. Use for animation APIs/behavior.
+- `ios-swiftui-gestures` — SwiftUI gesture patterns. Use for gesture composition/conflicts.
+- `ios-swiftui-liquid-glass` — Liquid Glass implementation. Use when adopting/refactoring to Liquid Glass.
+- `ios-swiftui-nav` — SwiftUI navigation patterns. Use for NavigationStack/SplitView/deep links.
+- `ios-swiftui-performance` — SwiftUI performance optimization. Use for laggy UI/scrolling issues.
+- `ios-swiftui-view-refactor` — SwiftUI view refactor patterns. Use for structure/DI/Observation cleanup.
+- `ios-synchronization` — Thread-safe primitives. Use for locks/actors/atomic concurrency choices.
+- `ios-textkit-ref` — TextKit 2 reference. Use for text system behavior/migration.
+- `ios-typography-ref` — Apple typography reference. Use for text styles/Dynamic Type/metrics.
+- `ios-ui-testing` — UI testing patterns. Use for flaky UI tests and XCTest UI.
+- `ios-ux-design` — iOS UX design review/specs. Use for iOS UI/UX analysis and improvements.
+- `jupyter-notebook` — Jupyter notebook scaffolding. Use when creating/editing `.ipynb`.
+- `justfile-authoring` — `just` recipe authoring. Use when editing justfiles.
+- `linear` — Linear issue/project management. Use when reading/updating Linear tickets.
+- `marketing-psychology` — Behavioral science for marketing. Use when applying mental models to marketing.
+- `motion` — Motion Vue animations. Use for motion-v animation work in Vue/Nuxt.
+- `notes-knowledge-graph` — Obsidian note workflow. Use for knowledge graph note creation/maintenance.
+- `pdf` — PDF read/create/review. Use when PDF layout/rendering matters.
+- `plantuml-graphs` — PlantUML diagram creation. Use for UML/system diagrams + PNG render.
+- `security-best-practices` — Security best-practice review. Use only on explicit security review requests (py/js/go).
+- `security-threat-model` — Threat modeling. Use only when explicitly requested to threat model.
+- `sentry` — Sentry API queries. Use for Sentry issues/health summaries.
+- `seo-audit` — SEO audits. Use for technical/on-page SEO reviews.
+- `sora` — OpenAI video (Sora) via CLI. Use when generating/remixing/downloading Sora videos.
+- `spreadsheet` — Spreadsheet editing/analysis. Use for `.xlsx/.csv` with formulas/formatting.
+- `supabase-postgres-best-practices` — Supabase Postgres optimization. Use for schema/query perf best practices.
+- `transcribe` — Audio transcription. Use when transcribing audio/video with diarization.
+- `tuist-best-practices` — Tuist project guidance. Use for Tuist manifest/caching workflows.
+- `vercel-deploy` — Vercel deployments. Use when deploying to Vercel.
+- `vercel-react-best-practices` — React/Next performance patterns. Use for React/Next optimization work.
+- `web-design-guidelines` — Web UI guideline review. Use when auditing UI/accessibility/UX.
+- `yeet` — Stage/commit/push/PR via gh. Use only when explicitly asked.
