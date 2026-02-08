@@ -8,6 +8,15 @@ This skill guides creation of distinctive, production-grade frontend interfaces 
 
 The user provides frontend requirements: a component, page, application, or interface to build. They may include context about the purpose, audience, or technical constraints.
 
+## Project Design Memory (Required)
+
+Before proposing or implementing UI styles:
+
+1. Check `<repo-root>/DESIGN.md`.
+2. If present, treat it as the design system source of truth (tokens, typography, component rules, vibe).
+3. If missing and task includes UI/design work, create it via the `design-system-doc` skill template and align implementation to it.
+4. After significant design changes, update `DESIGN.md` in the same task.
+
 ## Design Thinking
 
 Before coding, understand the context and commit to a BOLD aesthetic direction:

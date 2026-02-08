@@ -6,6 +6,9 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - PRs: use `gh pr view/diff` (no URLs).
 - “Make a note” => edit AGENTS.md (shortcut; not a blocker). Ignore `CLAUDE.md`.
 - AGENTS.md is living memory. Always update any AGENTS.md when repo facts change or new constraints learned.
+- Design memory: every project should have a repo-root `DESIGN.md` as living design system documentation (platform-agnostic; web + iOS/macOS where applicable).
+- Design workflow: read `DESIGN.md` before any design/UI implementation or review (web + native); update it in the same task whenever design decisions or tokens/components change.
+- If `DESIGN.md` is missing in a project with UI/design work, create it from the `design-system-doc` skill template.
 - Memory hierarchy:
 - `~/.codex/AGENTS.md`: global operating protocol + stable preferences.
 - `~/.codex/memory.md`: cross-project memory ledger (bugs, preferred code patterns, workflows, tool choices, reusable findings).
@@ -86,6 +89,7 @@ Avoid: purple-on-white clichés, generic component grids, predictable layouts. A
 - `commit-conventions` — Conventional commits planning/messages. Use when committing or organizing commits.
 - `copy-editing` — Marketing copy editing passes. Use when polishing or proofreading existing copy.
 - `copywriting` — Marketing copy writing/rewriting. Use when creating or rewriting product/marketing pages.
+- `design-system-doc` — Repo-root `DESIGN.md` governance (platform-agnostic: web + iOS/macOS). Use for UI/design tasks to read/update design tokens, typography, style/vibe, component rules, and decision log.
 - `emotional-design-norman` — Emotional design framework (visceral/behavioral/reflective). Use when tuning UX affect.
 - `figma` — Figma MCP design context/assets. Use when working with Figma URLs/nodes or design-to-code.
 - `figma-implement-design` — 1:1 Figma-to-code implementation. Use when implementing a specific Figma node/spec.
