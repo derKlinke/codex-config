@@ -55,6 +55,7 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - Safe by default: `git status/diff/log`. Push only when user asks.
 - `git checkout` ok for PR review / explicit request.
 - Branch changes require user consent.
+- Ignore automation runtime logs: `automations/**/memory.md` stays untracked.
 - Destructive ops forbidden unless explicit (`reset --hard`, `clean`, `restore`, `rm`, …).
 - Remotes under `~/Developer`: prefer HTTPS; flip SSH->HTTPS before pull/push.
 - Safe default: `git pull --rebase` before push (assumed ok).

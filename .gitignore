@@ -14,3 +14,4 @@ vendor_imports/
 worktrees/
 .codex-global-state.json
 __pycache__
+automations/**/memory.md
