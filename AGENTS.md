@@ -20,7 +20,6 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - Keep files <~500 LOC; split/refactor as needed.
 - Commits: Conventional Commits (`feat|fix|refactor|build|ci|chore|docs|style|perf|test`).
 - CI: `gh run list/view` (rerun/fix til green).
-- Prefer end-to-end verify when feasible; otherwise at least build. If blocked, say what’s missing.
 - New deps: quick health check (recent releases/commits, adoption).
 - Slash cmds: `~/.codex/prompts/`.
 - Web: search early; quote exact errors; prefer 2024–2026 sources; fallback Firecrawl / `mcporter`.
@@ -40,12 +39,7 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - `trash`: safe delete to system Trash. `trash <files>`.
 
 ## Build / Test
-- Default verify: run build for any code change. Builds encouraged, not optional.
-- Tests: run targeted tests for logic changes, bug fixes, or risky refactors. UI-only changes: build is enough unless behavior changes.
-- Full gate (lint/typecheck/tests/docs) preferred before handoff; ok to skip if time/blocked, but record what ran.
 - Formatter bootstrap: always run `npx @derklinke/miedinger --force` to install formatter config, commit hooks, justfiles, workflow dispatch sync.
-- Linear issues workflow: prefer full gate per issue; if skipping, run at least build and record run/skip + reason.
-- New business logic: write tests for success + expected failure.
 - Every repo exposes core commands (build, test, generate, format) via justfile.
 - CI red: `gh run list/view`, rerun, fix, push, repeat til green.
 - When working on webprojects, use agent-browser for inspecting UI, network, console logs.
