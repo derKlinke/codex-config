@@ -14,6 +14,7 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - `~/.codex/memory.md`: cross-project memory ledger (bugs, preferred code patterns, workflows, tool choices, reusable findings).
 - Project-specific memory: keep in that project’s `AGENTS.md` and local memory markdowns.
 - Long-term knowledge/research notes: Obsidian vault at `/Users/fabianklinke/Developer/klinke/klinke.studio/content/notes`; strong default = use proactively.
+- If a repo provides root `NOTES.md`, treat it as the fast note lookup index; refresh via that repo’s generator command before major note maintenance.
 - Note authoring/maintenance is governed by skill `notes-knowledge-graph` at `/Users/fabianklinke/.codex/skills/notes-knowledge-graph/SKILL.md`.
 - Treat that skill as single source of truth for note workflow, style, citations, visuals, language, and transparency footer; do not duplicate those rules in AGENTS files.
 - For note edits from outside `klinke.studio`, still read `/Users/fabianklinke/Developer/klinke/klinke.studio/AGENTS.md` for repo-specific constraints.

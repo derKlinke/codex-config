@@ -59,10 +59,9 @@ Apply these rules for `/Users/fabianklinke/Developer/klinke/klinke.studio/conten
 
 ## Transparency footer
 
-Add exactly one emphasized line at note end:
+Add exactly one emphasized line at note end (always English):
 
-- German: `_mitverfasst von einem KI-Agenten._`
-- English: `_co-authored by an AI agent._`
+- `_co-authored by an AI agent._`
 
 ## Notes overview copy
 
