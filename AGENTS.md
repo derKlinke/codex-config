@@ -29,6 +29,29 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - Web: search early; quote exact errors; prefer 2024–2026 sources; fallback Firecrawl / `mcporter`.
 - Comments: allow/encourage concise why-comments in hard-to-reason code (DSP/RT/concurrency/math). Avoid what-comments.
 
+## Subagent Orchestration
+- Bias: use subagents by default for non-trivial work; parallel lanes = `dev`, `test`, `research`, `review`.
+- Parent-agent responsibilities: decomposition, acceptance criteria, integration, final verification.
+- Child-agent prompt must specify: file ownership, done condition, required test command, expected output artifact.
+- Recursive delegation allowed: child may spawn child when complexity warrants; keep protocol invariant.
+- Depth bound: default `d_max = 2`; raise to `d_max = 3` only for large refactor/research spikes.
+- Iterative loop: `plan -> assign -> execute -> verify -> review -> reassign`.
+- Evidence gate each loop: repro (if bug) -> failing test -> fix -> passing test -> reviewer findings cleared.
+- Merge safety: single-writer per file per loop; resolve conflicts before next loop.
+- Escalation: `--dangerously-bypass-approvals-and-sandbox` only in externally sandboxed environments.
+- Codex CLI orchestrator template:
+```bash
+codex -C /path/to/repo exec --full-auto \
+  "Orchestrator mode. Spawn subagents for dev/test/research/review. Recursive delegation allowed up to depth=2. Require artifacts: patch diff, test logs, risk notes. Run iterative loop until acceptance criteria pass."
+```
+- Codex CLI focused agents:
+```bash
+codex -C /path/to/repo exec "Research root cause for <issue>. Return hypotheses, experiments, recommendation."
+codex -C /path/to/repo exec "Write failing repro test for <bug>. Stop after red test + command output."
+codex -C /path/to/repo exec "Implement minimal fix for <bug>. Run tests. Return diff + rationale."
+codex -C /path/to/repo exec review --uncommitted "Prioritize regressions, missing tests, risk."
+```
+
 ## Flow & Runtime
 - Use repo’s package manager/runtime; no swaps w/o approval. Prefer bun.
 - New iOS projects: use Tuist.
