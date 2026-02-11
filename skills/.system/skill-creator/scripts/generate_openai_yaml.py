@@ -11,10 +11,7 @@ import re
 import sys
 from pathlib import Path
 
-try:
-    import yaml
-except ModuleNotFoundError:
-    yaml = None
+import yaml
 
 ACRONYMS = {
     "GH",
@@ -107,10 +104,6 @@ def generate_short_description(display_name):
 
 
 def read_frontmatter_name(skill_dir):
-    if yaml is None:
-        print("[ERROR] Missing dependency: PyYAML")
-        print("        Install with: python -m pip install pyyaml")
-        return None
     skill_md = Path(skill_dir) / "SKILL.md"
     if not skill_md.exists():
         print(f"[ERROR] SKILL.md not found in {skill_dir}")

@@ -2,8 +2,8 @@ version = 1
 id = "update-memory-agents-and-notes"
 name = "Update Memory, AGENTS and notes/"
 prompt = "Check the changes from the last 24h to see if we have any new learnings, patterns or resreach findings we want to update our global or project specific rules in AGENTS.md with, take note in our global memory.md file or even want to write a long form resreach note on in our vaults folder.\n\nDont feel like you have to add anything if there is nothing that feels relevant."
-status = "ACTIVE"
+status = "PAUSED"
 rrule = "RRULE:FREQ=WEEKLY;BYHOUR=9;BYMINUTE=0;BYDAY=SU,MO,TU,WE,TH,FR,SA"
 cwds = ["/Users/fabianklinke/Developer/b90-industries/b90hq", "/Users/fabianklinke/Developer/b90-industries/zerre", "/Users/fabianklinke/Developer/klinke/marcus", "/Users/fabianklinke/Developer/klinke/klinke.studio"]
 created_at = 1770456630390
-updated_at = 1770458124487
+updated_at = 1770720575620

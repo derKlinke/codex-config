@@ -2,8 +2,8 @@ version = 1
 id = "daily-skills-index-refresh"
 name = "Daily Skills Index Refresh"
 prompt = "Ensure AGENTS.md has a current skills index covering all available skills. For each skill, include name, short description, and when to use it. Detect new/removed/changed skills from the current Codex skill set and update AGENTS.md only when needed. Keep wording concise and consistent. Post an inbox summary of what changed or that no update was required."
-status = "ACTIVE"
+status = "PAUSED"
 rrule = "FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR,SA,SU;BYHOUR=9;BYMINUTE=30"
 cwds = ["/Users/fabianklinke/.codex"]
 created_at = 1770552691162
-updated_at = 1770552768101
+updated_at = 1770720573269
