@@ -1,0 +1,9 @@
+version = 1
+id = "daily-documentation-sync"
+name = "Daily Documentation Sync"
+prompt = "Audit each git repo in scope for documentation currency versus code changes from the last 24h; ensure the docs hierarchy exists (docs/README.md, docs/architecture, docs/features, docs/how-to, docs/reference, docs/diagrams), update stale documentation when needed, and publish an inbox report with per-repo status, changed files, and unresolved gaps; when findings are reusable across projects, also capture them in /Users/fabianklinke/Developer/klinke/klinke.studio/content/notes."
+status = "ACTIVE"
+rrule = "FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR,SA,SU;BYHOUR=9;BYMINUTE=0"
+cwds = ["/Users/fabianklinke/Developer/b90-industries/b90hq", "/Users/fabianklinke/Developer/b90-industries/zerre", "/Users/fabianklinke/Developer/klinke/marcus"]
+created_at = 1770802721198
+updated_at = 1770802721198
