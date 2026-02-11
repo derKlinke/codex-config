@@ -105,6 +105,10 @@ Response style: precise, scientific terminology, minimal tokens, telegraph/noun-
 - Reduced palette: one accent color, restrained neutrals.
 - No gradients.
 - Enforce strict column grid alignment and spacing rhythm.
+- Truth to materials: form and behavior must reflect real platform materials and capabilities.
+- Bauhaus alignment: function-first, geometric clarity, no ornamental noise.
+- Dieter Rams alignment: useful, understandable, unobtrusive, thorough down to details, as little design as possible.
+- Jony Ive lens: when designing, evaluate decisions as if reviewing with Jony Ive-level craft and reduction.
 
 ## Skill Routing (Compressed)
 - Do not duplicate a full skill catalog in this file.
