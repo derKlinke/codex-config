@@ -1,6 +1,6 @@
 # DESIGN.md
 
-> Living design system documentation. Platform-agnostic (web + iOS/macOS as applicable). Update in every task that changes UI or visual behavior.
+> Authoritative current-state design system spec. Platform-agnostic (web + iOS/macOS as applicable). Update in every task that changes UI or visual behavior. No history/changelog here.
 
 ## Platform Scope
 
@@ -72,9 +72,9 @@
 - Assistive tech: keyboard/focus-visible on web; VoiceOver labels/hints and rotor-friendly structure on iOS.
 - Reduced motion support: web `prefers-reduced-motion`; iOS Reduce Motion accommodations.
 
-## Decision Log
+## Open Gaps (Current State)
 
-| Date (YYYY-MM-DD) | Decision | Rationale | Platform Impact | Affected Surfaces |
+| Gap | Impacted Surface(s) | Owner | Priority | Status |
 | --- | --- | --- | --- | --- |
 
 ## References

@@ -18,6 +18,7 @@ Response style: precise, scientific terminology, minimal tokens, telegraph/noun-
 - `~/.codex/memory.md` = cross-project durable ledger.
 - Project memory = project `AGENTS.md` + local memory markdowns.
 - Long-term notes default: `/Users/fabianklinke/Developer/klinke/klinke.studio/content/notes`.
+- Cross-project findings/patterns (reusable outside current repo): always document in `/Users/fabianklinke/Developer/klinke/klinke.studio/content/notes`.
 - If repo has root `NOTES.md`: treat as note index; refresh via repo generator before major maintenance.
 - Notes workflow source of truth: `/Users/fabianklinke/.codex/skills/notes-knowledge-graph/SKILL.md`.
 - For note edits outside `klinke.studio`, still read `/Users/fabianklinke/Developer/klinke/klinke.studio/AGENTS.md`.
@@ -25,8 +26,24 @@ Response style: precise, scientific terminology, minimal tokens, telegraph/noun-
 ## Design Protocol
 - Every UI/design repo should have root `DESIGN.md` (platform-agnostic; web + iOS/macOS).
 - Before UI/design implementation/review: read `DESIGN.md`.
-- If design decisions/tokens/components change: update `DESIGN.md` in same task.
+- `DESIGN.md` is authoritative current-state spec (what is true now), not a history artifact.
+- If design tokens/components/patterns change: update `DESIGN.md` in same task to reflect current state only.
+- Do not keep decision logs, changelogs, or historical timelines inside `DESIGN.md`.
 - If missing and UI work exists: create from `design-system-doc` skill template.
+
+## Documentation System
+- Purpose: project-specific memory + operator how-to for how the system works.
+- Canonical repo docs root: `docs/`.
+- Required hierarchy:
+- `docs/README.md` (map/index; where to find what)
+- `docs/architecture/README.md` (system model, boundaries, data/control flow)
+- `docs/architecture/adr/` (decision records; one file per decision)
+- `docs/features/<feature>/README.md` (feature behavior, invariants, failure modes)
+- `docs/how-to/` (task/runbook style procedures)
+- `docs/reference/` (APIs, schemas, config/env, commands)
+- `docs/diagrams/` (source diagrams + exported assets)
+- Change policy: if code changes behavior, interfaces, architecture, operations, or constraints, update relevant docs in same task.
+- Completion gate: before closing task, verify docs touched or explicitly justified as no-doc-impact.
 
 ## Subagent Orchestration
 - Default for non-trivial work: use subagents (lanes: `dev`, `test`, `research`, `review`).
@@ -79,12 +96,15 @@ Response style: precise, scientific terminology, minimal tokens, telegraph/noun-
 
 ## Frontend Aesthetics
 - Avoid generic/"AI slop" UI.
-- Typography: system fonts / Helvetica Neue unless strong reason.
-- Theme: committed palette + CSS vars; bold accents over timid gradients.
-- Motion: 1-2 meaningful moments; avoid noisy micro-motion.
-- Native platforms: prefer native components/styles; customize with purpose.
-- Priorities: clarity, hierarchy, whitespace, emotional design.
-- Avoid: purple-on-white clichés, generic grids, predictable layouts, gratuitous gradients/shadows.
+- Good design principle: as little design as possible.
+- Native-first design language per platform; iOS follows current HIG and Liquid Glass where appropriate.
+- Minimal design, content-first; navigation recedes into background.
+- Good UI should be "invisible": attention on content/task, not chrome.
+- Visual hierarchy via whitespace, typography, and text roles (`primary`, `foreground`, `secondary`).
+- Avoid boxes, borders, and shadows unless functionally necessary.
+- Reduced palette: one accent color, restrained neutrals.
+- No gradients.
+- Enforce strict column grid alignment and spacing rhythm.
 
 ## Skill Routing (Compressed)
 - Do not duplicate a full skill catalog in this file.
@@ -100,6 +120,7 @@ Response style: precise, scientific terminology, minimal tokens, telegraph/noun-
 - `agent-browser`: web UI/network/console checks.
 - `linear`: Linear workflow updates (set issue to In Progress at start).
 - `gh-fix-ci`: GitHub Actions triage/fix.
+- `ios-swift`: unified Swift/iOS/SwiftUI skill; route to `references/topic-index.md` for subdomains.
 
 ## Workflow Extras
 - Linear issues: set status to In Progress at start.
