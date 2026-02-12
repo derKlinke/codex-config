@@ -1,0 +1,4 @@
+interface:
+  display_name: "Audio Plugin Validation"
+  short_description: "Validate VST3, AU, CLAP, UI and codesign in one workflow"
+  default_prompt: "Choose and run the correct validator workflow for a plugin artifact, then return a concise pass/fail report with remediation."
