@@ -5,129 +5,87 @@ Response style: precise, scientific terminology, minimal tokens, telegraph/noun-
 ## Core Protocol
 - PR review: `gh pr view` / `gh pr diff` (no URLs).
 - "Make a note" => edit `AGENTS.md`. Ignore `CLAUDE.md`.
-- `AGENTS.md` = living memory; update when constraints/repo facts change.
-- Commits: Conventional Commits (`feat|fix|refactor|build|ci|chore|docs|style|perf|test`).
+- `AGENTS.md` is living memory; update it when constraints or repo facts change.
+- Commits use Conventional Commits (`feat|fix|refactor|build|ci|chore|docs|style|perf|test`).
 - Keep files `<~500 LOC`; split/refactor when needed.
-- Comments: concise why-comments allowed (DSP/RT/concurrency/math); avoid what-comments.
+- Comments: concise why-comments, avoid what-comments.
 - New dependencies: quick health check (release cadence, recent commits, adoption).
 - Web research: search early; quote exact errors; prefer 2024-2026 sources.
 
 ## Memory + Notes
 - Hierarchy:
-- `~/.codex/AGENTS.md` = global protocol.
-- `~/.codex/memory.md` = cross-project durable ledger.
-- Project memory = project `AGENTS.md` + local memory markdowns.
-- Long-term notes default: `/Users/fabianklinke/Developer/klinke/klinke.studio/content/notes`.
-- Cross-project findings/patterns (reusable outside current repo): always document in `/Users/fabianklinke/Developer/klinke/klinke.studio/content/notes`.
-- If repo has root `NOTES.md`: treat as note index; refresh via repo generator before major maintenance.
-- Notes workflow source of truth: `/Users/fabianklinke/.codex/skills/notes-knowledge-graph/SKILL.md`.
-- For note edits outside `klinke.studio`, still read `/Users/fabianklinke/Developer/klinke/klinke.studio/AGENTS.md`.
+- `~/.codex/AGENTS.md` (global protocol)
+- `~/.codex/memory.md` (cross-project durable ledger)
+- Project `AGENTS.md` + local memory notes
+- For note edits outside `klinke.studio`, read `/Users/fabianklinke/Developer/klinke/klinke.studio/AGENTS.md`.
 
 ## Design Protocol
-- Every UI/design repo should have root `DESIGN.md` (platform-agnostic; web + iOS/macOS).
-- Before UI/design implementation/review: read `DESIGN.md`.
-- `DESIGN.md` is authoritative current-state spec (what is true now), not a history artifact.
-- If design tokens/components/patterns change: update `DESIGN.md` in same task to reflect current state only.
-- Do not keep decision logs, changelogs, or historical timelines inside `DESIGN.md`.
-- If missing and UI work exists: create from `design-system-doc` skill template.
+- For UI/design work, keep `DESIGN.md` as current-state spec.
+- Before UI/design work: read `DESIGN.md`.
+- Update `DESIGN.md` whenever tokens/components/interaction patterns change.
+- Do not keep changelogs/decision histories inside `DESIGN.md`.
+
+## Frontend Aesthetics
+- Native-first: iOS/macOS follow HIG/material constraints; avoid generic, web-style chrome.
+- Default to content-first minimalism; reduce visual novelty unless it improves task clarity.
+- Use whitespace and typography as primary hierarchy; avoid decorative containers and ornamental effects.
+- Avoid unnecessary boxes, borders, shadows, and gradients unless they carry functional meaning.
+- Use restrained palette and restrained motion; one primary accent is usually enough.
+- Keep layout grid/alignment consistent and predictable for readability and motor predictability.
 
 ## Documentation System
 - Purpose: project-specific memory + operator how-to for how the system works.
-- Canonical repo docs root: `docs/`.
-- Required hierarchy:
-- `docs/README.md` (map/index; where to find what)
-- `docs/architecture/README.md` (system model, boundaries, data/control flow)
-- `docs/architecture/adr/` (decision records; one file per decision)
-- `docs/features/<feature>/README.md` (feature behavior, invariants, failure modes)
-- `docs/how-to/` (task/runbook style procedures)
-- `docs/reference/` (APIs, schemas, config/env, commands)
-- `docs/diagrams/` (source diagrams + exported assets)
-- Change policy: if code changes behavior, interfaces, architecture, operations, or constraints, update relevant docs in same task.
-- Completion gate: before closing task, verify docs touched or explicitly justified as no-doc-impact.
-
-## Subagent Orchestration
-- Default for non-trivial work: use subagents (lanes: `dev`, `test`, `research`, `review`).
-- Strong default: delegate research/code exploration before implementation.
-- Parent owns decomposition, acceptance criteria, integration, final verification.
-- Child prompt must include: file ownership, done condition, test command, output artifact.
-- Loop: `plan -> assign -> execute -> verify -> review -> reassign`.
-- Evidence gate: repro (if bug) -> failing test -> fix -> passing test -> reviewer findings cleared.
-- Completion gate: 2 fresh-eye review agents; fix all findings; rerun 2-agent review until clean.
-- Merge safety: single writer per file per loop.
-- Depth bound: `d_max=2` (raise to 3 only for large refactor/research spikes).
-- Escalation flag `--dangerously-bypass-approvals-and-sandbox`: only in externally sandboxed envs.
+- No mandatory docs folder hierarchy.
+- Use existing repo layout; introduce new structure only if a new documentation area is needed.
+- Avoid placeholder docs: no empty folders, duplicate README scaffolding, or unused index pages.
+- Keep documentation focused on:
+  - Architecture and system behavior (scope, boundaries, data/control flow, invariants)
+  - Feature behavior and requirements (acceptance criteria, edge cases, failure modes)
+  - Interfaces/contracts (APIs, schemas, config/env, migrations/versioning)
+  - Operations/runbooks (setup, build/test/run flow, recovery)
+  - Design/reference contracts (when behavior depends on them)
+  - High-impact decision notes (architecture/system choices)
+  - Incident/troubleshooting notes (diagnostics, remediation, rollback)
+- Change policy: if behavior, interfaces, architecture, operations, or constraints change, update relevant docs in the same task.
+- Completion gate: verify docs touched or explicitly justify no-doc-impact.
 
 ## Runtime + Tools
-- Use repo runtime/package manager; no swaps without approval. JS/TS default: `bun`.
-- New iOS projects: Tuist.
-- Long jobs: Codex background; tmux only for interactive/persistent debugger/server.
+- Use repo runtime/package manager (`bun` for JS/TS by default unless overridden).
 - Core tools:
 - `gh`: PRs/issues/actions.
 - `bun`: runtime + PM.
 - `tuist`: Xcode project tooling (prefer `just` if available).
-- `xcodebuildmcp`: default Apple simulator build/test/run/log/UI automation.
-- Canonical flow: `discover_projs -> list_schemes -> list_sims -> session_set_defaults -> build_sim/test_sim/build_run_sim`.
-- Debug/UI: `start_sim_log_cap` + `stop_sim_log_cap`; `snapshot_ui`; `screenshot`.
 - `prek`: pre-commit hooks.
 - `trash`: safe delete to system Trash.
 
 ## Build + Test
-- Bootstrap formatter/hooks: `npx @derklinke/miedinger --force`.
 - Prefer repo `justfile` commands for build/test/generate/format.
-- Apple targets: prefer `xcodebuildmcp` over raw `xcodebuild` for simulator workflows.
-- CI red: inspect via `gh run list/view`, rerun/fix/push until green.
-- Web projects: use `agent-browser` for UI/network/console inspection.
+- Bootstrap formatter/hooks with: `npx @derklinke/miedinger --force`.
+- CI checks: inspect with `gh run list/view`, fix and push until green.
 
 ## Git Policy
 - Branch changes require user consent.
-- Destructive ops forbidden unless explicit (`reset --hard`, `clean`, `restore`, `rm`, ...).
-- Remotes under `~/Developer`: prefer HTTPS; migrate SSH->HTTPS before pull/push.
+- Avoid destructive ops unless explicitly requested.
 - Before push: `git pull --rebase`.
 - If user explicitly says command (e.g. "pull and push"), treat as consent.
 - Ignore automation runtime logs: `automations/**/memory.md` untracked.
 - If unexpected file movement/deletion appears: stop + ask.
 
 ## Critical Thinking
-- Root cause fixes, not band-aids.
-- If uncertain: read more code; if still blocked, ask short options.
-- If constraints conflict: call out conflict; choose safer path.
-- Unrecognized/unrelated local changes: assume parallel agent/user edits; focus own scope unless breakage.
-- Leave breadcrumb notes in thread.
+- Prioritize root-cause fixes, not band-aids.
+- If uncertain: read more code; then ask short options.
+- If constraints conflict: call out tradeoff and pick a safer path.
+- Treat unrelated local edits as parallel work unless they break this task.
+- Leave breadcrumb notes in-thread.
 
-## Frontend Aesthetics
-- Avoid generic/"AI slop" UI.
-- Good design principle: as little design as possible.
-- Native-first design language per platform; iOS follows current HIG and Liquid Glass where appropriate.
-- Minimal design, content-first; navigation recedes into background.
-- Good UI should be "invisible": attention on content/task, not chrome.
-- Visual hierarchy via whitespace, typography, and text roles (`primary`, `foreground`, `secondary`).
-- Avoid boxes, borders, and shadows unless functionally necessary.
-- Reduced palette: one accent color, restrained neutrals.
-- No gradients.
-- Enforce strict column grid alignment and spacing rhythm.
-- Truth to materials: form and behavior must reflect real platform materials and capabilities.
-- Bauhaus alignment: function-first, geometric clarity, no ornamental noise.
-- Dieter Rams alignment: useful, understandable, unobtrusive, thorough down to details, as little design as possible.
-- Jony Ive lens: when designing, evaluate decisions as if reviewing with Jony Ive-level craft and reduction.
-
-## Skill Routing (Compressed)
-- Do not duplicate a full skill catalog in this file.
-- For each task: first take quick overview of runtime "Available skills" list.
-- Source of truth for details: each skill `SKILL.md`.
-- Default policy: always pick and apply relevant skill(s) when available.
-- Trigger rule: if user names a skill or task clearly matches, use that skill (not optional).
-- If multiple match: choose minimal relevant set and apply in explicit order.
-- If none match: state "no relevant skill found", then proceed with best general workflow.
+## Skill Routing
+- First review the runtime skill list.
+- If a task matches a listed skill, use it.
+- If none match, state `no relevant skill found` and use best general workflow.
 - Frequent picks:
-- `notes-knowledge-graph`: note authoring/maintenance.
-- `design-system-doc`: create/update `DESIGN.md`.
-- `agent-browser`: web UI/network/console checks.
-- `linear`: Linear workflow updates (set issue to In Progress at start).
-- `gh-fix-ci`: GitHub Actions triage/fix.
-- `ios-swift`: unified Swift/iOS/SwiftUI skill; route to `references/topic-index.md` for subdomains.
+  - `notes-knowledge-graph`
+  - `design-system-doc`
 
 ## Workflow Extras
-- Linear issues: set status to In Progress at start.
 - Need upstream file: stage in `/tmp/`, then cherry-pick; never overwrite tracked.
-- Bug report protocol: write failing repro test first; then fix; prove with passing test.
-- Slash command location: `~/.codex/prompts/`.
+- Keep debugging evidence-based: reproduce, fix, and verify.
