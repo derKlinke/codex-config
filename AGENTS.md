@@ -35,6 +35,8 @@ Response style: precise, scientific terminology, minimal tokens, telegraph/noun-
   - Target feature/component files and constraints
 - Claude prompt requirement: improve design quality while preserving existing design guidelines and product vibe.
 - Post-Claude gate (mandatory): review generated code in Codex, fix potential bugs/issues, and refactor non-optimal implementations to repo standards.
+- Example launch:
+  - `cd /Users/fabianklinke/.codex && claude -p "Use ~/.codex/AGENTS.md, this repo's AGENTS.md, and relevant DESIGN.md files. Improve the design while preserving current visual language and product constraints."`
 
 ## Frontend Aesthetics
 - Native-first: iOS/macOS follow HIG/material constraints; avoid generic, web-style chrome.
