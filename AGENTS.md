@@ -25,6 +25,17 @@ Response style: precise, scientific terminology, minimal tokens, telegraph/noun-
 - Update `DESIGN.md` whenever tokens/components/interaction patterns change.
 - Do not keep changelogs/decision histories inside `DESIGN.md`.
 
+## Claude Code Design Delegation
+- Small design tasks: implement directly in Codex.
+- Larger design tasks: launch Claude Code CLI by default.
+- Claude context package must include:
+  - Global `~/.codex/AGENTS.md`
+  - Local/project `AGENTS.md`
+  - Relevant `DESIGN.md` design spec files
+  - Target feature/component files and constraints
+- Claude prompt requirement: improve design quality while preserving existing design guidelines and product vibe.
+- Post-Claude gate (mandatory): review generated code in Codex, fix potential bugs/issues, and refactor non-optimal implementations to repo standards.
+
 ## Frontend Aesthetics
 - Native-first: iOS/macOS follow HIG/material constraints; avoid generic, web-style chrome.
 - Default to content-first minimalism; reduce visual novelty unless it improves task clarity.
