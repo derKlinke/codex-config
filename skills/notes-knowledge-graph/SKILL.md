@@ -12,14 +12,14 @@ Apply a strict workflow for note authoring and maintenance. Treat notes as reusa
 1. Identify target note(s) and repository context.
 2. If repo-root `NOTES.md` exists, use it first as the canonical note index and refresh it via the repo command if stale.
 3. Scan relevant existing notes before drafting.
-4. Read `references/klinke-studio-rules.md` when working in Fabian's `klinke.studio` vault.
+4. Read the skill reference file at `/Users/fabianklinke/.codex/skills/notes-knowledge-graph/references/klinke-studio-rules.md` when working in Fabian's `klinke.studio` vault (do not look for a repo-local `references/` directory).
 5. Create or edit note content with atomic concept scope and inline wikilink integration.
 6. Apply citation, visual, and language constraints from the reference, including visual tooling defaults (`matplotlib` and PlantUML).
 7. Run final quality check: structure, links, formulas, citations, transparency line.
 
 ## Klinke Studio Rules (Required)
 
-When working in `/Users/fabianklinke/Developer/klinke/klinke.studio`, treat `references/klinke-studio-rules.md` as normative. Enforce:
+When working in `/Users/fabianklinke/Developer/klinke/klinke.studio`, treat `/Users/fabianklinke/.codex/skills/notes-knowledge-graph/references/klinke-studio-rules.md` as normative. Enforce:
 
 - Notes system syntax: `content/notes/` Markdown; local relative images `![](img.png)`; math `$...$` and `$$...$$`; wikilinks `[[slug]]` or `[[slug|Label]]`; citations `[@key]` mapped to `content/bibliography/bibliography.bib`.
 - Bibliography assets: PDFs stored in `content/bibliography/files/` and served via `/pdf/` (Vercel Blob pipeline).
