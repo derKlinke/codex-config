@@ -23,6 +23,7 @@ Response style: precise, scientific terminology, minimal tokens, telegraph/noun-
 - For UI/design work, keep `DESIGN.md` as current-state spec.
 - Before UI/design work: read `DESIGN.md`.
 - Update `DESIGN.md` whenever tokens/components/interaction patterns change.
+- `DESIGN.md` must explicitly document the current design vibe (visual tone, interaction feel, aesthetic constraints) and be updated whenever that vibe changes.
 - Do not keep changelogs/decision histories inside `DESIGN.md`.
 
 ## Claude Code Design Delegation
