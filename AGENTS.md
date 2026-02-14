@@ -8,11 +8,7 @@
 - Prefer repo recipes when available: `just <recipe>`
 
 ## Commit Attribution
-- AI commits MUST include:
-```text
-Co-Authored-By: Codex (GPT-5) <noreply@openai.com>
-```
-- If another agent authors the change, use that agent identity instead
+- No `Co-Authored-By:` trailers (including Codex) unless explicitly requested by the user/repo
 
 ## Core Protocol
 - PR review: `gh pr view` / `gh pr diff` (no URLs)
