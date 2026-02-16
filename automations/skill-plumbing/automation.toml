@@ -2,8 +2,8 @@ version = 1
 id = "skill-plumbing"
 name = "Skill Creation"
 prompt = "Scan all of the `~/.codex/sessions` files from the past day and if there have been any issues using particular skills, update the skills to be more helpful. Personal skills only, no repo skills.\n\nIf there’s anything we’ve been doing often and struggle with that we should save as a skill to speed up future work, let’s do it.\n\nDefinitely don't feel like you need to update any- only if there's a good reason!\n\nLet me know if you make any."
-status = "ACTIVE"
+status = "PAUSED"
 rrule = "RRULE:FREQ=WEEKLY;BYHOUR=9;BYMINUTE=0;BYDAY=SU,MO,TU,WE,TH,FR,SA"
 cwds = ["/Users/fabianklinke/.codex"]
 created_at = 1770552243479
-updated_at = 1770803059460
+updated_at = 1771173057676

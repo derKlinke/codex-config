@@ -1,9 +1,0 @@
-version = 1
-id = "daily-wikilink-graph-audit"
-name = "Daily Wikilink Graph Audit"
-prompt = "Scan notes in content/notes for graph-connection quality only. Read-only audit: no note edits. Identify where inline wikilinks in sentence flow (Wikipedia style) should replace or outperform 'related notes' or 'see more' style linking. Propose concrete link insertions between existing notes to reduce orphan nodes, improve hub connectivity, and strengthen bidirectional topical paths. Output an inbox report with: prioritized candidates, exact source note + anchor phrase + target wikilink, and short rationale per proposal."
-status = "ACTIVE"
-rrule = "FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR,SA,SU;BYHOUR=9;BYMINUTE=0"
-cwds = ["/Users/fabianklinke/Developer/klinke/klinke.studio"]
-created_at = 1770462607260
-updated_at = 1770803154026
