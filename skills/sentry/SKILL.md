@@ -121,3 +121,9 @@ Always use these endpoints (GET only):
 
 Example prompt: “List the top 10 open issues for prod in the last 24h.”
 Expected: ordered list with titles, short IDs, counts, last seen.
+
+## Local Cross-References
+
+- `ios-sentry-swift-setup` - Use to add or refine iOS SDK instrumentation before querying live issues.
+- `ios-testflight-triage` - Use to align external crash trends with TestFlight crash investigation workflows.
+- `ios-app-store-connect-ref` - Use when comparing Sentry data against App Store Connect crash reports.

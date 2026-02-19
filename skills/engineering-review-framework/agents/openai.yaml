@@ -1,0 +1,4 @@
+interface:
+  display_name: "Engineering Review Framework"
+  short_description: "Structured engineering review before changes"
+  default_prompt: "Use $engineering-review-framework to review this architecture or implementation plan section by section before code changes."

@@ -1,45 +1,69 @@
-# Codex Agent Configs
+# Codex Config Repo
 
-Public release of my Codex coding-agent configuration: global rules, skills, prompts, and supporting files.
+Personal Codex configuration repo: global agent rules, reusable skills, prompt snippets, and local safety defaults.
 
-## What’s in this repo
+## Current State
 
-- `AGENTS.md` — global operating rules for the agent.
-- `skills/` — task-focused skill packs (many iOS skills based on Axiom).
-- `prompts/` — reusable prompt snippets and slash commands.
-- `rules/` — guardrails and policy overlays.
-- `config.toml` and other runtime files — Codex settings and state.
+- Global source of truth is `AGENTS.md`.
+- Skill system is the primary working memory (`skills/`).
+- iOS skills use a unified `ios-*` naming convention.
+- A large iOS skill pack has been imported and adapted for Codex use (not Claude-only command ecosystems).
+- Skill cross-linking is active via `## Local Cross-References` blocks in related skills.
 
-## Tooling this repo relies on
+## Repo Layout
 
-- `just` — command entrypoint in every repo.
-- `tuist` — iOS project generation and workflow.
-- `gh` — GitHub CLI for PRs and CI.
-- `vercel` — deploy flows and Vercel skill integration.
-- `agent-browser` — browser automation skill for web testing.
+- `AGENTS.md`
+  - Global behavior, engineering defaults, design/docs policy, and skill-memory policy.
+- `skills/`
+  - Reusable task skills.
+  - `ios-*` skills for Apple-platform development (Swift/SwiftUI/Xcode/TestFlight/App Store/etc.).
+  - Additional non-iOS skills for general engineering, cloud, docs, design, and tooling.
+  - `.system/` contains system support skills.
+- `prompts/`
+  - Stored prompts (currently includes `commit-split.md`).
+- `rules/`
+  - Local allow-rules and command prefix policies (`default.rules`).
+- `README.md`, `LICENSE`
 
-## Recursive Subagent Workflow (Codex CLI)
+## Local vs Versioned Files
 
-- Default strategy: orchestrator + parallel specialist agents (`dev`, `test`, `research`, `review`).
-- Recursive delegation allowed with bounded depth (`d_max = 2` default).
-- Iterative loop: `plan -> assign -> execute -> verify -> review -> reassign`.
+- This repo tracks portable configuration and skills.
+- Machine-local runtime/state files are intentionally ignored (`.gitignore`), including:
+  - `config.toml`
+  - auth/session/history/cache artifacts
+  - `tmp/`, `sessions/`, `archived_sessions/`, `shell_snapshots/`, etc.
 
-```bash
-codex -C /path/to/repo exec --full-auto \
-  "Orchestrator mode. Spawn subagents for dev/test/research/review. Recursive delegation allowed up to depth=2. Require patch/test/review artifacts."
-```
+## Skill Conventions
 
-```bash
-codex -C /path/to/repo exec "Write failing repro test for <bug>. Stop after red test output."
-codex -C /path/to/repo exec "Implement fix for <bug>. Run tests. Return diff + rationale."
-codex -C /path/to/repo exec review --uncommitted "Find regressions, risk, missing tests."
-```
+- Naming:
+  - iOS/platform skills: `ios-*`
+  - General skills keep domain-specific names.
+- Authoring:
+  - Keep skills concise, operational, and action-first.
+  - Prefer Codex-native workflows/tools.
+- Maintenance:
+  - If a reusable pattern is discovered, create or update a skill immediately.
+  - If two skills are frequently used together, add bidirectional cross-references.
+  - Prune stale or duplicate skills aggressively.
+
+## Tooling Baseline
+
+Common tools expected by these configs:
+
+- `gh`
+- `bun`
+- `just`
+- `tuist`
+- `xcrun`
+- `python`
+
+MCP usage is configured locally (see `config.toml` on each machine), with commonly used servers including XcodeBuildMCP, Linear, Figma, Supabase, and ShipSwift.
 
 ## Credits
 
 - Inspired by [@steipete](https://github.com/steipete).
-- Many iOS skills are based on Axiom.
 - Includes Vercel skills and the agent-browser integration.
+- Significant iOS skill content is adapted from Axiom and then curated for this Codex setup.
 
 ## License
 
