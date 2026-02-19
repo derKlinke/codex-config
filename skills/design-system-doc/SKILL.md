@@ -47,3 +47,12 @@ Keep `<repo-root>/DESIGN.md` as the authoritative present-state design doctrine:
 
 - For implementation tasks: deliver code changes + `DESIGN.md` updates together.
 - For review tasks: deliver findings + concrete `DESIGN.md` patch suggestions.
+
+## Local Cross-References
+
+- `ios-hig` - Use for fast HIG-aligned decisions while editing UI and design tokens.
+- `ios-hig-ref` - Use for detailed guideline lookups backing durable DESIGN.md updates.
+- `ios-liquid-glass` - Use when introducing or refining iOS 26 material behaviors in the design system.
+- `ios-swiftui-layout` - Use when layout constraints should become documented system-level rules.
+- `ios-typography-ref` - Use for type hierarchy and Dynamic Type standards in DESIGN.md.
+- `ios-sf-symbols` - Use for iconography policy and symbol behavior consistency.
