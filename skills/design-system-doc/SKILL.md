@@ -36,6 +36,7 @@ Keep `<repo-root>/DESIGN.md` as the authoritative present-state design doctrine:
 - Record accessibility implications per platform (for example WCAG contrast/focus for web, Dynamic Type/VoiceOver/reduced motion for iOS).
 - Keep semantics stable: one visual cue should map to one meaning.
 - Keep `DESIGN.md` concise and scannable; short sections and rule lists over long narrative.
+- For mobile navigation overlays, codify explicit rules for target sizes, section/link type hierarchy, safe-area behavior, modal focus behavior, and zero-layout-shift open/close behavior.
 
 ## File Convention
 
@@ -50,8 +51,9 @@ Keep `<repo-root>/DESIGN.md` as the authoritative present-state design doctrine:
 
 ## Local Cross-References
 
+- `frontend-design` - implementation companion for applying doctrine constraints in production UI code.
 - `design-quality-gates` - Mandatory objective gate checks for layout, type, hierarchy, color, and accessibility before design sign-off.
-- `interaction-motion-craft` - Motion/interaction doctrine for transitions, gestures, causality, and timing consistency.
+- `design-interaction-motion-craft` - Motion/interaction doctrine for transitions, gestures, causality, and timing consistency.
 - `ios-hig` - Use for fast HIG-aligned decisions while editing UI and design tokens.
 - `ios-hig-ref` - Use for detailed guideline lookups backing durable DESIGN.md updates.
 - `ios-liquid-glass` - Use when introducing or refining iOS 26 material behaviors in the design system.

@@ -7,7 +7,7 @@ description: Use when creating/editing/verifying skills and enforce high-density
 
 ## Related Skills
 
-- For creating/updating project `AGENTS.md` instructions, use `agents-md` (`~/.codex/skills/agents-md/SKILL.md`).
+- For creating/updating project `AGENTS.md` instructions, use `agents-md` (`~/.codex/skills/writing-agents-md/SKILL.md`).
 
 ## Language Density Contract (Mandatory)
 
@@ -110,7 +110,7 @@ skills/
 **Frontmatter (YAML):**
 - Only two fields supported: `name` and `description`
 - Max 1024 characters total
-- `name`: Use letters, numbers, and hyphens only (no parentheses, special chars)
+- `name`: Use letters, numbers, and hyphens only (no parentheses, special chars); follow canonical naming rules in Section 3
 - `description`: Third-person, describes ONLY when to use (NOT what it does)
   - Start with "Use when..." to focus on triggering conditions
   - Include specific symptoms, situations, and contexts
@@ -220,22 +220,37 @@ Use words the agent would search for:
 - Synonyms: "timeout/hang/freeze", "cleanup/teardown/afterEach"
 - Tools: Actual commands, library names, file types
 
-### 3. Descriptive Naming
+### 3. Canonical Skill Naming (Mandatory)
 
-**Use active voice, verb-first:**
-- ✅ `creating-skills` not `skill-creation`
-- ✅ `condition-based-waiting` not `async-test-helpers`
+**Canonical format:**
+- `kebab-case` only: letters, numbers, hyphens
+- Pattern: `<namespace>-<topic>[-<qualifier>]`
+- 2-5 segments preferred; avoid one-word generic names for new skills
 
-**Namespace prefixes (mandatory for new/refactored skills):**
-- Design-related skills MUST use `design-*`
-- Writing/copy/editing/documentation skills MUST use `writing-*`
-- Existing platform namespace remains: `ios-*`
+**Namespace rules (mandatory for new/refactored skills):**
+- UI/visual/motion/layout/interaction: `design-*`
+- Writing/copy/editing/docs/notes: `writing-*`
+- CRO/SEO/behavioral marketing: `marketing-*`
+- Web framework/platform best practices: `web-*`
+- Apple platform/API/runtime: `ios-*`
 
-**Examples:**
-- ✅ `design-interaction-motion`
-- ✅ `design-interface-critique`
+**Suffix semantics (use when applicable):**
+- `*-diag`: diagnostic workflows
+- `*-ref`: API/reference catalogs
+- `*-migration`: migration guides
+- `*-best-practices`: standards/pattern guidance
+
+**Identity invariants (required):**
+- Skill directory name MUST equal frontmatter `name`
+- Cross references MUST use that exact canonical name
+- No alias directories for renamed skills
+
+**Examples (current taxonomy):**
+- ✅ `design-interaction-motion-craft`
 - ✅ `writing-copy-editing`
-- ✅ `writing-tone-humanization`
+- ✅ `marketing-seo-audit`
+- ✅ `web-next-best-practices`
+- ✅ `ios-networking-diag`
 
 ### 4. Token Efficiency (Critical)
 
@@ -635,7 +650,8 @@ Deploying untested skills = deploying untested code. It's a violation of quality
 - [ ] Identify patterns in rationalizations/failures
 
 **GREEN Phase - Write Minimal Skill:**
-- [ ] Name uses only letters, numbers, hyphens (no parentheses/special chars)
+- [ ] Name uses canonical `kebab-case` and namespace rules (`design|writing|marketing|web|ios` when applicable)
+- [ ] Directory name == frontmatter `name` == canonical referenced name
 - [ ] YAML frontmatter with only name and description (max 1024 chars)
 - [ ] Description starts with "Use when..." and includes specific triggers/symptoms
 - [ ] Description written in third person

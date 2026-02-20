@@ -42,7 +42,7 @@ Read each skill frontmatter to decide references.
 
 - **Headers + terse bullets** - No paragraphs
 - **Code blocks** - Commands/templates only
-- **Reference, don't duplicate** - Point to skills: "Use `db-migrate` skill. See `.codex/skills/db-migrate/SKILL.md`"
+- **Reference, don't duplicate** - Point to skills: "Use `ios-database-migration` skill. See `.codex/skills/ios-database-migration/SKILL.md`"
 - **No filler** - No intros, conclusions, pleasantries, or motivational phrasing
 - **Trust capabilities** - Omit obvious context/explanations
 - **Default to maximum density** - Keep all directives; minimize tokens
@@ -63,10 +63,10 @@ Project-specific patterns agents must follow. Keep brief.
 Reference each discovered skill:
 ```markdown
 ## Database
-Use `db-migrate` skill for schema changes. See `.codex/skills/db-migrate/SKILL.md`
+Use `ios-database-migration` skill for schema changes. See `.codex/skills/ios-database-migration/SKILL.md`
 
 ## Testing
-Use `write-tests` skill. See `.codex/skills/write-tests/SKILL.md`
+Use `test-driven-development` skill. See `.codex/skills/test-driven-development/SKILL.md`
 ```
 
 ## Optional Sections
@@ -101,10 +101,10 @@ Use **pnpm**: `pnpm install`, `pnpm dev`
 [Template code block]
 
 ## Database
-Use `db-migrate` skill. See `.codex/skills/db-migrate/SKILL.md`
+Use `ios-database-migration` skill. See `.codex/skills/ios-database-migration/SKILL.md`
 
 ## Testing
-Use `write-tests` skill. See `.codex/skills/write-tests/SKILL.md`
+Use `test-driven-development` skill. See `.codex/skills/test-driven-development/SKILL.md`
 
 ## CLI
 | Command | Description |
