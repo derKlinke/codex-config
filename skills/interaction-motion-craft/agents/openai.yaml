@@ -1,0 +1,4 @@
+interface:
+  display_name: "Interaction Motion Craft"
+  short_description: "Interaction and motion craft principles"
+  default_prompt: "Apply interaction design and animation craft principles to motion, gestures, and transitions; enforce intent, interruptibility, spatial consistency, and timing discipline."
