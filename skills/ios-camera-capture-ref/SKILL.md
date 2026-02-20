@@ -49,7 +49,7 @@ previewLayer.connection?.videoRotationAngle = coordinator.videoRotationAngleForH
 
 ## AVCaptureSession
 
-Central coordinator for capture data flow.
+Central capture pipeline coordinator.
 
 ### Session Presets
 
@@ -67,7 +67,7 @@ Central coordinator for capture data flow.
 ### Session Configuration
 
 ```swift
-// Batch configuration (atomic)
+// Atomic batch configuration
 session.beginConfiguration()
 defer { session.commitConfiguration() }
 
@@ -89,7 +89,7 @@ if session.canAddOutput(output) {
 ### Session Lifecycle
 
 ```swift
-// Start (ALWAYS on background queue)
+// Start (ALWAYS on a background queue)
 sessionQueue.async {
     session.startRunning()  // Blocking call
 }

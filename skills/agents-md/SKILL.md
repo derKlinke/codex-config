@@ -1,11 +1,15 @@
 ---
 name: agents-md
-description: This skill should be used when the user asks to "create AGENTS.md", "update AGENTS.md", "maintain agent docs", "set up AGENTS.md", or needs to keep agent instructions concise. Guides discovery of local skills and enforces minimal documentation style.
+description: Use when the user asks to create/update/maintain AGENTS.md, set up agent docs, or enforce high-density concise agent instructions.
 ---
 
 # Maintaining AGENTS.md
 
-AGENTS.md is the canonical agent-facing documentation. Keep it minimal—agents are capable and don't need hand-holding.
+AGENTS.md is canonical agent-facing documentation. Keep it minimal and dense; agents do not need hand-holding.
+
+## Related Skills
+
+- For editing/validating skill files themselves, use `writing-skills` (`~/.codex/skills/writing-skills/SKILL.md`).
 
 ## File Setup
 
@@ -21,15 +25,27 @@ find .codex/skills -name "SKILL.md" 2>/dev/null
 ls plugins/*/skills/*/SKILL.md 2>/dev/null
 ```
 
-Read each skill's frontmatter to understand when to reference it.
+Read each skill frontmatter to decide references.
+
+## Density Contract (Mandatory)
+
+- Preserve all constraints/content unless user explicitly requests removal.
+- Compress wording aggressively: shorter clauses, noun-phrase style, minimal glue words.
+- Prefer one bullet = one rule; avoid explanatory prose.
+- Remove repetition; merge semantically overlapping bullets.
+- Replace verbose sentences with compact directives.
+- Keep examples minimal; enough to disambiguate format only.
+- Do not trade away precision for brevity; preserve normative force (`must`, `never`, `before`, etc.).
+- Final pass required: remove filler, collapse duplicates, tighten phrasing.
 
 ## Writing Rules
 
-- **Headers + bullets** - No paragraphs
-- **Code blocks** - For commands and templates
+- **Headers + terse bullets** - No paragraphs
+- **Code blocks** - Commands/templates only
 - **Reference, don't duplicate** - Point to skills: "Use `db-migrate` skill. See `.codex/skills/db-migrate/SKILL.md`"
-- **No filler** - No intros, conclusions, or pleasantries
-- **Trust capabilities** - Omit obvious context
+- **No filler** - No intros, conclusions, pleasantries, or motivational phrasing
+- **Trust capabilities** - Omit obvious context/explanations
+- **Default to maximum density** - Keep all directives; minimize tokens
 
 ## Required Sections
 
@@ -59,6 +75,7 @@ Add only if truly needed:
 - API route patterns (show template, not explanation)
 - CLI commands (table format)
 - File naming conventions
+- Compression checklist (if AGENTS.md is verbose or recently expanded)
 
 ## Anti-Patterns
 
@@ -69,6 +86,8 @@ Omit these:
 - Obvious instructions ("run tests", "write clean code")
 - Explanations of why (just say what)
 - Long prose paragraphs
+- Duplicated constraints across sections
+- Verbose rewrites that preserve wording but not density
 
 ## Example Structure
 

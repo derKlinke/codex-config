@@ -10,7 +10,7 @@ metadata:
 
 ## Overview
 
-Complete reference for every App Store submission requirement:
+Reference for App Store submission requirements:
 
 - **Part 1** — Required metadata fields (descriptions, screenshots, keywords, App Review info)
 - **Part 2** — Privacy requirements (manifest schema, nutrition labels, ATT, Required Reason APIs)
@@ -25,7 +25,7 @@ Complete reference for every App Store submission requirement:
 
 ## When to Use This Skill
 
-**Use when:**
+Use when:
 - Looking up specific metadata field requirements or character limits
 - Checking App Review guideline numbers for a specific topic
 - Verifying privacy manifest schema fields or Required Reason API categories
@@ -34,7 +34,7 @@ Complete reference for every App Store submission requirement:
 - Understanding IAP submission pipeline and review flow
 - Preparing builds for upload (SDK requirements, encryption, signing)
 
-**Do NOT use when:**
+Do NOT use when:
 - Deciding if your app is ready to submit (use **app-store-submission**)
 - Troubleshooting a rejection (use **app-store-diag**)
 - Implementing in-app purchases (use **storekit-ref**)
@@ -43,11 +43,11 @@ Complete reference for every App Store submission requirement:
 
 ## Related Skills
 
-- **app-store-submission** — Discipline skill with pre-flight checklist and workflow
-- **app-store-diag** — Rejection troubleshooting and appeal guidance
-- **privacy-ux** — Privacy manifest implementation, ATT UX, permission requests
-- **storekit-ref** — StoreKit 2 API reference for IAP implementation
-- **accessibility-diag** — Accessibility compliance scanning and VoiceOver testing
+- **app-store-submission** — Pre-flight checklist and workflow
+- **app-store-diag** — Rejection diagnosis and appeals
+- **privacy-ux** — Privacy manifest, ATT UX, permissions
+- **storekit-ref** — StoreKit 2 IAP API reference
+- **accessibility-diag** — Accessibility scans and VoiceOver testing
 
 ## Key Terminology
 

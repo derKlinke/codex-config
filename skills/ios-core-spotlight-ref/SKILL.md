@@ -10,15 +10,15 @@ metadata:
 
 ## Overview
 
-Comprehensive guide to Core Spotlight framework and NSUserActivity for making app content discoverable in Spotlight search, enabling Siri predictions, and supporting Handoff. Core Spotlight directly indexes app content while NSUserActivity captures user engagement for prediction.
+Guide to Core Spotlight and NSUserActivity for Spotlight discovery, Siri prediction, and Handoff. Core Spotlight indexes app content; NSUserActivity captures active user context.
 
-**Key distinction** Core Spotlight = indexing all app content; NSUserActivity = marking current user activity for prediction/handoff.
+**Distinction** Core Spotlight indexes broad content; NSUserActivity marks current activity for prediction/Handoff.
 
 ---
 
-## When to Use This Skill
+## Use When
 
-Use this skill when:
+Use when:
 - Indexing app content (documents, notes, orders, messages) for Spotlight
 - Using NSUserActivity for Handoff or Siri predictions
 - Choosing between CSSearchableItem, IndexedEntity, and NSUserActivity
@@ -28,7 +28,7 @@ Use this skill when:
 - Debugging Spotlight search not finding app content
 - Integrating NSUserActivity with App Intents (appEntityIdentifier)
 
-Do NOT use this skill for:
+Do not use for:
 - App Shortcuts implementation (use app-shortcuts-ref)
 - App Intents basics (use app-intents-ref)
 - Overall discoverability strategy (use app-discoverability)
@@ -53,7 +53,7 @@ Do NOT use this skill for:
 | Handoff between devices | `NSUserActivity` | Continue editing note on Mac |
 | Background content indexing | `CSSearchableItem` batch | Index documents on launch |
 
-**Apple guidance** Use NSUserActivity for user-initiated activities (screens currently visible), not as a general indexing mechanism. For comprehensive content indexing, use Core Spotlight's CSSearchableItem.
+**Apple guidance** Use NSUserActivity for user-initiated visible activities, not general indexing. For full indexing, use CSSearchableItem.
 
 ---
 

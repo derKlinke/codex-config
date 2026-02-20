@@ -1,6 +1,6 @@
 ---
 name: ios-swiftdata
-description: Use when working with SwiftData - @Model definitions, @Query in SwiftUI, @Relationship macros, ModelContext patterns, CloudKit integration, iOS 26+ features, and Swift 6 concurrency with @MainActor — Apple's native persistence framework
+description: Use for SwiftData modeling, querying, relationships, ModelContext patterns, CloudKit sync, and Swift concurrency integration
 license: MIT
 metadata:
   version: "1.0.0"
@@ -10,9 +10,9 @@ metadata:
 
 ## Overview
 
-Apple's native persistence framework using `@Model` classes and declarative queries. Built on Core Data, designed for SwiftUI.
+Apple's native persistence framework with `@Model` classes and declarative queries (Core Data-based, SwiftUI-first).
 
-**Core principle** Reference types (`class`) + `@Model` macro + declarative `@Query` for reactive SwiftUI integration.
+**Core principle**: reference types (`class`) + `@Model` + declarative `@Query` for reactive UI integration.
 
 **Requires** iOS 17+, Swift 5.9+
 **Target** iOS 26+ (this skill focuses on latest features)
@@ -40,46 +40,44 @@ Apple's native persistence framework using `@Model` classes and declarative quer
 
 ## Example Prompts
 
-These are real questions developers ask that this skill is designed to answer:
-
 #### Basic Operations
 
 #### 1. "I have a notes app with folders. I need to filter notes by folder and sort by last modified. How do I set up the @Query?"
-→ The skill shows how to use `@Query` with predicates, sorting, and automatic view updates
+→ Shows how to use `@Query` with predicates, sorting, and automatic view updates
 
 #### 2. "When a user deletes a task list, all tasks should auto-delete too. How do I set up the relationship?"
-→ The skill explains `@Relationship` with `deleteRule: .cascade` and inverse relationships
+→ Explains `@Relationship` with `deleteRule: .cascade` and inverse relationships
 
 #### 3. "I have a relationship between User → Messages → Attachments. How do I prevent orphaned data when deleting?"
-→ The skill shows cascading deletes, inverse relationships, and safe deletion patterns
+→ Shows cascading deletes, inverse relationships, and safe deletion patterns
 
 #### CloudKit & Sync
 
 #### 4. "My chat app syncs messages to other devices via CloudKit. Sometimes messages conflict. How do I handle sync conflicts?"
-→ The skill covers CloudKit integration, conflict resolution strategies (last-write-wins, custom resolution), and sync patterns
+→ Covers CloudKit integration, conflict resolution strategies (last-write-wins, custom resolution), and sync patterns
 
 #### 5. "I'm adding CloudKit sync to my app, but I get 'Property must have a default value' error. What's wrong?"
-→ The skill explains CloudKit constraints: all properties must be optional or have defaults, explains why (network timing), and shows fixes
+→ Explains CloudKit constraints: all properties must be optional or have defaults, explains why (network timing), and shows fixes
 
 #### 6. "I want to show users when their data is syncing to iCloud and what happens when they're offline."
-→ The skill shows monitoring sync status with notifications, detecting network connectivity, and offline-aware UI patterns
+→ Shows monitoring sync status with notifications, detecting network connectivity, and offline-aware UI patterns
 
 #### 7. "I need to share a playlist with other users. How do I implement CloudKit record sharing?"
-→ The skill covers CloudKit record sharing patterns (iOS 26+) with owner/permission tracking and sharing metadata
+→ Covers CloudKit record sharing patterns (iOS 26+) with owner/permission tracking and sharing metadata
 
 #### Performance & Optimization
 
 #### 8. "I need to query 50,000 messages but only display 20 at a time. How do I paginate efficiently?"
-→ The skill covers performance patterns, batch fetching, limiting queries, and preventing memory bloat with chunked imports
+→ Covers performance patterns, batch fetching, limiting queries, and preventing memory bloat with chunked imports
 
 #### 9. "My app loads 100 tasks with relationships, and displaying them is slow. I think it's N+1 queries."
-→ The skill shows how to identify N+1 problems without prefetching, provides prefetching pattern, and shows 100x performance improvement
+→ Shows how to identify N+1 problems without prefetching, provides prefetching pattern, and shows 100x performance improvement
 
 #### 10. "I'm importing 1 million records from an API. What's the best way to batch them without running out of memory?"
-→ The skill shows chunk-based importing with periodic saves, memory cleanup patterns, and batch operation optimization
+→ Shows chunk-based importing with periodic saves, memory cleanup patterns, and batch operation optimization
 
 #### 11. "Which properties should I add indexes to? I'm worried about over-indexing slowing down writes."
-→ The skill explains index optimization patterns: when to index (frequently filtered/sorted properties), when to avoid (rarely used, frequently changing), maintenance costs
+→ Explains index optimization patterns: when to index (frequently filtered/sorted properties), when to avoid (rarely used, frequently changing), maintenance costs
 
 #### Migration from Legacy Frameworks
 

@@ -11,7 +11,7 @@ metadata:
 
 ## Overview
 
-iOS app performance problems fall into distinct categories, each with a specific diagnosis tool. This skill helps you **choose the right tool**, **use it effectively**, and **interpret results correctly** under pressure.
+iOS performance issues map to specific diagnosis tools. This skill helps you **pick the right tool**, **run it correctly**, and **interpret results under pressure**.
 
 **Core principle**: Measure before optimizing. Guessing about performance wastes more time than profiling.
 
@@ -20,7 +20,7 @@ iOS app performance problems fall into distinct categories, each with a specific
 
 ## When to Use Performance Profiling
 
-#### Use this skill when
+#### Use when
 - ✅ App feels slow (UI lags, loads take 5+ seconds)
 - ✅ Memory grows over time (Xcode shows increasing memory usage)
 - ✅ Battery drains fast (device gets hot, battery depletes in hours)

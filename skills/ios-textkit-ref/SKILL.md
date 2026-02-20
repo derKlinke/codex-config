@@ -6,11 +6,11 @@ license: MIT
 
 # TextKit 2 Reference
 
-Complete reference for TextKit 2 covering architecture, migration from TextKit 1, Writing Tools integration, and SwiftUI TextEditor with AttributedString through iOS 26.
+Reference for TextKit 2: architecture, TextKit 1 migration, Writing Tools, and SwiftUI TextEditor with AttributedString through iOS 26.
 
 ## Architecture
 
-TextKit 2 uses MVC pattern with new classes optimized for correctness, safety, and performance.
+TextKit 2 uses MVC classes optimized for correctness, safety, and performance.
 
 ### Model Layer
 
@@ -20,12 +20,12 @@ TextKit 2 uses MVC pattern with new classes optimized for correctness, safety, a
 - Default implementation: NSTextContentStorage
 
 **NSTextContentStorage**
-- Uses NSTextStorage as backing store
+- Uses NSTextStorage as backing storage
 - Automatically divides content into NSTextParagraph elements
 - Generates updated elements when text changes
 
 **NSTextElement** (abstract)
-- Represents portion of content (paragraph, attachment, custom type)
+- Represents a content unit (paragraph, attachment, custom type)
 - Immutable value semantics
 - Properties cannot change after creation
 - Default implementation: NSTextParagraph

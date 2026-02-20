@@ -1,6 +1,6 @@
 ---
 name: ios-swiftui-nav-ref
-description: Reference — Comprehensive SwiftUI navigation guide covering NavigationStack (iOS 16+), NavigationSplitView (iOS 16+), NavigationPath, deep linking, state restoration, Tab+Navigation integration (iOS 18+), Liquid Glass navigation (iOS 26+), and coordinator patterns
+description: Reference — SwiftUI navigation guide for NavigationStack/SplitView, NavigationPath, deep links, state restoration, Tab integration (iOS 18+), Liquid Glass navigation (iOS 26+), and coordinators
 license: MIT
 compatibility: iOS 16+ (NavigationStack), iOS 18+ (Tab/Sidebar), iOS 26+ (Liquid Glass)
 metadata:
@@ -12,7 +12,7 @@ metadata:
 
 ## Overview
 
-SwiftUI's navigation APIs provide data-driven, programmatic navigation that scales from simple stacks to complex multi-column layouts. Introduced in iOS 16 (2022) with NavigationStack and NavigationSplitView, evolved in iOS 18 (2024) with Tab/Sidebar unification, and refined in iOS 26 (2025) with Liquid Glass design.
+SwiftUI navigation APIs provide data-driven programmatic navigation from simple stacks to multi-column layouts. Introduced in iOS 16, expanded in iOS 18 (Tab/Sidebar unification), refined in iOS 26 (Liquid Glass).
 
 #### Evolution timeline
 - **2022 (iOS 16)** NavigationStack, NavigationSplitView, NavigationPath, value-based NavigationLink
@@ -38,7 +38,7 @@ SwiftUI's navigation APIs provide data-driven, programmatic navigation that scal
 
 ## When to Use This Skill
 
-Use this skill when:
+Use when:
 - **Implementing navigation APIs** NavigationStack, NavigationSplitView, NavigationPath, Tab+Navigation
 - **Deep linking or state restoration** URL routing, Codable NavigationPath, SceneStorage
 - **Adopting iOS 26+ features** Liquid Glass navigation, bottom-aligned search, tab bar minimization

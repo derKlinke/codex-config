@@ -50,6 +50,8 @@ Keep `<repo-root>/DESIGN.md` as the authoritative present-state design doctrine:
 
 ## Local Cross-References
 
+- `design-quality-gates` - Mandatory objective gate checks for layout, type, hierarchy, color, and accessibility before design sign-off.
+- `interaction-motion-craft` - Motion/interaction doctrine for transitions, gestures, causality, and timing consistency.
 - `ios-hig` - Use for fast HIG-aligned decisions while editing UI and design tokens.
 - `ios-hig-ref` - Use for detailed guideline lookups backing durable DESIGN.md updates.
 - `ios-liquid-glass` - Use when introducing or refining iOS 26 material behaviors in the design system.

@@ -1,478 +1,211 @@
 ---
 name: ios-typography-ref
-description: Apple platform typography reference (San Francisco fonts, text styles, Dynamic Type, tracking, leading, internationalization) through iOS 26
+description: Use for Apple typography reference: SF families, text styles, Dynamic Type, tracking/leading, AttributedString typography behavior, and international text handling through iOS 26.
 license: MIT
 ---
 
 # Typography Reference
 
-Complete reference for typography on Apple platforms including San Francisco font system, text styles, Dynamic Type, tracking, leading, and internationalization through iOS 26.
+Apple platform typography reference (iOS/macOS/watchOS/visionOS).
 
-## San Francisco Font System
+## San Francisco System
 
-### Font Families
+### Families
+- `SF Pro` / `SF Pro Rounded`: default UI fonts
+- `SF Compact` / `SF Compact Rounded`: constrained/narrow contexts (watchOS default)
+- `SF Mono`: monospaced contexts
+- `New York`: serif alternative
+- `SF Arabic`: Arabic family aligned with SF system language
 
-**SF Pro** and **SF Pro Rounded** (iOS, iPadOS, macOS, tvOS)
-- Main system fonts for most UI elements
-- Rounded variant for friendly, approachable interfaces (e.g., Reminders app)
+### Variable axes
 
-**SF Compact** and **SF Compact Rounded** (watchOS, narrow columns)
-- Optimized for constrained spaces and small sizes
-- watchOS default system font
+- Weight: Ultralight -> Black
+- Width: Condensed, Compressed, Regular, Expanded
+- Optical sizing: text (<20pt) vs display (>=20pt)
 
-**SF Mono** (Code environments, monospaced text)
-- Monospaced font for code editors and technical content
-- Consistent character widths for alignment
-
-**New York** (Serif system font)
-- Serif alternative for editorial content
-- Works with text styles just like SF Pro
-
-### Variable Font Axes
-
-#### Weight Axis (9 weights)
-- Ultralight, Thin, Light, Regular, Medium, Semibold, Bold, Heavy, Black
-- Continuous weight spectrum via variable fonts
-- Avoid light weights at small sizes (legibility issues)
-
-#### Width Axis (WWDC 2022)
-- **Condensed** — narrowest width
-- **Compressed** — narrow width
-- **Regular** — standard width (default)
-- **Expanded** — wide width
-
-Access via:
 ```swift
-// iOS/macOS
 let descriptor = UIFontDescriptor(fontAttributes: [
     .family: "SF Pro",
-    kCTFontWidthTrait: 1.0 // 1.0 = Expanded
+    kCTFontWidthTrait: 1.0
 ])
 ```
 
-**SF Arabic** (WWDC 2022)
-- Matches SF Pro design language for Arabic text
-- Proper right-to-left support
+## Text Styles and Dynamic Type
 
-#### Optical Sizes
-Variable fonts automatically adjust optical size based on point size:
-- **Text variant** (< 20pt) — more spacing, sturdier strokes
-- **Display variant** (≥ 20pt) — tighter spacing, refined details
-- **Smooth transition** (17-28pt) with variable SF Pro
+### System styles
 
-From WWDC 2020:
-> "TextKit 2 abstracts away glyph handling to provide a consistent experience for international text."
+| Text Style | Default iOS size | Typical use |
+|---|---:|---|
+| `.largeTitle` | 34pt | Primary page title |
+| `.title` | 28pt | Section title |
+| `.title2` | 22pt | Secondary heading |
+| `.title3` | 20pt | Tertiary heading |
+| `.headline` | 17pt (semibold) | Emphasized body |
+| `.body` | 17pt | Primary text |
+| `.callout` | 16pt | Secondary text |
+| `.subheadline` | 15pt | Supporting text |
+| `.footnote` | 13pt | Footnotes |
+| `.caption` | 12pt | Captions |
+| `.caption2` | 11pt | Small labels |
 
-## Text Styles & Dynamic Type
-
-### System Text Styles
-
-| Text Style | Default Size (iOS) | Use Case |
-|------------|-------------------|----------|
-| `.largeTitle` | 34pt | Primary page headings |
-| `.title` | 28pt | Secondary headings |
-| `.title2` | 22pt | Tertiary headings |
-| `.title3` | 20pt | Quaternary headings |
-| `.headline` | 17pt (Semibold) | Emphasized body text |
-| `.body` | 17pt | Primary body text |
-| `.callout` | 16pt | Secondary body text |
-| `.subheadline` | 15pt | Tertiary body text |
-| `.footnote` | 13pt | Footnotes, captions |
-| `.caption` | 12pt | Small annotations |
-| `.caption2` | 11pt | Smallest annotations |
-
-### Emphasized Text Styles
-
-Apply `.bold` symbolic trait to get emphasized variants:
+### Emphasis
 
 ```swift
 // UIKit
 let descriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .title1)
-let boldDescriptor = descriptor.withSymbolicTraits(.traitBold)!
-let font = UIFont(descriptor: boldDescriptor, size: 0)
+let bold = descriptor.withSymbolicTraits(.traitBold)!
+let font = UIFont(descriptor: bold, size: 0)
 
 // SwiftUI
-Text("Bold Title")
-    .font(.title.bold())
+Text("Bold title").font(.title.bold())
 ```
 
-**Actual weights by text style:**
-- Some styles map to **medium**
-- Others map to **semibold**, **bold**, or **heavy**
-- Depends on semantic hierarchy
+### Leading variants
 
-### Leading Variants
+```swift
+Text("Compact").font(.body.leading(.tight))
+Text("Spacious").font(.body.leading(.loose))
+```
 
-**Tight Leading** (reduces line height by 2pt on iOS, 1pt on watchOS):
+### Dynamic Type with custom fonts
+
 ```swift
 // UIKit
-let descriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .body)
-let tightDescriptor = descriptor.withSymbolicTraits(.traitTightLeading)!
+let base = UIFont(name: "Avenir-Medium", size: 34)!
+let scaled = UIFontMetrics(forTextStyle: .body).scaledFont(for: base)
 
 // SwiftUI
-Text("Compact text")
-    .font(.body.leading(.tight))
-```
-
-**Loose Leading** (increases line height by 2pt on iOS, 1pt on watchOS):
-```swift
-// SwiftUI
-Text("Spacious paragraph")
-    .font(.body.leading(.loose))
-```
-
-### Dynamic Type
-
-**Automatic Scaling** (iOS):
-Text styles scale automatically based on user preferences from Settings → Display & Brightness → Text Size.
-
-**Custom Fonts with Dynamic Type:**
-
-```swift
-// UIKit - UIFontMetrics
-let customFont = UIFont(name: "Avenir-Medium", size: 34)!
-let bodyMetrics = UIFontMetrics(forTextStyle: .body)
-let scaledFont = bodyMetrics.scaledFont(for: customFont)
-
-// Also scale constants
-let spacing = bodyMetrics.scaledValue(for: 20.0)
-```
-
-```swift
-// SwiftUI - .font(.custom(_:relativeTo:))
-Text("Custom scaled text")
+Text("Scaled")
     .font(.custom("Avenir-Medium", size: 34, relativeTo: .body))
 
-// @ScaledMetric for values
 @ScaledMetric(relativeTo: .body) var padding: CGFloat = 20
 ```
 
-### Platform Differences
+### Platform notes
 
-**macOS**
-- No Dynamic Type support in AppKit
-- Text style sizes optimized for macOS control sizes
-- Catalyst apps use iOS sizes × 77% (legacy) or macOS-optimized sizes ("Optimize Interface for Mac")
+- macOS AppKit: no Dynamic Type equivalent to iOS automatic scaling.
+- watchOS: compact defaults, tight spacing.
+- visionOS: similar typography behavior to iOS.
 
-**watchOS**
-- Smaller text styles optimized for watch faces
-- Tight leading default for compact displays
+## Tracking and Leading
 
-**visionOS**
-- System fonts work identically to iOS
-- Dynamic Type support included
+### Tracking
 
-## Tracking & Leading
+- Small text often needs looser tracking; large display text often tighter.
+- Use semantic APIs carefully.
 
-### Tracking (Letter Spacing)
-
-Tracking adjusts space between letters. Essential for optical size behavior.
-
-**Size-Specific Tracking Tables:**
-
-SF Pro includes tracking values that vary by point size to maintain optimal spacing:
-- Larger sizes: tighter tracking
-- Smaller sizes: looser tracking
-
-Example from Apple Design Resources:
-- 34pt (largeTitle): +0.016 tracking
-- 17pt (body): +0.008 tracking
-- 11pt (caption2): +0.06 tracking
-
-**Tight Tracking API** (for fitting text):
 ```swift
 // UIKit
-textView.allowsDefaultTightening(for: .byTruncatingTail)
-
-// SwiftUI
-Text("Long text that needs to fit")
-    .lineLimit(1)
-    .minimumScaleFactor(0.5) // Allows tight tracking
-```
-
-**Manual Tracking:**
-```swift
-// UIKit
-let attributes: [NSAttributedString.Key: Any] = [
+let attrs: [NSAttributedString.Key: Any] = [
     .font: UIFont.preferredFont(forTextStyle: .body),
-    .kern: 2.0 // 2pt tracking
+    .kern: 2.0
 ]
 
 // SwiftUI
-Text("Tracked text")
-    .tracking(2.0)
-    .kerning(2.0) // Alternative API
+Text("Tracked").tracking(2.0)
 ```
 
-**Important:** Use `.tracking()` not `.kerning()` API for semantic correctness. Tracking disables ligatures when necessary; kerning does not.
+Use `.tracking` when intent is letter tracking; `.kerning` differs semantically.
 
-### Leading (Line Spacing)
+### Leading / line spacing
 
-**Default Line Height:**
-Calculated from font's built-in metrics (ascender + descender + line gap).
-
-**Language-Aware Adjustments:**
-iOS 17+ automatically increases line height for scripts with tall ascenders/descenders:
-- Arabic
-- Thai, Lao
-- Hindi, Bengali, Telugu
-
-From WWDC 2023:
-> "Automatic line height adjustment for scripts with variable heights"
-
-**Manual Leading:**
 ```swift
 // UIKit
-let paragraphStyle = NSMutableParagraphStyle()
-paragraphStyle.lineSpacing = 8.0 // 8pt additional space
+let style = NSMutableParagraphStyle()
+style.lineSpacing = 8
 
 // SwiftUI
-Text("Custom spacing")
-    .lineSpacing(8.0)
+Text("Paragraph").lineSpacing(8)
 ```
 
-### Third-Party Font Tracking
+iOS 17+ can increase line height automatically for scripts with taller glyph metrics (e.g., Arabic, Thai, Indic scripts).
 
-**New in iOS 18:**
-Font vendors can embed tracking tables in custom fonts using STAT table + CTFont optical size attribute.
+## AttributedString + SwiftUI Typography (Critical)
 
-```swift
-let attributes: [String: Any] = [
-    kCTFontOpticalSizeAttribute as String: pointSize
-]
-let descriptor = CTFontDescriptorCreateWithAttributes(attributes as CFDictionary)
-let font = CTFontCreateWithFontDescriptor(descriptor, pointSize, nil)
-```
+If paragraph style must be preserved (e.g., `lineHeightMultiple`), keep font attributes inside `AttributedString` and avoid overriding with view-level `.font(...)` unless intentional.
 
-## SwiftUI AttributedString Typography
-
-### Font Environment Interaction
-
-**Critical Pattern** When using `AttributedString` with SwiftUI's `Text`, paragraph styles (like `lineHeightMultiple`) can be lost if fonts come from the environment instead of the attributed content.
-
-From WWDC 2025-280:
-> "TextEditor substitutes the default value calculated from the environment for any AttributedStringKeys with a value of nil."
-
-This same principle applies to `Text`—when your `AttributedString` doesn't specify a font, SwiftUI applies the environment font, which can cause it to rebuild text runs and drop or normalize paragraph style details.
-
-### The Problem
+### Risk pattern
 
 ```swift
-// ❌ WRONG - .font() modifier can override and drop paragraph styles
-var s = AttributedString(longString)
-
-// Set paragraph style
-var p = AttributedString.ParagraphStyle()
-p.lineHeightMultiple = 0.92
-s.paragraphStyle = p
-// ⚠️ No font set in AttributedString
-
-Text(s)
-    .font(.body) // ⚠️ May rebuild runs, lose lineHeightMultiple
-```
-
-**Why this fails:**
-1. `AttributedString` has no font attribute set (value is `nil`)
-2. SwiftUI's `.font(.body)` modifier tells it "use this font for the whole run"
-3. SwiftUI rebuilds text runs with the environment font
-4. Paragraph styles get dropped or normalized during rebuild
-
-### The Solution
-
-**Keep typography inside the AttributedString when you need fine control:**
-
-```swift
-// ✅ CORRECT - Font in AttributedString, no environment override
-var s = AttributedString(longString)
-
-// Set font INSIDE the attributed content
-s.font = .system(.body) // ✅ Typography inside AttributedString
-
-// Set paragraph style
+var s = AttributedString(longText)
 var p = AttributedString.ParagraphStyle()
 p.lineHeightMultiple = 0.92
 s.paragraphStyle = p
 
-Text(s) // ✅ No .font() modifier
+Text(s).font(.body) // may rebuild runs, may normalize/drop paragraph details
 ```
 
-**Why this works:**
-1. Font is part of the attributed content (not `nil`)
-2. No environment override from `.font()` modifier
-3. SwiftUI preserves both font AND paragraph styles
-4. Text runs remain intact with all attributes
-
-### When to Use Each Approach
-
-#### Use Font in AttributedString (Fine Control)
+### Safe pattern
 
 ```swift
-var s = AttributedString("Carefully styled text")
+var s = AttributedString(longText)
 s.font = .system(.body)
 
 var p = AttributedString.ParagraphStyle()
 p.lineHeightMultiple = 0.92
-p.alignment = .leading
 s.paragraphStyle = p
 
-Text(s) // No modifier
+Text(s) // no overriding .font()
 ```
 
-**When to use:**
-- Need precise paragraph styling (line height, alignment)
-- Mixing multiple fonts in one string
-- Content will be displayed in both `Text` and `TextEditor`
-- Preserving exact formatting from rich text editor
+### Rule of use
 
-#### Use .font() Modifier (Broad Override)
+- Need precise paragraph control or mixed fonts: put fonts in `AttributedString`.
+- Need broad semantic override only: use `.font(...)` at view level.
 
-```swift
-Text("Simple text")
-    .font(.body)
-    .lineSpacing(4.0) // SwiftUI-level spacing
-```
+### Verification checklist
 
-**When to use:**
-- Simple text without paragraph styles
-- Want Dynamic Type automatic scaling
-- Need SwiftUI's semantic font behavior (Dark Mode, accessibility)
-- Intentionally overriding AttributedString fonts
-
-### Multiple Fonts in One String
-
-```swift
-var s = AttributedString("Title")
-s.font = .system(.title).bold()
-
-var body = AttributedString(" and body text")
-body.font = .system(.body)
-
-s.append(body)
-
-Text(s) // ✅ No .font() modifier preserves both fonts
-```
-
-### Common Mistake: Order Doesn't Matter
-
-```swift
-// ❌ WRONG mental model: "Create AttributedString first"
-var s = AttributedString(text)
-var p = AttributedString.ParagraphStyle()
-p.lineHeightMultiple = 0.92
-s.paragraphStyle = p
-s.font = .system(.body) // ⚠️ Setting font last doesn't help if you use .font() modifier
-
-Text(s).font(.body) // Still breaks!
-```
-
-The issue isn't **when** you set the font in `AttributedString`. The issue is **whether the attributed content carries its own font attributes** versus relying on SwiftUI's `.font(...)` environment.
-
-### Verification Checklist
-
-When using `AttributedString` with paragraph styles:
-- [ ] Font set inside `AttributedString` (not `nil`)
-- [ ] No `.font()` modifier on `Text` view (unless intentionally overriding)
-- [ ] Paragraph styles set after or before font (order doesn't matter)
-- [ ] Tested with actual content to verify line height/alignment preserved
+- [ ] `AttributedString` includes explicit font where paragraph fidelity matters
+- [ ] No accidental `.font(...)` override on the same `Text`
+- [ ] Paragraph styling validated with real content
+- [ ] Large accessibility sizes tested
 
 ## Internationalization
 
-### Bidirectional Text
+### BiDi and complex scripts
 
-**Complex Script Example (from WWDC 2021):**
+- Visual glyph order can differ from character index order.
+- A single visual selection may map to multiple text ranges in bidirectional text.
 
-Kannada word "October":
-- Character index 4 has split vowel → 2 glyphs
-- Glyphs reorder before ligature application
-- Glyph index ≠ character index
+### Line breaking
 
-This is why TextKit 2 uses **NSTextLocation** instead of integer indices.
+- iOS 17+ improves language-aware breaks (CJK, German compounds, etc.).
+- TextKit 2 line breaking improves spacing regularity in justified text.
 
-**Hebrew/Arabic Selection:**
-Single visual selection = multiple NSRanges in AttributedString due to right-to-left layout.
+### Clipping prevention
 
-### Line Breaking
+- Prefer Dynamic Type aware styles
+- Use adequate line limits (`nil` or bounded ranges)
+- Use `minimumScaleFactor` only for constrained single-line cases
 
-**Language-Aware (iOS 17+):**
-- Chinese, Japanese, Korean: break at semantic boundaries
-- German: avoid breaking compound words
-- English: prefer breaking at hyphens
-
-**Even Line Breaking (TextKit 2):**
-Justified paragraphs use improved line breaking algorithm:
-- Reduces stretched-out lines
-- More even interword spacing
-- Automatic in TextKit 2
-
-### Text Clipping Prevention
-
-**Best Practices:**
-1. Use Dynamic Type (auto-adjusts)
-2. Set `.lineLimit(nil)` or `.lineLimit(2...5)` in SwiftUI
-3. Use `.minimumScaleFactor()` for constrained single-line text
-4. Test with large accessibility sizes
-
-## CSS & Web Typography
-
-**System UI Font Families:**
+## Web/CSS Mapping
 
 ```css
-font-family: system-ui; /* SF Pro */
-font-family: ui-rounded; /* SF Pro Rounded */
-font-family: ui-serif; /* New York */
-font-family: ui-monospace; /* SF Mono */
+font-family: system-ui;     /* SF Pro */
+font-family: ui-rounded;    /* SF Rounded */
+font-family: ui-serif;      /* New York */
+font-family: ui-monospace;  /* SF Mono */
 ```
 
-**Legacy:**
-```css
-font-family: -apple-system; /* deprecated, use system-ui */
-```
+`-apple-system` is legacy; prefer `system-ui`.
 
-## Code Examples
+## Quick Examples
 
-### Emphasized Large Title (SwiftUI)
 ```swift
-Text("Recipe Editor")
-    .font(.largeTitle.bold()) // Emphasized variant
-```
+Text("Recipe Editor").font(.largeTitle.bold())
 
-### Custom Font + Dynamic Type (UIKit)
-```swift
-let customFont = UIFont(name: "Avenir-Medium", size: 17)!
-let metrics = UIFontMetrics(forTextStyle: .body)
-label.font = metrics.scaledFont(for: customFont)
-label.adjustsFontForContentSizeCategory = true
-```
-
-### Rounded Design (UIKit)
-```swift
-let descriptor = UIFontDescriptor
+let rounded = UIFontDescriptor
     .preferredFontDescriptor(withTextStyle: .largeTitle)
     .withDesign(.rounded)!
-let font = UIFont(descriptor: descriptor, size: 0)
-```
+let roundedFont = UIFont(descriptor: rounded, size: 0)
 
-### Rounded Design (SwiftUI)
-```swift
-Text("Today")
-    .font(.largeTitle.bold())
-    .fontDesign(.rounded)
-```
-
-### ScaledMetric (SwiftUI)
-```swift
-struct RecipeView: View {
+struct ExampleView: View {
     @ScaledMetric(relativeTo: .body) var padding: CGFloat = 20
-
-    var body: some View {
-        Text("Recipe")
-            .padding(padding) // Scales with Dynamic Type
-    }
+    var body: some View { Text("Recipe").padding(padding) }
 }
 ```
 
 ## Resources
 
-**WWDC**: 2020-10175, 2022-110381, 2023-10058
-
-**Docs**: /uikit/uifontdescriptor, /uikit/uifontmetrics, /swiftui/font
+- WWDC: 2020-10175, 2022-110381, 2023-10058
+- Docs: `/uikit/uifontdescriptor`, `/uikit/uifontmetrics`, `/swiftui/font`

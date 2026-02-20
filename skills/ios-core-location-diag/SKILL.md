@@ -1,6 +1,6 @@
 ---
 name: ios-core-location-diag
-description: Use for Core Location troubleshooting - no location updates, background location broken, authorization denied, geofence not triggering
+description: Use for Core Location troubleshooting: no updates, background failure, denied auth, poor accuracy, geofence misses, persistent location icon.
 license: MIT
 compatibility: iOS 17+, iPadOS 17+, macOS 14+, watchOS 10+
 metadata:
@@ -10,159 +10,103 @@ metadata:
 
 # Core Location Diagnostics
 
-Symptom-based troubleshooting for Core Location issues.
-
-## When to Use
-
-- Location updates never arrive
-- Background location stops working
-- Authorization always denied
-- Location accuracy unexpectedly poor
-- Geofence events not triggering
-- Location icon won't go away
+Symptom-first diagnosis for modern Core Location APIs.
 
 ## Related Skills
 
-- `ios-core-location` — Implementation patterns, decision trees
-- `ios-core-location-ref` — API reference, code examples
-- `ios-energy-diag` — Battery drain from location
-
----
+- `ios-core-location` - implementation patterns
+- `ios-core-location-ref` - API reference
+- `ios-energy-diag` - battery diagnostics
 
 ## Symptom 1: Location Updates Never Arrive
 
-### Quick Checks
+### Quick checks
 
 ```swift
-// 1. Check authorization
-let status = CLLocationManager().authorizationStatus
-print("Authorization: \(status.rawValue)")
-// 0=notDetermined, 1=restricted, 2=denied, 3=authorizedAlways, 4=authorizedWhenInUse
-
-// 2. Check if location services enabled system-wide
+let manager = CLLocationManager()
+print("Authorization: \(manager.authorizationStatus.rawValue)")
 print("Services enabled: \(CLLocationManager.locationServicesEnabled())")
-
-// 3. Check accuracy authorization
-let accuracy = CLLocationManager().accuracyAuthorization
-print("Accuracy: \(accuracy == .fullAccuracy ? "full" : "reduced")")
+print("Accuracy: \(manager.accuracyAuthorization == .fullAccuracy ? "full" : "reduced")")
 ```
 
-### Decision Tree
+### Decision tree
 
-```
-Q1: What does authorizationStatus return?
-├─ .notDetermined → Authorization never requested
-│   Fix: Add CLServiceSession(authorization: .whenInUse) or requestWhenInUseAuthorization()
-│
-├─ .denied → User denied access
-│   Fix: Show UI explaining why location needed, link to Settings
-│
-├─ .restricted → Parental controls block access
-│   Fix: Inform user, offer manual location input
-│
-└─ .authorizedWhenInUse / .authorizedAlways → Check next
+1. `authorizationStatus`?
+- `.notDetermined`: request authorization (`CLServiceSession(authorization: .whenInUse)` or `requestWhenInUseAuthorization()`)
+- `.denied`: show rationale + Settings link
+- `.restricted`: cannot override; offer manual location
+- authorized states: continue
 
-Q2: Is locationServicesEnabled() returning true?
-├─ NO → Location services disabled system-wide
-│   Fix: Show UI prompting user to enable in Settings → Privacy → Location Services
-│
-└─ YES → Check next
+2. `locationServicesEnabled()` false?
+- yes: prompt system enable path (Privacy -> Location Services)
+- no: continue
 
-Q3: Are you iterating the AsyncSequence?
-├─ NO → Updates only arrive when you await
-│   Fix: Task { for try await update in CLLocationUpdate.liveUpdates() { ... } }
-│
-└─ YES → Check next
+3. Are you iterating `CLLocationUpdate.liveUpdates()`?
+- no: no updates will arrive
+- yes: continue
 
-Q4: Is the Task cancelled or broken?
-├─ YES → Task cancelled before updates arrived
-│   Fix: Ensure Task lives long enough (store in property, not local)
-│
-└─ NO → Check next
+4. Task canceled/deallocated?
+- yes: store task in a property
+- no: continue
 
-Q5: Is location available? (iOS 17+)
-├─ Check update.locationUnavailable
-│   If true: Device cannot determine location (indoors, airplane mode, no GPS)
-│   Fix: Wait or inform user to move to better location
-│
-└─ Check update.authorizationDenied / update.authorizationDeniedGlobally
-    If true: Handle denial gracefully
-```
+5. Inspect update flags:
+- `locationUnavailable == true`: device cannot determine location now (indoors/airplane mode/no fix)
+- `authorizationDenied` or `authorizationDeniedGlobally`: handle denial path explicitly
 
-### Info.plist Checklist
+### Info.plist required keys
 
 ```xml
-<!-- Required for any location access -->
 <key>NSLocationWhenInUseUsageDescription</key>
-<string>Your clear explanation here</string>
+<string>Explain user value clearly</string>
 
-<!-- Required for Always authorization -->
 <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-<string>Your clear explanation here</string>
+<string>Explain background benefit clearly</string>
 ```
 
-Missing these keys = silent failure with no prompt.
-
----
+Missing keys can cause silent failure/no prompt.
 
 ## Symptom 2: Background Location Not Working
 
-### Quick Checks
+### Quick checks
 
-1. **Background mode capability**: Xcode → Signing & Capabilities → Background Modes → Location updates
-2. **Info.plist**: Should have `UIBackgroundModes` with `location` value
-3. **CLBackgroundActivitySession**: Must be created AND held
+1. Capability enabled: Signing & Capabilities -> Background Modes -> Location updates
+2. `UIBackgroundModes` includes `location`
+3. `CLBackgroundActivitySession` is retained (property, not local)
 
-### Decision Tree
+### Decision tree
 
-```
-Q1: Is "Location updates" checked in Background Modes?
-├─ NO → Background location silently disabled
-│   Fix: Xcode → Signing & Capabilities → Background Modes → Location updates
-│
-└─ YES → Check next
+1. Background mode missing?
+- yes: add capability and plist mode
+- no: continue
 
-Q2: Are you holding CLBackgroundActivitySession?
-├─ NO / Using local variable → Session deallocates, background stops
-│   Fix: Store in property: var backgroundSession: CLBackgroundActivitySession?
-│
-└─ YES → Check next
+2. `CLBackgroundActivitySession` retained?
+- no: retain in property
+- yes: continue
 
-Q3: Was session started from foreground?
-├─ NO → Cannot start new session from background
-│   Fix: Create CLBackgroundActivitySession while app in foreground
-│
-└─ YES → Check next
+3. Session started in foreground?
+- no: start from foreground only
+- yes: continue
 
-Q4: Is app being terminated and not recovering?
-├─ YES → Not recreating session on relaunch
-│   Fix: In didFinishLaunchingWithOptions:
-│         if wasTrackingLocation {
-│             backgroundSession = CLBackgroundActivitySession()
-│             startLocationUpdates()
-│         }
-│
-└─ NO → Check authorization level
+4. Relaunch recovery implemented?
+- no: recreate session + restart updates in launch path
+- yes: continue
 
-Q5: What is authorization level?
-├─ .authorizedWhenInUse → This is fine with CLBackgroundActivitySession
-│   The blue indicator allows background access
-│
-├─ .authorizedAlways → Should work, check session lifecycle
-│
-└─ .denied → No background access possible
-```
+5. Authorization level?
+- `.authorizedWhenInUse`: valid with background activity session (+ blue indicator)
+- `.authorizedAlways`: valid
+- `.denied`: impossible
 
-### Common Mistakes
+### Retention pattern
 
 ```swift
-// ❌ WRONG: Local variable deallocates immediately
-func startTracking() {
-    let session = CLBackgroundActivitySession()  // Dies at end of function!
+// Wrong: local session deallocates
+func startTrackingWrong() {
+    let session = CLBackgroundActivitySession()
     startLocationUpdates()
+    _ = session
 }
 
-// ✅ RIGHT: Property keeps session alive
+// Right: retained property
 var backgroundSession: CLBackgroundActivitySession?
 
 func startTracking() {
@@ -171,231 +115,124 @@ func startTracking() {
 }
 ```
 
----
-
 ## Symptom 3: Authorization Always Denied
 
-### Decision Tree
+### Decision tree
 
-```
-Q1: Is this a fresh install or returning user?
-├─ FRESH INSTALL with immediate denial → Check Info.plist strings
-│   Missing/empty NSLocationWhenInUseUsageDescription = automatic denial
-│
-└─ RETURNING USER → Check previous denial
+1. Fresh install auto-deny?
+- usually missing/empty usage strings
 
-Q2: Did user previously deny?
-├─ YES → User must manually re-enable in Settings
-│   Fix: Show UI explaining value, with button to open Settings:
-│        UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
-│
-└─ NO → Check next
+2. Returning user previously denied?
+- must re-enable in Settings
 
-Q3: Are you requesting authorization at wrong time?
-├─ Requesting when app not "in use" → insufficientlyInUse
-│   Check: update.insufficientlyInUse or diagnostic.insufficientlyInUse
-│   Fix: Only request authorization from foreground, during user interaction
-│
-└─ NO → Check next
+3. Requesting at wrong time?
+- if `insufficientlyInUse`: request only during foreground user interaction
 
-Q4: Is device in restricted mode?
-├─ YES → .restricted status (parental controls, MDM)
-│   Fix: Cannot override. Offer manual location input.
-│
-└─ NO → Check Info.plist again
+4. Restricted mode?
+- `.restricted` (MDM/parental controls): cannot override
 
-Q5: Are Info.plist strings compelling?
-├─ Generic string → Users more likely to deny
-│   Bad: "This app needs your location"
-│   Good: "Your location helps us show restaurants within walking distance"
-│
-└─ Review: Look at string from user's perspective
-```
+5. Copy quality poor?
+- vague string -> higher denial
+- specific user benefit -> lower denial
 
-### Info.plist String Best Practices
+### Usage string quality
 
 ```xml
-<!-- ❌ BAD: Vague, no value proposition -->
+<!-- Bad -->
 <key>NSLocationWhenInUseUsageDescription</key>
 <string>We need your location.</string>
 
-<!-- ✅ GOOD: Specific benefit to user -->
+<!-- Good -->
 <key>NSLocationWhenInUseUsageDescription</key>
-<string>Your location helps show restaurants, coffee shops, and attractions within walking distance.</string>
-
-<!-- ❌ BAD: No explanation for Always -->
-<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-<string>We need your location always.</string>
-
-<!-- ✅ GOOD: Explains background benefit -->
-<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-<string>Enable background location to receive reminders when you arrive at saved places, even when the app is closed.</string>
+<string>Location is used to show nearby places within walking distance.</string>
 ```
 
----
+## Symptom 4: Accuracy Unexpectedly Poor
 
-## Symptom 4: Location Accuracy Unexpectedly Poor
-
-### Quick Checks
+### Quick checks
 
 ```swift
-// 1. Check accuracy authorization
-let accuracy = CLLocationManager().accuracyAuthorization
-print("Accuracy auth: \(accuracy == .fullAccuracy ? "full" : "reduced")")
+let manager = CLLocationManager()
+print("Accuracy auth: \(manager.accuracyAuthorization == .fullAccuracy ? "full" : "reduced")")
 
-// 2. Check update's accuracy flag (iOS 17+)
 for try await update in CLLocationUpdate.liveUpdates() {
-    if update.accuracyLimited {
-        print("Accuracy limited - updates every 15-20 min")
-    }
+    if update.accuracyLimited { print("Accuracy limited") }
     if let location = update.location {
         print("Horizontal accuracy: \(location.horizontalAccuracy)m")
     }
 }
 ```
 
-### Decision Tree
+### Decision tree
 
-```
-Q1: What is accuracyAuthorization?
-├─ .reducedAccuracy → User chose approximate location
-│   Options:
-│   1. Accept reduced accuracy (weather, city-level features)
-│   2. Request temporary full accuracy:
-│      CLServiceSession(authorization: .whenInUse, fullAccuracyPurposeKey: "Navigation")
-│   3. Explain value and link to Settings
-│
-└─ .fullAccuracy → Check environment and configuration
+1. `accuracyAuthorization == .reducedAccuracy`?
+- accept reduced accuracy if feature tolerates it
+- or request temporary full accuracy with purpose key
 
-Q2: What is horizontalAccuracy on locations?
-├─ < 0 (typically -1) → INVALID location, do not use
-│   Meaning: System could not determine accuracy (no valid fix)
-│   Fix: Filter out: guard location.horizontalAccuracy >= 0 else { continue }
-│   Common when: Indoors with no WiFi, airplane mode, immediately after cold start
-│
-├─ > 100m → Likely using WiFi/cell only (no GPS)
-│   Causes: Indoors, airplane mode, dense urban canyon
-│   Fix: User needs to move to better location, or wait for GPS lock
-│
-├─ 10-100m → Normal for most use cases
-│   If need better: Use .automotiveNavigation or .otherNavigation config
-│
-└─ < 10m → Good GPS accuracy
-    Note: .automotiveNavigation can achieve ~5m
+2. `horizontalAccuracy` values:
+- `< 0`: invalid; discard
+- `> 100m`: likely non-GPS conditions
+- `10-100m`: normal for many apps
+- `< 10m`: strong GPS fix
 
-Q3: What LiveConfiguration are you using?
-├─ .default or none → System manages, may prioritize battery
-│   If need more accuracy: Use .fitness, .otherNavigation, or .automotiveNavigation
-│
-├─ .fitness → Good for pedestrian activities
-│
-└─ .automotiveNavigation → Highest accuracy, ios-highest battery
-    Only use for actual navigation
+3. `LiveConfiguration` too low/high for use case?
+- `.default`: general/battery-balanced
+- `.fitness`/`.otherNavigation`: better tracking
+- `.automotiveNavigation`: highest accuracy, highest battery
 
-Q4: Is the location stale?
-├─ Check location.timestamp
-│   If old: Device hasn't moved, or updates paused (isStationary)
-│
-└─ If timestamp recent but accuracy poor: Environmental issue
-```
+4. Stale timestamp?
+- old timestamp or `isStationary` can indicate paused movement state
 
-### Requesting Temporary Full Accuracy (iOS 18+)
+### Temporary full accuracy (iOS 18+)
 
 ```swift
-// Requires Info.plist entry:
-// NSLocationTemporaryUsageDescriptionDictionary
-//   NavigationPurpose: "Precise location enables turn-by-turn directions"
-
+// Requires NSLocationTemporaryUsageDescriptionDictionary key
 let session = CLServiceSession(
     authorization: .whenInUse,
     fullAccuracyPurposeKey: "NavigationPurpose"
 )
 ```
 
----
-
 ## Symptom 5: Geofence Events Not Triggering
 
-### Quick Checks
+### Quick checks
 
 ```swift
 let monitor = await CLMonitor("MyMonitor")
+print("Conditions: \(await monitor.identifiers.count)/20")
 
-// 1. Check condition count (max 20)
-let count = await monitor.identifiers.count
-print("Conditions: \(count)/20")
-
-// 2. Check specific condition
 if let record = await monitor.record(for: "MyGeofence") {
-    let lastEvent = record.lastEvent
-    print("State: \(lastEvent.state)")
-    print("Date: \(lastEvent.date)")
-
-    if let geo = record.condition as? CLMonitor.CircularGeographicCondition {
-        print("Center: \(geo.center)")
-        print("Radius: \(geo.radius)m")
-    }
+    print("State: \(record.lastEvent.state)")
+    print("Date: \(record.lastEvent.date)")
 }
 ```
 
-### Decision Tree
+### Decision tree
 
-```
-Q1: How many conditions are monitored?
-├─ 20 → At the limit, new conditions ignored
-│   Fix: Prioritize important conditions, swap dynamically based on user location
-│   Check: lastEvent.conditionLimitExceeded
-│
-└─ < 20 → Check next
+1. At 20-condition limit?
+- yes: prioritize/swap dynamically (`conditionLimitExceeded`)
 
-Q2: What is the radius?
-├─ < 100m → Unreliable, may not trigger
-│   Fix: Use minimum 100m radius for reliable detection
-│
-└─ >= 100m → Check next
+2. Radius < 100m?
+- yes: unreliable; increase radius
 
-Q3: Is the app awaiting monitor.events?
-├─ NO → Events not processed, lastEvent not updated
-│   Fix: Always have a Task awaiting:
-│        for try await event in monitor.events { ... }
-│
-└─ YES → Check next
+3. Awaiting `monitor.events`?
+- no: events not processed
 
-Q4: Was monitor reinitialized on app launch?
-├─ NO → Monitor conditions lost after termination
-│   Fix: Recreate monitor with same name in didFinishLaunchingWithOptions
-│
-└─ YES → Check next
+4. Monitor recreated on launch?
+- no: recreate with same name on launch
 
-Q5: What does lastEvent show?
-├─ state: .unknown → System hasn't determined state yet
-│   Wait for determination, or check if monitoring is working
-│
-├─ state: .satisfied → Inside region, waiting for exit
-│
-├─ state: .unsatisfied → Outside region, waiting for entry
-│
-└─ Check lastEvent.date → When was last update?
-    If very old: May not be monitoring correctly
+5. `lastEvent.state` interpretation:
+- `.unknown`: undecided yet
+- `.satisfied`: currently inside; wait for exit
+- `.unsatisfied`: currently outside; wait for entry
 
-Q6: Is accuracyLimited preventing monitoring?
-├─ Check: lastEvent.accuracyLimited
-│   If true: Reduced accuracy prevents geofencing
-│   Fix: Request full accuracy or accept limitation
-│
-└─ NO → Check environment (device must have location access)
-```
+6. `lastEvent.accuracyLimited` true?
+- reduced accuracy can break geofence reliability
 
-### Common Mistakes
+### Event loop requirement
 
 ```swift
-// ❌ WRONG: Not awaiting events
-let monitor = await CLMonitor("Test")
-await monitor.add(condition, identifier: "Place")
-// Nothing happens - no Task awaiting events!
-
-// ✅ RIGHT: Always await events
-let monitor = await CLMonitor("Test")
+let monitor = await CLMonitor("App")
 await monitor.add(condition, identifier: "Place")
 
 Task {
@@ -408,132 +245,66 @@ Task {
         }
     }
 }
-
-// ❌ WRONG: Creating multiple monitors with same name
-let monitor1 = await CLMonitor("App")  // OK
-let monitor2 = await CLMonitor("App")  // UNDEFINED BEHAVIOR
-
-// ✅ RIGHT: One monitor instance per name
-class LocationService {
-    private var monitor: CLMonitor?
-
-    func setup() async {
-        monitor = await CLMonitor("App")
-    }
-}
 ```
 
----
+One monitor instance per name; avoid duplicate instances with same identifier.
 
 ## Symptom 6: Location Icon Won't Go Away
 
-### Quick Checks
+### Decision tree
 
-The location arrow appears when:
-- App actively receiving location updates
-- CLMonitor is monitoring conditions
-- Background activity session active
+1. Still iterating `liveUpdates`?
+- yes: cancel task
 
-### Decision Tree
+2. `CLBackgroundActivitySession` retained?
+- yes: `invalidate()` and nil it
 
-```
-Q1: Is your app still iterating liveUpdates?
-├─ YES → Updates continue until you break/cancel
-│   Fix: Cancel the Task or break from loop:
-│        locationTask?.cancel()
-│
-└─ NO → Check next
+3. `CLMonitor` conditions still active?
+- yes: icon is expected; remove all if done
 
-Q2: Is CLBackgroundActivitySession still held?
-├─ YES → Session keeps location access active
-│   Fix: Invalidate when done:
-│        backgroundSession?.invalidate()
-│        backgroundSession = nil
-│
-└─ NO → Check next
+4. Legacy `CLLocationManager` still running?
+- call `stopUpdatingLocation`, stop significant changes/visits/regions
 
-Q3: Is CLMonitor still monitoring conditions?
-├─ YES → CLMonitor uses location for geofencing
-│   Note: This is expected behavior - icon shows monitoring active
-│   Fix: If truly done, remove all conditions:
-│        for id in await monitor.identifiers {
-│            await monitor.remove(id)
-│        }
-│
-└─ NO → Check next
+5. Other frameworks requesting location?
+- e.g., `MKMapView.showsUserLocation = true`
 
-Q4: Is legacy CLLocationManager still running?
-├─ Check: manager.stopUpdatingLocation() called?
-│   Check: manager.stopMonitoring(for: region) for all regions?
-│   Fix: Ensure all legacy APIs stopped
-│
-└─ NO → Check other location-using frameworks
-
-Q5: Other frameworks using location?
-├─ MapKit with showsUserLocation = true → Shows location
-│   Fix: mapView.showsUserLocation = false when not needed
-│
-├─ Core Motion with location → Shows location
-│
-└─ Check all location-using code
-```
-
-### Force Stop All Location
+### Force-stop pattern
 
 ```swift
-// Stop modern APIs
 locationTask?.cancel()
 backgroundSession?.invalidate()
 backgroundSession = nil
 
-// Remove all CLMonitor conditions
 for id in await monitor.identifiers {
     await monitor.remove(id)
 }
 
-// Stop legacy APIs
 manager.stopUpdatingLocation()
 manager.stopMonitoringSignificantLocationChanges()
 manager.stopMonitoringVisits()
-
 for region in manager.monitoredRegions {
     manager.stopMonitoring(for: region)
 }
 ```
 
----
-
-## Console Debugging
-
-### Filter Location Logs
+## Console Diagnostics
 
 ```bash
-# View locationd logs
 log stream --predicate 'subsystem == "com.apple.locationd"' --level debug
-
-# View your app's location-related logs
 log stream --predicate 'subsystem == "com.apple.CoreLocation"' --level debug
-
-# Filter for specific process
 log stream --predicate 'process == "YourAppName" AND subsystem == "com.apple.CoreLocation"'
 ```
 
-### Common Log Messages
-
-| Log Message | Meaning |
-|-------------|---------|
-| `Client is not authorized` | Authorization denied or not requested |
-| `Location services disabled` | System-wide toggle off |
-| `Accuracy authorization is reduced` | User chose approximate location |
-| `Condition limit exceeded` | At 20-condition maximum |
-| `Background location access denied` | Missing background capability or session |
-
----
+| Log message | Meaning |
+|---|---|
+| `Client is not authorized` | Authorization missing/denied |
+| `Location services disabled` | System toggle off |
+| `Accuracy authorization is reduced` | Approximate location mode |
+| `Condition limit exceeded` | 20-condition cap reached |
+| `Background location access denied` | Missing capability/session |
 
 ## Resources
 
-**WWDC**: 2023-10180, 2023-10147, 2024-10212
-
-**Docs**: /corelocation, /corelocation/clmonitor, /corelocation/cllocationupdate
-
-**Skills**: ios-core-location, ios-core-location-ref, ios-energy-diag
+- WWDC: 2023-10180, 2023-10147, 2024-10212
+- Docs: `/corelocation`, `/corelocation/clmonitor`, `/corelocation/cllocationupdate`
+- Skills: `ios-core-location`, `ios-core-location-ref`, `ios-energy-diag`

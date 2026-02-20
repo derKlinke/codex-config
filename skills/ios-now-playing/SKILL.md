@@ -9,7 +9,7 @@ metadata:
 
 # Now Playing Integration Guide
 
-**Purpose**: Prevent the 4 most common Now Playing issues on iOS 18+: info not appearing, commands not working, artwork problems, and state sync issues
+**Purpose**: Prevent four common Now Playing failures: missing metadata, broken commands, artwork issues, state drift.
 
 **Swift Version**: Swift 6.0+
 **iOS Version**: iOS 18+
@@ -17,15 +17,15 @@ metadata:
 
 ## Core Philosophy
 
-> "Now Playing eligibility requires THREE things working together: AVAudioSession activation, remote command handlers, and metadata publishing. Missing ANY of these silently breaks the entire system. 90% of Now Playing issues stem from incorrect activation order or missing command handlers, not API bugs."
+> "Now Playing eligibility requires three parts: AVAudioSession activation, remote command handlers, and metadata publishing. Missing any part breaks the system."
 
-**Key Insight from WWDC 2022/110338**: Apps must meet two system heuristics:
+**Key insight (WWDC 2022/110338):** Apps must meet two system heuristics:
 1. Register handlers for at least one remote command
 2. Configure AVAudioSession with a non-mixable category
 
-## When to Use This Skill
+## When to Use
 
-✅ **Use this skill when**:
+✅ **Use when**:
 - Now Playing info doesn't appear on Lock Screen or Control Center
 - Play/pause/skip buttons are grayed out or don't respond
 - Album artwork is missing, wrong, or flickers between images
@@ -40,7 +40,7 @@ metadata:
 
 iOS 26 introduces **Liquid Glass visual design** for Lock Screen and Control Center Now Playing widgets. This is **automatic system behavior** — no code changes required. The patterns in this skill remain valid for iOS 26.
 
-❌ **Do NOT use this skill for**:
+❌ **Do not use for**:
 - Background audio configuration details (see AVFoundation skill)
 
 ## Related Skills
@@ -53,7 +53,7 @@ iOS 26 introduces **Liquid Glass visual design** for Lock Screen and Control Cen
 
 ## Red Flags / Anti-Patterns
 
-**If you see ANY of these, suspect Now Playing misconfiguration:**
+**If any appear, suspect Now Playing misconfiguration:**
 
 - Info appears briefly then disappears (AVAudioSession deactivated)
 - Commands work in simulator but not on device (simulator has different audio stack)

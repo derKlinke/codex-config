@@ -1,6 +1,6 @@
 ---
 name: ios-foundation-models-ref
-description: Reference — Complete Foundation Models framework guide covering LanguageModelSession, @Generable, @Guide, Tool protocol, streaming, dynamic schemas, built-in use cases, and all WWDC 2025 code examples
+description: Reference — Foundation Models guide covering LanguageModelSession, @Generable, @Guide, Tool protocol, streaming, dynamic schemas, and built-in use cases
 license: MIT
 compatibility: iOS 26+, macOS 26+, iPadOS 26+, ios-visionOS 26+
 metadata:
@@ -8,11 +8,11 @@ metadata:
   last-updated: "2025-12-03"
 ---
 
-# Foundation Models Framework — Complete API Reference
+# Foundation Models Framework API Reference
 
 ## Overview
 
-The Foundation Models framework provides access to Apple's on-device Large Language Model (3 billion parameters, 2-bit quantized) with a Swift API. This reference covers every API, all WWDC 2025 code examples, and comprehensive implementation patterns.
+Foundation Models exposes Apple's on-device LLM (3B parameters, 2-bit quantized) via Swift APIs. This reference covers APIs, WWDC 2025 examples, and implementation patterns.
 
 ### Model Specifications
 
@@ -22,7 +22,7 @@ The Foundation Models framework provides access to Apple's on-device Large Langu
 
 ## When to Use This Reference
 
-Use this reference when:
+Use when:
 - Implementing Foundation Models features
 - Understanding API capabilities
 - Looking up specific code examples

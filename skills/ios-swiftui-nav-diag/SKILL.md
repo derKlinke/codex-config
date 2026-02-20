@@ -14,7 +14,7 @@ metadata:
 
 SwiftUI's navigation system is used by millions of apps and handles complex navigation patterns reliably. If your navigation is failing, not responding, or behaving unexpectedly, the issue is almost always in how you're managing navigation state, not the framework itself.
 
-This skill provides systematic diagnostics to identify root causes in minutes, not hours.
+Systematic diagnostics to find root causes in minutes.
 
 ## Red Flags — Suspect Navigation Issue
 
@@ -35,11 +35,11 @@ If you see ANY of these, suspect a code issue, not framework breakage:
   - UIKit interop has its own edge cases you'll spend weeks discovering
   - Your issue is almost certainly path management, not framework defect
 
-**Critical distinction** NavigationStack behavior is deterministic. If it's not working, you're modifying state incorrectly, have view identity issues, or navigationDestination is misplaced.
+**Key distinction** NavigationStack behavior is deterministic. If it's not working, you're modifying state incorrectly, have view identity issues, or navigationDestination is misplaced.
 
 ## Mandatory First Steps
 
-**ALWAYS run these checks FIRST** (before changing code):
+**Run these checks first** (before changing code):
 
 ```swift
 // 1. Add NavigationPath logging
@@ -79,7 +79,7 @@ NavigationStack {
 // If this works, problem is in your specific setup
 ```
 
-#### What this tells you
+#### Interpretation
 
 | Observation | Diagnosis | Next Step |
 |-------------|-----------|-----------|

@@ -12,9 +12,9 @@ metadata:
 
 Systematic accessibility diagnosis and remediation for iOS/macOS apps. Covers the 7 most common accessibility issues that cause App Store rejections and user complaints.
 
-**Core principle** Accessibility is not optional. iOS apps must support VoiceOver, Dynamic Type, and sufficient color contrast to pass App Store Review. Users with disabilities depend on these features.
+**Core principle:** Accessibility is not optional. iOS apps must support VoiceOver, Dynamic Type, and sufficient color contrast to pass App Store Review. Users with disabilities depend on these features.
 
-## When to Use This Skill
+## When to Use
 
 - Fixing VoiceOver navigation issues (missing labels, wrong element order)
 - Supporting Dynamic Type (text scaling for vision disabilities)

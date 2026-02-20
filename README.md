@@ -37,7 +37,10 @@ Personal Codex configuration repo: global agent rules, reusable skills, prompt s
 
 - Naming:
   - iOS/platform skills: `ios-*`
-  - General skills keep domain-specific names.
+  - Design-related skills: `design-*`
+  - Writing/copy/editing/documentation skills: `writing-*`
+  - Other general skills: domain-specific names.
+  - Legacy non-prefixed design/writing names should be renamed opportunistically when touched.
 - Authoring:
   - Keep skills concise, operational, and action-first.
   - Prefer Codex-native workflows/tools.

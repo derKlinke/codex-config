@@ -116,7 +116,7 @@ Task {
 
 ## Mandatory First Steps
 
-**ALWAYS complete these steps** before writing any networking code:
+**Complete these steps** before writing any networking code:
 
 ```swift
 // Step 1: Identify your use case
@@ -152,7 +152,7 @@ if #available(iOS 26, *) {
 // grep -rn "SCNetworkReachability\|CFSocket\|NSStream\|getaddrinfo" .
 ```
 
-#### What this tells you
+#### Interpretation
 - If HTTP/HTTPS: Use URLSession, not Network.framework
 - If iOS 26+ deployment: Use NetworkConnection with async/await
 - If iOS 12-25 support needed: Use NWConnection with completion handlers

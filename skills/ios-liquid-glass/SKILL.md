@@ -1,6 +1,6 @@
 ---
 name: ios-liquid-glass
-description: Use when implementing Liquid Glass effects, reviewing UI for Liquid Glass adoption, debugging visual artifacts, optimizing performance, or requesting expert review of Liquid Glass implementation - provides comprehensive design principles, API patterns, and troubleshooting guidance from WWDC 2025. Includes design review pressure handling and professional push-back frameworks
+description: Use for Liquid Glass implementation, adoption review, artifact debugging, performance tuning, and expert implementation review based on WWDC 2025 patterns
 license: MIT
 compatibility: iOS 26+, iPadOS 26+, macOS Tahoe+, ios-visionOS 3+
 metadata:
@@ -10,7 +10,7 @@ metadata:
 
 # Liquid Glass — Apple's New Material Design System
 
-## When to Use This Skill
+## Use This Skill When
 
 Use when:
 - Implementing Liquid Glass effects in your app
@@ -22,7 +22,7 @@ Use when:
 - Troubleshooting tinting, legibility, or adaptive behavior issues
 
 #### Related Skills
-- Use `ios-liquid-glass-ref` for comprehensive app-wide adoption guidance (app icons, controls, navigation, menus, windows, platform considerations)
+- Use `ios-liquid-glass-ref` for app-wide adoption guidance (icons, controls, navigation, menus, windows, platform details)
 
 ## Example Prompts
 
@@ -36,14 +36,14 @@ Use when:
 
 ## What is Liquid Glass?
 
-Liquid Glass is Apple's next-generation material design system introduced at WWDC 2025. It represents a significant evolution from previous materials (Aqua, iOS 7 blurs, Dynamic Island) by creating a new digital meta-material that:
+Liquid Glass is Apple's next-generation material system (WWDC 2025). It extends prior materials (Aqua, iOS 7 blur, Dynamic Island) with a new digital meta-material that:
 
 - **Dynamically bends and shapes light** (lensing) rather than scattering it
 - **Moves organically** like a lightweight liquid, responding to touch and app dynamism
 - **Adapts automatically** to size, environment, content, and light/dark modes
 - **Unifies design language** across all Apple platforms (iOS, iPadOS, macOS, ios-visionOS)
 
-**Core Philosophy**: Liquid Glass complements the evolution of rounded, immersive screens with rounded, floating forms that feel natural to touch interaction while letting content shine through.
+**Principle**: Liquid Glass pairs rounded, immersive displays with floating forms that feel touch-native and keep content visible.
 
 ---
 

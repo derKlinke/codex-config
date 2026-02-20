@@ -8,9 +8,9 @@ metadata:
 
 # Background Processing Reference
 
-Complete API reference for iOS background execution, with code examples from WWDC sessions.
+API reference for iOS background execution with WWDC-based examples.
 
-**Related skills**: `ios-background-processing` (decision trees, patterns), `ios-background-processing-diag` (troubleshooting)
+**Related skills**: `ios-background-processing` (decision trees/patterns), `ios-background-processing-diag` (troubleshooting)
 
 ---
 
@@ -87,7 +87,7 @@ Register in:
 
 ### Purpose
 
-Keep app content fresh throughout the day. System launches app based on **user usage patterns**.
+Keep content fresh through the day. System launch timing follows **user usage patterns**.
 
 ### Runtime
 
@@ -99,8 +99,8 @@ Keep app content fresh throughout the day. System launches app based on **user u
 func scheduleAppRefresh() {
     let request = BGAppRefreshTaskRequest(identifier: "com.yourapp.refresh")
 
-    // earliestBeginDate = MINIMUM delay (not exact time)
-    // System decides actual time based on usage patterns
+    // earliestBeginDate is minimum delay, not exact execution time.
+    // System chooses actual launch time from usage patterns.
     request.earliestBeginDate = Date(timeIntervalSinceNow: 15 * 60)
 
     do {

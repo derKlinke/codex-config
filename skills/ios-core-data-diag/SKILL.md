@@ -25,7 +25,7 @@ If you see ANY of these, suspect a Core Data misunderstanding, not framework bre
   - Schema mismatches and thread errors are always developer code, not framework
   - Do not rationalize away the issue—diagnose it
 
-**Critical distinction** Simulator deletes the database on each rebuild, hiding schema mismatch issues. Real devices keep persistent databases and crash immediately on schema mismatch. **MANDATORY: Test migrations on real device with real data before shipping.**
+**Key distinction** Simulator deletes the database on each rebuild, hiding schema mismatch issues. Real devices keep persistent databases and crash immediately on schema mismatch. **MANDATORY: Test migrations on real device with real data before shipping.**
 
 ## Mandatory First Steps
 
@@ -89,7 +89,7 @@ if #available(iOS 17.0, *) {
 // Record: "Mixing SwiftData + Core Data? Yes/no"
 ```
 
-#### What this tells you
+#### Interpretation
 - **Schema mismatch** → Proceed to Pattern 1 (lightweight migration decision)
 - **Thread-confinement error** → Proceed to Pattern 2 (async/await concurrency)
 - **N+1 queries** → Proceed to Pattern 3 (relationship prefetching)

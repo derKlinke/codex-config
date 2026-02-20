@@ -1,6 +1,6 @@
 ---
 name: ios-core-location
-description: Use for Core Location implementation patterns - authorization strategy, monitoring strategy, accuracy selection, background location
+description: Use for Core Location implementation decisions: authorization strategy, monitoring mode, accuracy selection, geofencing, and background location lifecycle.
 license: MIT
 compatibility: iOS 17+, iPadOS 17+, macOS 14+, watchOS 10+
 metadata:
@@ -10,179 +10,91 @@ metadata:
 
 # Core Location Patterns
 
-Discipline skill for Core Location implementation decisions. Prevents common authorization mistakes, battery drain, and background location failures.
-
-## When to Use
-
-- Choosing authorization strategy (When In Use vs Always)
-- Deciding monitoring approach (continuous vs significant-change vs CLMonitor)
-- Implementing geofencing or background location
-- Debugging "location not working" issues
-- Reviewing location code for anti-patterns
+Implementation discipline for location features: correct authorization, battery-aware tracking, and reliable background behavior.
 
 ## Related Skills
 
-- `ios-core-location-ref` — API reference, code examples
-- `ios-core-location-diag` — Symptom-based troubleshooting
-- `ios-energy` — Location as battery subsystem
+- `ios-core-location-ref` - API reference
+- `ios-core-location-diag` - symptom diagnostics
+- `ios-energy` - energy subsystem patterns
 
----
+## Anti-Patterns (and cost)
 
-## Part 1: Anti-Patterns (with Time Costs)
+### 1) Premature Always authorization
 
-### Anti-Pattern 1: Premature Always Authorization
-
-**Wrong** (30-60% denial rate):
 ```swift
-// First launch: "Can we have Always access?"
+// Wrong
 manager.requestAlwaysAuthorization()
-```
 
-**Right** (5-10% denial rate):
-```swift
-// Start with When In Use
+// Right
 CLServiceSession(authorization: .whenInUse)
-
-// Later, when user triggers background feature:
-CLServiceSession(authorization: .always)
+// upgrade to .always only when user starts background feature
 ```
 
-**Time cost**: 15 min to fix code, but 30-60% of users permanently denied = feature adoption destroyed.
+- Cost: fast code, poor adoption (high denial rates)
+- Rule: start minimal, escalate with contextual user intent
 
-**Why**: Users deny aggressive requests. Start minimal, upgrade when user understands value.
+### 2) Continuous updates for geofencing
 
----
-
-### Anti-Pattern 2: Continuous Updates for Geofencing
-
-**Wrong** (10x battery drain):
 ```swift
-for try await update in CLLocationUpdate.liveUpdates() {
-    if isNearTarget(update.location) {
-        triggerGeofence()
-    }
-}
-```
+// Wrong: polling location to emulate geofencing
+for try await update in CLLocationUpdate.liveUpdates() { ... }
 
-**Right** (system-managed, low power):
-```swift
+// Right: system geofencing
 let monitor = await CLMonitor("Geofences")
-let condition = CLMonitor.CircularGeographicCondition(
-    center: target, radius: 100
-)
-await monitor.add(condition, identifier: "Target")
-
-for try await event in monitor.events {
-    if event.state == .satisfied { triggerGeofence() }
-}
+await monitor.add(CLMonitor.CircularGeographicCondition(center: target, radius: 100), identifier: "Target")
+for try await event in monitor.events { ... }
 ```
 
-**Time cost**: 5 min to refactor, saves 10x battery.
+- Cost: major battery waste
+- Rule: use `CLMonitor` for entry/exit semantics
 
----
+### 3) Ignoring stationary behavior
 
-### Anti-Pattern 3: Ignoring Stationary Detection
-
-**Wrong** (wasted battery):
 ```swift
 for try await update in CLLocationUpdate.liveUpdates() {
-    processLocation(update.location)
-    // Never stops, even when device stationary
+    if let location = update.location { processLocation(location) }
+    if update.isStationary { saveLastKnownLocation(update.location) }
 }
 ```
 
-**Right** (automatic pause/resume):
+- Cost: unnecessary processing while stationary
+- Rule: respect stationary/pause behavior
+
+### 4) No graceful denial path
+
 ```swift
 for try await update in CLLocationUpdate.liveUpdates() {
-    if let location = update.location {
-        processLocation(location)
-    }
-    if update.isStationary, let location = update.location {
-        // Device stopped moving - updates pause automatically
-        // Will resume when device moves again
-        saveLastKnownLocation(location)
-    }
+    if update.authorizationDenied { showManualLocationPicker(); break }
+    if update.authorizationDeniedGlobally { showSystemLocationDisabledMessage(); break }
+    if let location = update.location { processLocation(location) }
 }
 ```
 
-**Time cost**: 2 min to add check, saves significant battery.
+- Cost: silent failure + broken UX
+- Rule: always branch explicit denial states
 
----
+### 5) Wrong accuracy for use case
 
-### Anti-Pattern 4: No Graceful Denial Handling
-
-**Wrong** (broken UX):
 ```swift
-for try await update in CLLocationUpdate.liveUpdates() {
-    guard let location = update.location else { continue }
-    // User denied - silent failure, no feedback
-}
-```
-
-**Right** (graceful degradation):
-```swift
-for try await update in CLLocationUpdate.liveUpdates() {
-    if update.authorizationDenied {
-        showManualLocationPicker()
-        break
-    }
-    if update.authorizationDeniedGlobally {
-        showSystemLocationDisabledMessage()
-        break
-    }
-    if let location = update.location {
-        processLocation(location)
-    }
-}
-```
-
-**Time cost**: 10 min to add handling, prevents confused users.
-
----
-
-### Anti-Pattern 5: Wrong Accuracy for Use Case
-
-**Wrong** (battery drain for weather app):
-```swift
-// Weather app using navigation accuracy
+// Wrong for weather app
 CLLocationUpdate.liveUpdates(.automotiveNavigation)
+
+// Better by intent
+CLLocationUpdate.liveUpdates(.default) // weather/store-finder
+CLLocationUpdate.liveUpdates(.fitness) // activity
+CLLocationUpdate.liveUpdates(.automotiveNavigation) // turn-by-turn
 ```
 
-**Right** (match accuracy to need):
-```swift
-// Weather: city-level is fine
-CLLocationUpdate.liveUpdates(.default)  // or .fitness for runners
-
-// Navigation: needs high accuracy
-CLLocationUpdate.liveUpdates(.automotiveNavigation)
-```
-
-| Use Case | Configuration | Accuracy | Battery |
-|----------|---------------|----------|---------|
+| Use case | Config | Typical accuracy | Battery |
+|---|---|---|---|
 | Navigation | `.automotiveNavigation` | ~5m | Highest |
-| Fitness tracking | `.fitness` | ~10m | High |
+| Fitness | `.fitness` | ~10m | High |
 | Store finder | `.default` | ~10-100m | Medium |
-| Weather | `.default` | ~100m+ | Low |
+| Weather | `.default` | city-level | Low |
 
-**Time cost**: 1 min to change, significant battery savings.
+### 6) Not stopping updates
 
----
-
-### Anti-Pattern 6: Not Stopping Updates
-
-**Wrong** (battery drain, location icon persists):
-```swift
-func viewDidLoad() {
-    Task {
-        for try await update in CLLocationUpdate.liveUpdates() {
-            updateMap(update.location)
-        }
-    }
-}
-// User navigates away, updates continue forever
-```
-
-**Right** (cancel when done):
 ```swift
 private var locationTask: Task<Void, Error>?
 
@@ -201,284 +113,141 @@ func stopTracking() {
 }
 ```
 
-**Time cost**: 5 min to add cancellation, stops battery drain.
+- Cost: battery drain + persistent location indicator
+- Rule: explicit start/stop lifecycle
 
----
+### 7) Ignoring `CLServiceSession` (iOS 18+)
 
-### Anti-Pattern 7: Ignoring CLServiceSession (iOS 18+)
-
-**Wrong** (procedural authorization juggling):
 ```swift
-func requestAuth() {
-    switch manager.authorizationStatus {
-    case .notDetermined:
-        manager.requestWhenInUseAuthorization()
-    case .authorizedWhenInUse:
-        if needsFullAccuracy {
-            manager.requestTemporaryFullAccuracyAuthorization(...)
-        }
-    // Complex state machine...
-    }
-}
-```
-
-**Right** (declarative goals):
-```swift
-// Just declare what you need - Core Location handles the rest
 let session = CLServiceSession(authorization: .whenInUse)
-
-// For feature needing full accuracy
 let navSession = CLServiceSession(
     authorization: .whenInUse,
     fullAccuracyPurposeKey: "Navigation"
 )
 
-// Monitor diagnostics if needed
 for try await diag in session.diagnostics {
     if diag.authorizationDenied { handleDenial() }
 }
 ```
 
-**Time cost**: 30 min to migrate, simpler code, fewer bugs.
+- Cost: manual state machine complexity
+- Rule: declare needs; observe diagnostics
 
----
+## Decision Trees
 
-## Part 2: Decision Trees
+### Authorization
 
-### Authorization Strategy
+1. Need background location?
+- no -> `.whenInUse`
+- yes -> start `.whenInUse`, upgrade `.always` at first background feature action
 
-```
-Q1: Does your feature REQUIRE background location?
-├─ NO → Use .whenInUse
-│   └─ Q2: Does any feature need precise location?
-│       ├─ ALWAYS → Add fullAccuracyPurposeKey to session
-│       └─ SOMETIMES → Layer full-accuracy session when feature active
-│
-└─ YES → Start with .whenInUse, upgrade to .always when user triggers feature
-    └─ Q3: When does user first need background location?
-        ├─ IMMEDIATELY (e.g., fitness tracker) → Request .always on first relevant action
-        └─ LATER (e.g., geofence reminders) → Add .always session when user creates first geofence
-```
+2. Need precise location?
+- always -> full accuracy purpose key
+- sometimes -> temporary full-accuracy session only during relevant feature
 
-### Monitoring Strategy
+### Monitoring mode
 
-```
-Q1: What are you monitoring for?
-├─ USER POSITION (continuous tracking)
-│   └─ Use CLLocationUpdate.liveUpdates()
-│       └─ Q2: What activity?
-│           ├─ Driving navigation → .automotiveNavigation
-│           ├─ Walking/cycling nav → .otherNavigation
-│           ├─ Fitness tracking → .fitness
-│           ├─ Airplane apps → .airborne
-│           └─ General → .default or omit
-│
-├─ ENTRY/EXIT REGIONS (geofencing)
-│   └─ Use CLMonitor with CircularGeographicCondition
-│       └─ Note: Maximum 20 conditions per app
-│
-├─ BEACON PROXIMITY
-│   └─ Use CLMonitor with BeaconIdentityCondition
-│       └─ Choose granularity: UUID only, UUID+major, UUID+major+minor
-│
-└─ SIGNIFICANT CHANGES ONLY (lowest power)
-    └─ Use startMonitoringSignificantLocationChanges() (legacy)
-        └─ Updates ~500m movements, works in background
-```
+1. Track continuous position?
+- use `CLLocationUpdate.liveUpdates()` with matching `LiveConfiguration`
 
-### Accuracy Selection
+2. Entry/exit geofence?
+- use `CLMonitor.CircularGeographicCondition` (20-condition cap)
 
-```
-Q1: What's the minimum accuracy that makes your feature work?
-├─ TURN-BY-TURN NAV needs 5-10m → .automotiveNavigation / .otherNavigation
-├─ FITNESS TRACKING needs 10-20m → .fitness
-├─ STORE FINDER needs 100m → .default
-├─ WEATHER/CITY needs 1km+ → .default (reduced accuracy acceptable)
-└─ GEOFENCING uses system determination → CLMonitor handles it
+3. Beacon proximity?
+- use `CLMonitor.BeaconIdentityCondition` with needed granularity
 
-Q2: Will user be moving fast?
-├─ DRIVING (high speed) → .automotiveNavigation (extra processing for speed)
-├─ CYCLING/WALKING → .otherNavigation
-└─ STATIONARY/SLOW → .default
+4. Low-power broad movement only?
+- use significant-change monitoring (legacy API)
 
-Always start with lowest acceptable accuracy. Higher accuracy = higher battery drain.
-```
+### Accuracy selection
 
----
+- pick lowest accuracy that still satisfies feature requirements
+- high speed driving -> `.automotiveNavigation`
+- walking/cycling -> `.otherNavigation`
+- general/stationary -> `.default`
 
-## Part 3: Pressure Scenarios
+Higher accuracy always increases energy cost.
 
-### Scenario 1: "Just Use Always Authorization"
+## Pressure Scenarios
 
-**Context**: PM says "Users want location reminders. Just request Always access on first launch so it works."
+### "Request Always on first launch"
 
-**Pressure**: Ship fast, seems simpler.
+Response:
+- upfront Always requests commonly increase denial
+- use staged ask: `.whenInUse` first, upgrade on feature trigger
+- reference CLServiceSession guidance for contextual asks
 
-**Reality**:
-- 30-60% of users will deny Always authorization when asked upfront
-- Users who deny can only re-enable in Settings (most won't)
-- Feature adoption destroyed before users understand value
+### "Background location not working"
 
-**Response**:
-> "Always authorization has 30-60% denial rates when requested upfront. We should start with When In Use, then request Always upgrade when the user creates their first location reminder. This gives us a 5-10% denial rate because users understand why they need it."
+Checklist:
+1. background capability present
+2. `CLBackgroundActivitySession` retained
+3. session started in foreground
+4. relaunch recovery restores session + update stream
 
-**Evidence**: Apple's own guidance in WWDC 2024-10212: "CLServiceSessions should be taken proactively... hold one requiring full-accuracy when people engage a feature that would warrant a special ask for it."
+### "Geofence unreliable in production"
 
----
+Checklist:
+1. <=20 conditions
+2. radius >=100m
+3. always await `monitor.events`
+4. recreate monitor on app launch
+5. inspect `lastEvent` and `accuracyLimited`
 
-### Scenario 2: "Location Isn't Working in Background"
+## Pre-Release Checklist
 
-**Context**: QA reports "App stops getting location when backgrounded."
+### Info.plist
+- [ ] `NSLocationWhenInUseUsageDescription`
+- [ ] `NSLocationAlwaysAndWhenInUseUsageDescription` (if applicable)
+- [ ] `NSLocationDefaultAccuracyReduced` (if acceptable)
+- [ ] `NSLocationTemporaryUsageDescriptionDictionary` (if requesting temporary full accuracy)
+- [ ] `UIBackgroundModes` includes `location` (if background tracking)
 
-**Pressure**: Quick fix before release.
+### Authorization and UX
+- [ ] Start with minimal auth
+- [ ] Upgrade only at feature trigger
+- [ ] Denial and global-disable paths handled
+- [ ] Reduced-accuracy path tested
 
-**Wrong fixes**:
-- Add all background modes
-- Use `allowsBackgroundLocationUpdates = true` without understanding
-- Request Always authorization
+### Runtime lifecycle
+- [ ] Appropriate `LiveConfiguration`
+- [ ] Stationary behavior handled
+- [ ] Tasks canceled when inactive
+- [ ] Geofencing not implemented via continuous polling
 
-**Right diagnosis**:
-1. Check background mode capability exists
-2. Check CLBackgroundActivitySession is held (not deallocated)
-3. Check session started from foreground
-4. Check authorization level (.whenInUse works with CLBackgroundActivitySession)
+### Testing
+- [ ] Deny/re-enable flow tested
+- [ ] Background/foreground transitions tested
+- [ ] Termination + relaunch recovery tested
 
-**Response**:
-> "Background location requires specific setup. Let me check: (1) Background mode capability, (2) CLBackgroundActivitySession held during tracking, (3) session started from foreground. Missing any of these causes silent failure."
+## Background Location Checklist
 
-**Checklist**:
-```swift
-// 1. Signing & Capabilities → Background Modes → Location updates
-// 2. Hold session reference (property, not local variable)
-var backgroundSession: CLBackgroundActivitySession?
+### Setup
+- [ ] Capability enabled: Location updates
+- [ ] `CLBackgroundActivitySession` retained strongly
+- [ ] Created in foreground
+- [ ] Relaunch path rehydrates tracking state
 
-func startBackgroundTracking() {
-    // 3. Must start from foreground
-    backgroundSession = CLBackgroundActivitySession()
-    startLocationUpdates()
-}
-```
+### Lifecycle
+- [ ] Persist "tracking active" state
+- [ ] Restore session and update stream on launch
+- [ ] Reinitialize `CLMonitor` with same name
 
----
+## Version Guidance
 
-### Scenario 3: "Geofence Events Aren't Firing"
+| Feature | Minimum iOS | Note |
+|---|---:|---|
+| `CLLocationUpdate` | 17 | AsyncSequence API |
+| `CLMonitor` | 17 | Region/beacon monitoring |
+| `CLBackgroundActivitySession` | 17 | Background with indicator |
+| `CLServiceSession` | 18 | Declarative authorization |
 
-**Context**: Geofences work in testing but not in production for some users.
-
-**Pressure**: "It works on my device" dismissal.
-
-**Common causes**:
-1. **Too many conditions**: Maximum 20 per app
-2. **Radius too small**: Minimum ~100m for reliable triggering
-3. **Overlapping regions**: Can cause confusion
-4. **Not awaiting events**: Events only become lastEvent after handled
-5. **Not reinitializing on launch**: Monitor must be recreated
-
-**Response**:
-> "Geofencing has several system constraints. Check: (1) Are we within the 20-condition limit? (2) Are all radii at least 100m? (3) Is the app reinitializing CLMonitor on launch? (4) Is the app always awaiting on monitor.events?"
-
-**Diagnostic code**:
-```swift
-// Check condition count
-let count = await monitor.identifiers.count
-if count >= 20 {
-    print("At 20-condition limit!")
-}
-
-// Check all conditions
-for id in await monitor.identifiers {
-    if let record = await monitor.record(for: id) {
-        let condition = record.condition
-        if let geo = condition as? CLMonitor.CircularGeographicCondition {
-            if geo.radius < 100 {
-                print("Radius too small: \(id)")
-            }
-        }
-    }
-}
-```
-
----
-
-## Part 4: Checklists
-
-### Pre-Release Location Checklist
-
-**Info.plist**:
-- [ ] `NSLocationWhenInUseUsageDescription` with clear explanation
-- [ ] `NSLocationAlwaysAndWhenInUseUsageDescription` if using Always (clear why background needed)
-- [ ] `NSLocationDefaultAccuracyReduced` if reduced accuracy acceptable
-- [ ] `NSLocationTemporaryUsageDescriptionDictionary` if requesting temporary full accuracy
-- [ ] `UIBackgroundModes` includes `location` if background tracking
-
-**Authorization**:
-- [ ] Start with minimal authorization (.whenInUse)
-- [ ] Upgrade to .always only when user triggers background feature
-- [ ] Handle authorization denial gracefully (offer alternatives)
-- [ ] Handle global location services disabled
-- [ ] Test with reduced accuracy authorization
-
-**Updates**:
-- [ ] Using appropriate LiveConfiguration for use case
-- [ ] Handling isStationary for pause/resume
-- [ ] Cancelling location tasks when feature inactive
-- [ ] Not using continuous updates for geofencing
-
-**Testing**:
-- [ ] Tested authorization denial flow
-- [ ] Tested reduced accuracy mode
-- [ ] Tested background-to-foreground transitions
-- [ ] Tested app termination and relaunch recovery
-
-### Background Location Checklist
-
-**Setup**:
-- [ ] Background mode capability added (Location updates)
-- [ ] CLBackgroundActivitySession created and HELD (not local variable)
-- [ ] Session started from foreground
-- [ ] Updates restarted on background launch in didFinishLaunchingWithOptions
-
-**Authorization**:
-- [ ] Using .whenInUse with CLBackgroundActivitySession, OR
-- [ ] Using .always (but only if needed beyond background indicator)
-
-**Lifecycle**:
-- [ ] Persisting "was tracking" state for relaunch recovery
-- [ ] Recreating CLBackgroundActivitySession on background launch
-- [ ] Restarting CLLocationUpdate iteration on launch
-- [ ] CLMonitor reinitialized with same name on launch
-
-**Testing**:
-- [ ] Blue background location indicator appears when backgrounded
-- [ ] Updates continue when app backgrounded
-- [ ] Updates resume after app suspended and resumed
-- [ ] Updates resume after app terminated and relaunched
-
----
-
-## Part 5: iOS Version Considerations
-
-| Feature | iOS Version | Notes |
-|---------|-------------|-------|
-| CLLocationUpdate | iOS 17+ | AsyncSequence API |
-| CLMonitor | iOS 17+ | Replaces CLCircularRegion |
-| CLBackgroundActivitySession | iOS 17+ | Background with blue indicator |
-| CLServiceSession | iOS 18+ | Declarative authorization |
-| Implicit service sessions | iOS 18+ | From iterating liveUpdates |
-| CLLocationManager | iOS 2+ | Legacy but still works |
-
-**For iOS 14-16 support**: Use CLLocationManager delegate pattern (see core-location-ref Part 7).
-
-**For iOS 17+**: Prefer CLLocationUpdate and CLMonitor.
-
-**For iOS 18+**: Add CLServiceSession for declarative authorization.
-
----
+- iOS 14-16: use `CLLocationManager` delegate style.
+- iOS 17+: prefer `CLLocationUpdate` and `CLMonitor`.
+- iOS 18+: add `CLServiceSession`.
 
 ## Resources
 
-**WWDC**: 2023-10180, 2023-10147, 2024-10212
-
-**Docs**: /corelocation, /corelocation/clmonitor, /corelocation/cllocationupdate, /corelocation/clservicesession
-
-**Skills**: ios-core-location-ref, ios-core-location-diag, ios-energy
+- WWDC: 2023-10180, 2023-10147, 2024-10212
+- Docs: `/corelocation`, `/corelocation/clmonitor`, `/corelocation/cllocationupdate`, `/corelocation/clservicesession`
+- Skills: `ios-core-location-ref`, `ios-core-location-diag`, `ios-energy`

@@ -23,22 +23,22 @@ Use when:
 
 ## Example Prompts
 
-These are real questions developers ask that this skill is designed to answer:
+Representative prompts:
 
 #### 1. "My app has janky scrolling and animations are stuttering. How do I figure out if SwiftUI is the cause?"
-→ The skill shows how to use the new SwiftUI Instrument in Instruments 26 to identify if SwiftUI is the bottleneck vs other layers
+→ Shows how to use the new SwiftUI Instrument in Instruments 26 to identify if SwiftUI is the bottleneck vs other layers
 
 #### 2. "I'm using the new SwiftUI Instrument and I see orange/red bars showing long updates. How do I know what's causing them?"
-→ The skill covers the Cause & Effect Graph patterns that show data flow through your app and which state changes trigger expensive updates
+→ Covers the Cause & Effect Graph patterns that show data flow through your app and which state changes trigger expensive updates
 
 #### 3. "Some views are updating way too often even though their data hasn't changed. How do I find which views are the problem?"
-→ The skill demonstrates unnecessary update detection and Identity troubleshooting with the visual timeline
+→ Demonstrates unnecessary update detection and Identity troubleshooting with the visual timeline
 
 #### 4. "I have large data structures and complex view hierarchies. How do I optimize them for SwiftUI performance?"
-→ The skill covers performance patterns: breaking down view hierarchies, minimizing body complexity, and using the @Sendable optimization checklist
+→ Covers performance patterns: breaking down view hierarchies, minimizing body complexity, and using the @Sendable optimization checklist
 
 #### 5. "We have a performance deadline and I need to understand what's slow in SwiftUI. What are the critical metrics?"
-→ The skill provides the decision tree for prioritizing optimizations and understands pressure scenarios with professional guidance for trade-offs
+→ Provides the decision tree for prioritizing optimizations and understands pressure scenarios with professional guidance for trade-offs
 
 ---
 

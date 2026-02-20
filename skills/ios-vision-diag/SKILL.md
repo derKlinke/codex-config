@@ -10,7 +10,7 @@ metadata:
 
 # Vision Framework Diagnostics
 
-Systematic troubleshooting for Vision framework issues: subjects not detected, missing landmarks, low confidence, performance problems, coordinate mismatches, text recognition failures, barcode detection issues, and document scanning problems.
+Systematic troubleshooting for Vision failures: missed subjects/landmarks, low confidence, performance issues, coordinate mismatches, OCR/barcode failures, and document-scanning issues.
 
 ## Overview
 
@@ -46,7 +46,7 @@ Symptoms that indicate Vision-specific issues:
 
 ## Mandatory First Steps
 
-Before investigating code, run these diagnostics:
+Before code debugging, run these diagnostics:
 
 ### Step 1: Verify Detection with Diagnostic Code
 

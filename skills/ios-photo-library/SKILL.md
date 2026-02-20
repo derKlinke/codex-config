@@ -14,7 +14,7 @@ Guides you through photo picking, limited library handling, and saving photos to
 
 ## When to Use This Skill
 
-Use when you need to:
+Use when:
 - ☑ Let users select photos from their library
 - ☑ Handle limited photo library access
 - ☑ Save photos/videos to the camera roll
@@ -35,7 +35,7 @@ Use when you need to:
 
 ## Red Flags
 
-Signs you're making this harder than it needs to be:
+Red flags:
 
 - ❌ Using UIImagePickerController (deprecated for photo selection)
 - ❌ Requesting full library access when picker suffices (privacy violation)
@@ -47,7 +47,7 @@ Signs you're making this harder than it needs to be:
 
 ## Mandatory First Steps
 
-Before implementing photo library features:
+Before implementing photo-library features:
 
 ### 1. Choose Your Approach
 

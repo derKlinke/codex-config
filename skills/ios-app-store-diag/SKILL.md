@@ -10,15 +10,13 @@ metadata:
 
 ## Overview
 
-Systematic App Store rejection diagnosis and remediation. Covers the 6 most common rejection categories that account for 90% of all App Review failures.
+Systematic App Store rejection diagnosis and remediation for the 6 categories behind most review failures.
 
-**Core principle** 90% of App Store rejections fall into 6 categories. Reading the rejection message carefully and mapping to the correct guideline prevents the #1 mistake: fixing the wrong thing and getting rejected again for the same reason.
-
-Most developers waste 1-2 weeks on rejection cycles because they skim the rejection message, assume the cause, and "fix" something that wasn't the problem. This skill provides systematic diagnosis from rejection message to targeted fix.
+**Core principle** Map exact rejection text to the cited guideline before fixing anything. Wrong mapping causes repeat rejections.
 
 ## Red Flags — Suspect Submission Issue
 
-If you see ANY of these, suspect a submission issue and use this skill:
+If any of these appear, suspect a submission issue:
 
 - Rejection message cites a specific guideline number
 - "Binary Rejected" without clear guideline (technical gate failure)

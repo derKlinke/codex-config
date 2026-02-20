@@ -1,6 +1,6 @@
 ---
 name: ios-realitykit
-description: Use when building 3D content, AR experiences, or spatial computing with RealityKit. Covers ECS architecture, SwiftUI integration, RealityView, AR anchors, materials, physics, interaction, multiplayer, performance.
+description: Use for RealityKit 3D/AR/spatial apps: ECS architecture, SwiftUI integration, RealityView, anchors, materials, physics, interaction, multiplayer, and performance
 license: MIT
 metadata:
   version: "1.0.0"
@@ -8,13 +8,13 @@ metadata:
 
 # RealityKit Development Guide
 
-**Purpose**: Build 3D content, AR experiences, and spatial computing apps using RealityKit's Entity-Component-System architecture
+**Purpose**: Build 3D, AR, and spatial apps with RealityKit's Entity-Component-System architecture
 **iOS Version**: iOS 13+ (base), iOS 18+ (RealityView on iOS), visionOS 1.0+
 **Xcode**: Xcode 15+
 
-## When to Use This Skill
+## Use This Skill When
 
-Use this skill when:
+Use when:
 - Building any 3D experience (AR, games, visualization, spatial computing)
 - Creating SwiftUI apps with 3D content (RealityView, Model3D)
 - Implementing AR with anchors (world, image, face, body tracking)
@@ -24,7 +24,7 @@ Use this skill when:
 - Migrating from SceneKit to RealityKit
 - Targeting visionOS
 
-Do NOT use this skill for:
+Do not use for:
 - SceneKit maintenance (use `ios-scenekit`)
 - 2D games (use `ios-spritekit`)
 - Metal shader programming (use `ios-metal-migration-ref`)

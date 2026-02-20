@@ -24,13 +24,13 @@ SwiftUI debugging falls into three categories, each with a different diagnostic 
 
 ## Example Prompts
 
-These are real questions developers ask that this skill is designed to answer:
+Representative prompts:
 
 #### 1. "My list item doesn't update when I tap the favorite button, even though the data changed"
-→ The skill walks through the decision tree to identify struct mutation vs lost binding vs missing observer
+→ Walks through the decision tree to identify struct mutation vs lost binding vs missing observer
 
 #### 2. "Preview crashes with 'Cannot find AppModel in scope' but it compiles fine"
-→ The skill shows how to provide missing dependencies with `.environment()` or `.environmentObject()`
+→ Shows how to provide missing dependencies with `.environment()` or `.environmentObject()`
 
 #### 3. "My counter resets to 0 every time I toggle a boolean, why?"
 → The skill identifies accidental view recreation from conditionals and shows `.opacity()` fix

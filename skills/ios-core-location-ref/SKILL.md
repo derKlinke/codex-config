@@ -10,9 +10,9 @@ metadata:
 
 # Core Location Reference
 
-Comprehensive API reference for modern Core Location (iOS 17+).
+API reference for modern Core Location (iOS 17+).
 
-## When to Use
+## Use When
 
 - Need API signatures for CLLocationUpdate, CLMonitor, CLServiceSession
 - Implementing geofencing or region monitoring
@@ -39,7 +39,7 @@ Four key classes replace legacy CLLocationManager patterns:
 | `CLServiceSession` | Declarative authorization goals | 18+ |
 | `CLBackgroundActivitySession` | Background location support | 17+ |
 
-**Migration path**: Legacy CLLocationManager still works, but new APIs provide:
+**Migration path**: `CLLocationManager` still works, but new APIs add:
 - Swift concurrency (async/await)
 - Automatic pause/resume
 - Simplified authorization
@@ -102,7 +102,7 @@ When device becomes stationary:
 2. Updates pause (saves battery)
 3. When device moves, updates resume with `isStationary = false`
 
-No action required—happens automatically.
+No app action required; this is automatic.
 
 ### AsyncSequence Operations
 

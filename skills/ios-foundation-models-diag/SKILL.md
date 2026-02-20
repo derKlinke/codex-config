@@ -12,11 +12,11 @@ metadata:
 
 ## Overview
 
-Foundation Models issues manifest as context window exceeded errors, guardrail violations, slow generation, availability failures, and unexpected output. **Core principle** 80% of Foundation Models problems stem from misunderstanding model capabilities (3B parameter device-scale model, not world knowledge), context limits (4096 tokens), or availability requirements—not framework bugs.
+Foundation Models issues manifest as context window exceeded errors, guardrail violations, slow generation, availability failures, and unexpected output. **Core principle:** 80% of Foundation Models problems stem from misunderstanding model capabilities (3B parameter device-scale model, not world knowledge), context limits (4096 tokens), or availability requirements—not framework bugs.
 
 ## Red Flags — Suspect Foundation Models Issue
 
-If you see ANY of these, suspect a Foundation Models misunderstanding, not framework breakage:
+If any appear, suspect a Foundation Models misunderstanding, not framework breakage:
 - Generation takes >5 seconds
 - Error: `exceededContextWindowSize`
 - Error: `guardrailViolation`

@@ -1,6 +1,6 @@
 ---
 name: ios-avfoundation-ref
-description: Reference — AVFoundation audio APIs, AVAudioSession categories/modes, AVAudioEngine pipelines, bit-perfect DAC output, iOS 26+ spatial audio capture, ASAF/APAC, Audio Mix with Cinematic framework
+description: Use for AVFoundation audio reference: AVAudioSession categories/modes/options, AVAudioEngine pipelines/taps/conversion, DAC output behavior, and iOS 26+ input/spatial audio features.
 license: MIT
 metadata:
   version: "1.0.0"
@@ -8,89 +8,58 @@ metadata:
 
 # AVFoundation Audio Reference
 
-## Quick Reference
+## Quick Start
 
 ```swift
-// AUDIO SESSION SETUP
 import AVFoundation
 
 try AVAudioSession.sharedInstance().setCategory(
-    .playback,                              // or .playAndRecord, .ambient
-    mode: .default,                         // or .voiceChat, .measurement
+    .playback,
+    mode: .default,
     options: [.mixWithOthers, .allowBluetooth]
 )
 try AVAudioSession.sharedInstance().setActive(true)
 
-// AUDIO ENGINE PIPELINE
 let engine = AVAudioEngine()
 let player = AVAudioPlayerNode()
 engine.attach(player)
 engine.connect(player, to: engine.mainMixerNode, format: nil)
 try engine.start()
-player.scheduleFile(audioFile, at: nil)
-player.play()
-
-// INPUT PICKER (iOS 26+)
-import AVKit
-let picker = AVInputPickerInteraction()
-picker.delegate = self
-myButton.addInteraction(picker)
-// In button action: picker.present()
-
-// AIRPODS HIGH QUALITY (iOS 26+)
-try AVAudioSession.sharedInstance().setCategory(
-    .playAndRecord,
-    options: [.bluetoothHighQualityRecording, .allowBluetoothA2DP]
-)
 ```
-
----
 
 ## AVAudioSession
 
 ### Categories
 
-| Category | Use Case | Silent Switch | Background |
-|----------|----------|---------------|------------|
-| `.ambient` | Game sounds, not primary | Silences | No |
-| `.soloAmbient` | Default, interrupts others | Silences | No |
-| `.playback` | Music player, podcast | Ignores | Yes |
-| `.record` | Voice recorder | — | Yes |
-| `.playAndRecord` | VoIP, voice chat | Ignores | Yes |
-| `.multiRoute` | DJ apps, multiple outputs | Ignores | Yes |
+| Category | Typical use | Silent switch | Background |
+|---|---|---|---|
+| `.ambient` | non-primary sounds | silenced | no |
+| `.soloAmbient` | default ambient | silenced | no |
+| `.playback` | music/podcast/video audio | ignored | yes |
+| `.record` | capture-only | n/a | yes |
+| `.playAndRecord` | call/chat/duplex | ignored | yes |
+| `.multiRoute` | advanced multi-output | ignored | yes |
 
 ### Modes
 
-| Mode | Use Case |
-|------|----------|
-| `.default` | General audio |
-| `.voiceChat` | VoIP, reduces echo |
-| `.videoChat` | FaceTime-style |
-| `.gameChat` | Voice chat in games |
-| `.videoRecording` | Camera recording |
-| `.measurement` | Flat response, no processing |
-| `.moviePlayback` | Video playback |
-| `.spokenAudio` | Podcasts, audiobooks |
+| Mode | Typical use |
+|---|---|
+| `.default` | general |
+| `.voiceChat` | VoIP echo control |
+| `.videoChat` | FaceTime-like |
+| `.gameChat` | game voice |
+| `.videoRecording` | camera recording |
+| `.measurement` | minimal processing |
+| `.moviePlayback` | video playback |
+| `.spokenAudio` | spoken-word content |
 
 ### Options
 
-```swift
-// Mixing
-.mixWithOthers          // Play with other apps
-.duckOthers             // Lower other audio while playing
-.interruptSpokenAudioAndMixWithOthers  // Pause podcasts, mix music
+- Mixing: `.mixWithOthers`, `.duckOthers`, `.interruptSpokenAudioAndMixWithOthers`
+- Bluetooth: `.allowBluetooth`, `.allowBluetoothA2DP`, `.bluetoothHighQualityRecording` (iOS 26+)
+- Routing: `.defaultToSpeaker`, `.allowAirPlay`
 
-// Bluetooth
-.allowBluetooth         // HFP (calls)
-.allowBluetoothA2DP     // High quality stereo
-.bluetoothHighQualityRecording  // iOS 26+ AirPods recording
-
-// Routing
-.defaultToSpeaker       // Route to speaker (not receiver)
-.allowAirPlay           // Enable AirPlay
-```
-
-### Interruption Handling
+### Interruption handling
 
 ```swift
 NotificationCenter.default.addObserver(
@@ -98,31 +67,26 @@ NotificationCenter.default.addObserver(
     object: nil,
     queue: .main
 ) { notification in
-    guard let userInfo = notification.userInfo,
-          let typeValue = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt,
-          let type = AVAudioSession.InterruptionType(rawValue: typeValue) else {
-        return
-    }
+    guard
+        let userInfo = notification.userInfo,
+        let typeValue = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt,
+        let type = AVAudioSession.InterruptionType(rawValue: typeValue)
+    else { return }
 
     switch type {
     case .began:
-        // Pause playback
         player.pause()
-
     case .ended:
-        guard let optionsValue = userInfo[AVAudioSessionInterruptionOptionKey] as? UInt else { return }
+        let optionsValue = (userInfo[AVAudioSessionInterruptionOptionKey] as? UInt) ?? 0
         let options = AVAudioSession.InterruptionOptions(rawValue: optionsValue)
-        if options.contains(.shouldResume) {
-            player.play()
-        }
-
+        if options.contains(.shouldResume) { player.play() }
     @unknown default:
         break
     }
 }
 ```
 
-### Route Change Handling
+### Route changes
 
 ```swift
 NotificationCenter.default.addObserver(
@@ -130,514 +94,221 @@ NotificationCenter.default.addObserver(
     object: nil,
     queue: .main
 ) { notification in
-    guard let userInfo = notification.userInfo,
-          let reasonValue = userInfo[AVAudioSessionRouteChangeReasonKey] as? UInt,
-          let reason = AVAudioSession.RouteChangeReason(rawValue: reasonValue) else {
-        return
-    }
+    guard
+        let userInfo = notification.userInfo,
+        let reasonValue = userInfo[AVAudioSessionRouteChangeReasonKey] as? UInt,
+        let reason = AVAudioSession.RouteChangeReason(rawValue: reasonValue)
+    else { return }
 
-    switch reason {
-    case .oldDeviceUnavailable:
-        // Headphones unplugged — pause playback
-        player.pause()
-
-    case .newDeviceAvailable:
-        // New device connected
-        break
-
-    case .categoryChange:
-        // Category changed by system or another app
-        break
-
-    default:
-        break
+    if reason == .oldDeviceUnavailable {
+        player.pause() // e.g., unplugged headphones
     }
 }
 ```
 
----
-
 ## AVAudioEngine
 
-### Basic Pipeline
+### Basic graph
 
 ```swift
 let engine = AVAudioEngine()
-
-// Create nodes
 let player = AVAudioPlayerNode()
 let reverb = AVAudioUnitReverb()
 reverb.loadFactoryPreset(.largeHall)
 reverb.wetDryMix = 50
 
-// Attach to engine
 engine.attach(player)
 engine.attach(reverb)
-
-// Connect: player → reverb → mixer → output
 engine.connect(player, to: reverb, format: nil)
 engine.connect(reverb, to: engine.mainMixerNode, format: nil)
 
-// Start
 engine.prepare()
 try engine.start()
-
-// Play file
-let url = Bundle.main.url(forResource: "audio", withExtension: "m4a")!
-let file = try AVAudioFile(forReading: url)
-player.scheduleFile(file, at: nil)
-player.play()
 ```
 
-### Node Types
+### Common node roles
 
-| Node | Purpose |
-|------|---------|
-| `AVAudioPlayerNode` | Plays audio files/buffers |
-| `AVAudioInputNode` | Mic input (engine.inputNode) |
-| `AVAudioOutputNode` | Speaker output (engine.outputNode) |
-| `AVAudioMixerNode` | Mix multiple inputs |
-| `AVAudioUnitEQ` | Equalizer |
-| `AVAudioUnitReverb` | Reverb effect |
-| `AVAudioUnitDelay` | Delay effect |
-| `AVAudioUnitDistortion` | Distortion effect |
-| `AVAudioUnitTimePitch` | Time stretch / pitch shift |
+| Node | Role |
+|---|---|
+| `AVAudioPlayerNode` | playback |
+| `AVAudioInputNode` | mic input |
+| `AVAudioOutputNode` | output endpoint |
+| `AVAudioMixerNode` | mixing |
+| `AVAudioUnitEQ` / `Reverb` / `Delay` / `Distortion` / `TimePitch` | effects |
 
-### Installing Taps (Audio Analysis)
+### Tap for analysis
 
 ```swift
-let inputNode = engine.inputNode
-let format = inputNode.outputFormat(forBus: 0)
+let input = engine.inputNode
+let format = input.outputFormat(forBus: 0)
 
-inputNode.installTap(onBus: 0, bufferSize: 1024, format: format) { buffer, time in
-    // Process audio buffer
-    guard let channelData = buffer.floatChannelData?[0] else { return }
-    let frameLength = Int(buffer.frameLength)
-
-    // Calculate RMS level
+input.installTap(onBus: 0, bufferSize: 1024, format: format) { buffer, _ in
+    guard let ch = buffer.floatChannelData?[0] else { return }
+    let n = Int(buffer.frameLength)
     var sum: Float = 0
-    for i in 0..<frameLength {
-        sum += channelData[i] * channelData[i]
-    }
-    let rms = sqrt(sum / Float(frameLength))
+    for i in 0..<n { sum += ch[i] * ch[i] }
+    let rms = sqrt(sum / Float(n))
     let dB = 20 * log10(rms)
-
-    DispatchQueue.main.async {
-        self.levelMeter = dB
-    }
+    DispatchQueue.main.async { self.levelMeter = dB }
 }
 
-// Don't forget to remove when done
-inputNode.removeTap(onBus: 0)
+input.removeTap(onBus: 0)
 ```
 
-### Format Conversion
+### Format conversion
 
 ```swift
-// AVAudioEngine mic input is always 44.1kHz/32-bit float
-// Use AVAudioConverter for other formats
-
 let inputFormat = engine.inputNode.outputFormat(forBus: 0)
-let outputFormat = AVAudioFormat(
-    commonFormat: .pcmFormatInt16,
-    sampleRate: 48000,
-    channels: 1,
-    interleaved: false
-)!
-
+let outputFormat = AVAudioFormat(commonFormat: .pcmFormatInt16, sampleRate: 48_000, channels: 1, interleaved: false)!
 let converter = AVAudioConverter(from: inputFormat, to: outputFormat)!
 
-// In tap callback:
-let outputBuffer = AVAudioPCMBuffer(
-    pcmFormat: outputFormat,
-    frameCapacity: AVAudioFrameCount(outputFormat.sampleRate * 0.1)
-)!
-
+let out = AVAudioPCMBuffer(pcmFormat: outputFormat, frameCapacity: AVAudioFrameCount(outputFormat.sampleRate * 0.1))!
 var error: NSError?
-converter.convert(to: outputBuffer, error: &error) { inNumPackets, outStatus in
-    outStatus.pointee = .haveData
+converter.convert(to: out, error: &error) { _, status in
+    status.pointee = .haveData
     return inputBuffer
 }
 ```
 
----
+## DAC / Bit-Perfect Output
 
-## Bit-Perfect Audio / DAC Output
-
-### iOS Behavior
-
-iOS provides **bit-perfect output by default** to USB DACs — no resampling occurs. The DAC receives the source sample rate directly.
+- iOS typically passes source sample rate to compatible USB DACs without forced resampling.
+- Match processing graph to hardware rate where possible.
 
 ```swift
-// iOS automatically matches source sample rate to DAC
-// No special configuration needed for bit-perfect output
-
-let player = AVAudioPlayerNode()
-// File at 96kHz → DAC receives 96kHz
+let hwRate = AVAudioSession.sharedInstance().sampleRate
+let format = AVAudioFormat(standardFormatWithSampleRate: hwRate, channels: 2)
 ```
 
-### Avoiding Resampling
+### Route inspection
 
 ```swift
-// Check hardware sample rate
-let hardwareSampleRate = AVAudioSession.sharedInstance().sampleRate
-
-// Match your audio format to hardware when possible
-let format = AVAudioFormat(
-    standardFormatWithSampleRate: hardwareSampleRate,
-    channels: 2
-)
-```
-
-### USB DAC Routing
-
-```swift
-// List available outputs
-let currentRoute = AVAudioSession.sharedInstance().currentRoute
-for output in currentRoute.outputs {
-    print("Output: \(output.portName), Type: \(output.portType)")
-    // USB DAC shows as .usbAudio
+for output in AVAudioSession.sharedInstance().currentRoute.outputs {
+    print("Output: \(output.portName), type: \(output.portType)")
 }
-
-// Prefer USB output
-try AVAudioSession.sharedInstance().setPreferredInput(usbPort)
 ```
 
-### Sample Rate Considerations
-
-| Source | iOS Behavior | Notes |
-|--------|--------------|-------|
-| 44.1 kHz | Passthrough | CD quality |
-| 48 kHz | Passthrough | Video standard |
-| 96 kHz | Passthrough | Hi-res |
-| 192 kHz | Passthrough | Hi-res |
-| DSD | Not supported | Use DoP or convert |
-
----
+| Source rate | Typical behavior |
+|---|---|
+| 44.1/48/96/192 kHz | passthrough on compatible path |
+| DSD | unsupported directly |
 
 ## iOS 26+ Input Selection
 
-### AVInputPickerInteraction
-
-Native input device selection with live metering:
+### `AVInputPickerInteraction`
 
 ```swift
 import AVKit
 
-class RecordingViewController: UIViewController {
-    let inputPicker = AVInputPickerInteraction()
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Configure audio session first
-        try? AVAudioSession.sharedInstance().setCategory(.playAndRecord)
-        try? AVAudioSession.sharedInstance().setActive(true)
-
-        // Setup picker
-        inputPicker.delegate = self
-        selectMicButton.addInteraction(inputPicker)
-    }
-
-    @IBAction func selectMicTapped(_ sender: UIButton) {
-        inputPicker.present()
-    }
-}
-
-extension RecordingViewController: AVInputPickerInteractionDelegate {
-    // Implement delegate methods as needed
-}
+let picker = AVInputPickerInteraction()
+picker.delegate = self
+button.addInteraction(picker)
+// on action: picker.present()
 ```
 
-**Features:**
-- Live sound level metering
-- Microphone mode selection
-- System remembers selection per app
+Features: system input picker, live levels, per-app remembered selection.
 
----
-
-## iOS 26+ AirPods High Quality Recording
-
-LAV-microphone equivalent quality for content creators:
+## iOS 26+ AirPods High-Quality Recording
 
 ```swift
-// AVAudioSession approach
 try AVAudioSession.sharedInstance().setCategory(
     .playAndRecord,
-    options: [
-        .bluetoothHighQualityRecording,  // New in iOS 26
-        .allowBluetoothA2DP              // Fallback
-    ]
+    options: [.bluetoothHighQualityRecording, .allowBluetoothA2DP]
 )
 
-// AVCaptureSession approach
-let captureSession = AVCaptureSession()
-captureSession.configuresApplicationAudioSessionForBluetoothHighQualityRecording = true
+let capture = AVCaptureSession()
+capture.configuresApplicationAudioSessionForBluetoothHighQualityRecording = true
 ```
 
-**Notes:**
-- Uses dedicated Bluetooth link optimized for AirPods
-- Falls back to HFP if device doesn't support HQ mode
-- Supports AirPods stem controls for start/stop recording
-
----
+Fallback occurs on unsupported hardware.
 
 ## Spatial Audio Capture (iOS 26+)
 
-### First Order Ambisonics (FOA)
-
-Record 3D spatial audio using device microphone array:
+### FOA capture
 
 ```swift
-// With AVCaptureMovieFileOutput (simple)
 let audioInput = AVCaptureDeviceInput(device: audioDevice)
 audioInput.multichannelAudioMode = .firstOrderAmbisonics
-
-// With AVAssetWriter (full control)
-// Requires two AudioDataOutputs: FOA (4ch) + Stereo (2ch)
 ```
 
-### AVAssetWriter Spatial Audio Setup
+### AVAssetWriter path
+
+- capture FOA + stereo + metadata tracks
+- use `AVCaptureSpatialAudioMetadataSampleGenerator` for metadata samples
 
 ```swift
-// Configure two AudioDataOutputs
 let foaOutput = AVCaptureAudioDataOutput()
-foaOutput.spatialAudioChannelLayoutTag = kAudioChannelLayoutTag_HOA_ACN_SN3D  // 4 channels
+foaOutput.spatialAudioChannelLayoutTag = kAudioChannelLayoutTag_HOA_ACN_SN3D
 
 let stereoOutput = AVCaptureAudioDataOutput()
-stereoOutput.spatialAudioChannelLayoutTag = kAudioChannelLayoutTag_Stereo    // 2 channels
-
-// Create metadata generator
-let metadataGenerator = AVCaptureSpatialAudioMetadataSampleGenerator()
-
-// Feed FOA buffers to generator
-func captureOutput(_ output: AVCaptureOutput,
-                   didOutput sampleBuffer: CMSampleBuffer,
-                   from connection: AVCaptureConnection) {
-    metadataGenerator.append(sampleBuffer)
-    // Also write to FOA AssetWriterInput
-}
-
-// When recording stops, get metadata sample
-let metadataSample = metadataGenerator.createMetadataSample()
-// Write to metadata track
+stereoOutput.spatialAudioChannelLayoutTag = kAudioChannelLayoutTag_Stereo
 ```
 
-### Output File Structure
+Typical file composition:
+1. stereo compatibility track
+2. APAC spatial track
+3. metadata track
 
-Spatial audio files contain:
-1. **Stereo AAC track** — Compatibility fallback
-2. **APAC track** — Spatial audio (FOA)
-3. **Metadata track** — Audio Mix tuning parameters
-
-File formats: `.mov`, `.mp4`, `.qta` (QuickTime Audio, iOS 26+)
-
----
-
-## ASAF / APAC (Apple Spatial Audio)
-
-### Overview
+## ASAF / APAC
 
 | Component | Purpose |
-|-----------|---------|
-| **ASAF** | Apple Spatial Audio Format — production format |
-| **APAC** | Apple Positional Audio Codec — delivery codec |
+|---|---|
+| ASAF | authoring/production format |
+| APAC | positional delivery codec |
 
-### APAC Capabilities
+APAC supports channels/objects/HOA/dialogue/binaural, adapts to head tracking, and is used in immersive media workflows.
 
-- Bitrates: 64 kbps to 768 kbps
-- Supports: Channels, Objects, Higher Order Ambisonics, Dialogue, Binaural
-- Head-tracked rendering adaptive to listener position/orientation
-- Required for Apple Immersive Video
+Playback is standard `AVPlayer` for supported files.
 
-### Playback
-
-```swift
-// Standard AVPlayer handles APAC automatically
-let player = AVPlayer(url: spatialAudioURL)
-player.play()
-
-// Head tracking enabled automatically on AirPods
-```
-
-### Platform Support
-
-All Apple platforms except watchOS support APAC playback.
-
----
-
-## Audio Mix (Cinematic Framework)
-
-Separate and remix speech vs ambient sounds in spatial recordings:
-
-### AVPlayer Integration
+## Cinematic Audio Mix
 
 ```swift
 import Cinematic
 
-// Load spatial audio asset
 let asset = AVURLAsset(url: spatialAudioURL)
-let audioInfo = try await CNAssetSpatialAudioInfo(asset: asset)
-
-// Configure mix parameters
-let intensity: Float = 0.5  // 0.0 to 1.0
-let style = CNSpatialAudioRenderingStyle.cinematic
-
-// Create and apply audio mix
-let audioMix = audioInfo.audioMix(
-    effectIntensity: intensity,
-    renderingStyle: style
-)
-playerItem.audioMix = audioMix
+let info = try await CNAssetSpatialAudioInfo(asset: asset)
+let mix = info.audioMix(effectIntensity: 0.5, renderingStyle: .cinematic)
+playerItem.audioMix = mix
 ```
 
-### Rendering Styles
+Rendering styles include `.cinematic`, `.studio`, `.inFrame`, plus extraction-oriented modes.
 
-| Style | Effect |
-|-------|--------|
-| `.cinematic` | Balanced speech/ambient |
-| `.studio` | Enhanced speech clarity |
-| `.inFrame` | Focus on visible speakers |
-| + 6 extraction modes | Speech-only, ambient-only stems |
-
-### AUAudioMix (Direct AudioUnit)
-
-For apps not using AVPlayer:
-
-```swift
-// Input: 4 channels FOA
-// Output: Separated speech + ambient
-
-// Get tuning metadata from file
-let audioInfo = try await CNAssetSpatialAudioInfo(asset: asset)
-let remixMetadata = audioInfo.spatialAudioMixMetadata as CFData
-
-// Apply to AudioUnit via AudioUnitSetProperty
-```
-
----
+For non-`AVPlayer` paths, apply metadata to audio units via `spatialAudioMixMetadata`.
 
 ## Common Patterns
 
-### Background Audio Playback
+### Background playback
 
 ```swift
-// 1. Set category
 try AVAudioSession.sharedInstance().setCategory(.playback)
-
-// 2. Enable background mode in Info.plist
-// <key>UIBackgroundModes</key>
-// <array><string>audio</string></array>
-
-// 3. Set Now Playing info (recommended)
-let nowPlayingInfo: [String: Any] = [
-    MPMediaItemPropertyTitle: "Song Title",
-    MPMediaItemPropertyArtist: "Artist",
-    MPNowPlayingInfoPropertyElapsedPlaybackTime: player.currentTime,
-    MPMediaItemPropertyPlaybackDuration: duration
-]
-MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
+// Info.plist: UIBackgroundModes includes audio
 ```
 
-### Ducking Other Audio
+### Duck others
 
 ```swift
-try AVAudioSession.sharedInstance().setCategory(
-    .playback,
-    options: .duckOthers
-)
-
-// When done, restore others
+try AVAudioSession.sharedInstance().setCategory(.playback, options: .duckOthers)
 try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
 ```
 
-### Bluetooth Device Handling
+### Bluetooth handling
 
 ```swift
-// Allow all Bluetooth
-try AVAudioSession.sharedInstance().setCategory(
-    .playAndRecord,
-    options: [.allowBluetooth, .allowBluetoothA2DP]
-)
-
-// Check current Bluetooth route
+try AVAudioSession.sharedInstance().setCategory(.playAndRecord, options: [.allowBluetooth, .allowBluetoothA2DP])
 let route = AVAudioSession.sharedInstance().currentRoute
-let hasBluetoothOutput = route.outputs.contains {
-    $0.portType == .bluetoothA2DP || $0.portType == .bluetoothHFP
-}
+let hasBT = route.outputs.contains { $0.portType == .bluetoothA2DP || $0.portType == .bluetoothHFP }
 ```
-
----
 
 ## Anti-Patterns
 
-### Wrong Category
-
-```swift
-// WRONG — music player using ambient (silenced by switch)
-try AVAudioSession.sharedInstance().setCategory(.ambient)
-
-// CORRECT — music needs .playback
-try AVAudioSession.sharedInstance().setCategory(.playback)
-```
-
-### Missing Interruption Handling
-
-```swift
-// WRONG — no interruption observer
-// Audio stops on phone call and never resumes
-
-// CORRECT — always handle interruptions
-NotificationCenter.default.addObserver(
-    forName: AVAudioSession.interruptionNotification,
-    // ... handle began/ended
-)
-```
-
-### Tap Memory Leaks
-
-```swift
-// WRONG — tap installed, never removed
-engine.inputNode.installTap(onBus: 0, bufferSize: 1024, format: format) { ... }
-
-// CORRECT — remove tap when done
-deinit {
-    engine.inputNode.removeTap(onBus: 0)
-}
-```
-
-### Format Mismatch Crashes
-
-```swift
-// WRONG — connecting nodes with incompatible formats
-engine.connect(playerNode, to: mixerNode, format: wrongFormat)  // Crash!
-
-// CORRECT — use nil for automatic format negotiation, or match exactly
-engine.connect(playerNode, to: mixerNode, format: nil)
-```
-
-### Forgetting to Activate Session
-
-```swift
-// WRONG — configure but don't activate
-try AVAudioSession.sharedInstance().setCategory(.playback)
-// Audio doesn't work!
-
-// CORRECT — always activate
-try AVAudioSession.sharedInstance().setCategory(.playback)
-try AVAudioSession.sharedInstance().setActive(true)
-```
-
----
+1. Wrong category for feature intent (e.g., music app using `.ambient`).
+2. No interruption observer.
+3. Installing taps without removing them.
+4. Incompatible manual formats causing graph failures.
+5. Configuring session but never calling `setActive(true)`.
 
 ## Resources
 
-**WWDC**: 2025-251, 2025-403, 2019-510
-
-**Docs**: /avfoundation, /avkit, /cinematic
-
----
-
-**Targets:** iOS 12+ (core), iOS 26+ (spatial features)
-**Frameworks:** AVFoundation, AVKit, Cinematic (iOS 26+)
-**History:** See git log for changes
+- WWDC: 2025-251, 2025-403, 2019-510
+- Docs: `/avfoundation`, `/avkit`, `/cinematic`
+- Targets: iOS 12+ core audio; iOS 26+ for input picker/spatial/HQ AirPods capture

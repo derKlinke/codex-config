@@ -10,7 +10,7 @@ metadata:
 
 # Foundation Models — On-Device AI for Apple Platforms
 
-## When to Use This Skill
+## When to Use
 
 Use when:
 - Implementing on-device AI features with Foundation Models
@@ -21,7 +21,7 @@ Use when:
 - Debugging Foundation Models issues (context overflow, slow generation, wrong output)
 - Deciding between Foundation Models vs server LLMs (ChatGPT, Claude, etc.)
 
-#### Related Skills
+## Related Skills
 - Use `ios-foundation-models-diag` for systematic troubleshooting (context exceeded, guardrail violations, availability problems)
 - Use `ios-foundation-models-ref` for complete API reference with all WWDC code examples
 

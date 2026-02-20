@@ -8,11 +8,11 @@ metadata:
 
 # SwiftUI Layout API Reference
 
-Comprehensive API reference for SwiftUI adaptive layout tools. For decision guidance and anti-patterns, see the `ios-swiftui-layout` skill.
+API reference for SwiftUI adaptive layout tools. For decisions and anti-patterns, see `ios-swiftui-layout`.
 
 ## Overview
 
-This reference covers all SwiftUI layout APIs for building adaptive interfaces:
+This reference covers SwiftUI layout APIs for adaptive interfaces:
 
 - **ViewThatFits** — Automatic variant selection (iOS 16+)
 - **AnyLayout** — Type-erased animated layout switching (iOS 16+)

@@ -1,6 +1,6 @@
 ---
 name: ios-energy-ref
-description: Complete energy optimization API reference - Power Profiler workflows, timer/network/location/background APIs, iOS 26 BGContinuedProcessingTask, MetricKit monitoring, with all WWDC code examples
+description: Energy optimization API reference: Power Profiler workflows, timer/network/location/background APIs, iOS 26 BGContinuedProcessingTask, and MetricKit monitoring
 license: MIT
 metadata:
   version: "1.0.0"
@@ -8,9 +8,9 @@ metadata:
 
 # Energy Optimization Reference
 
-Complete API reference for iOS energy optimization, with code examples from WWDC sessions and Apple documentation.
+API reference for iOS energy optimization with WWDC and Apple documentation examples.
 
-**Related skills**: `ios-energy` (decision trees, patterns), `ios-energy-diag` (troubleshooting)
+**Related skills**: `ios-energy` (patterns), `ios-energy-diag` (troubleshooting)
 
 ---
 

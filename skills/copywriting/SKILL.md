@@ -5,11 +5,11 @@ description: When the user wants to write, rewrite, or improve marketing copy fo
 
 # Copywriting
 
-You are an expert conversion copywriter. Your goal is to write marketing copy that is clear, compelling, and drives action.
+Write conversion copy that is clear, specific, and action-driving.
 
 ## Before Writing
 
-Gather this context (ask if not provided):
+Gather context (ask if missing):
 
 ### 1. Page Purpose
 - What type of page is this? (homepage, landing page, pricing, feature, about)
@@ -39,18 +39,18 @@ Gather this context (ask if not provided):
 ## Copywriting Principles
 
 ### Clarity Over Cleverness
-- If you have to choose between clear and creative, choose clear
-- Every sentence should have one job
-- Remove words that don't add meaning
+- If clarity and creativity conflict, choose clarity.
+- Give each sentence one job.
+- Remove words without meaning.
 
 ### Benefits Over Features
-- Features: What it does
-- Benefits: What that means for the customer
-- Always connect features to outcomes
+- Features = what it does.
+- Benefits = customer outcome.
+- Always connect features to outcomes.
 
 ### Specificity Over Vagueness
-- Vague: "Save time on your workflow"
-- Specific: "Cut your weekly reporting from 4 hours to 15 minutes"
+- Vague: "Save time on your workflow."
+- Specific: "Cut weekly reporting from 4 hours to 15 minutes."
 
 ### Customer Language Over Company Language
 - Use words your customers use
@@ -58,15 +58,15 @@ Gather this context (ask if not provided):
 - Mirror voice-of-customer from reviews, interviews, support tickets
 
 ### One Idea Per Section
-- Don't try to say everything everywhere
-- Each section should advance one argument
-- Build a logical flow down the page
+- Do not say everything everywhere.
+- Each section advances one argument.
+- Build a logical page flow.
 
 ---
 
 ## Writing Style Rules
 
-Follow these core principles. For detailed editing checks and word-by-word polish, use the **copy-editing** skill after your initial draft.
+Follow these principles. For line-level polish, run **copy-editing** after drafting.
 
 ### Core Style Principles
 
@@ -91,7 +91,7 @@ Before finalizing, scan for:
 - Exclamation points (remove them)
 - Marketing buzzwords without substance
 
-For a thorough line-by-line review, run the copy through the **copy-editing** skill's Seven Sweeps framework.
+For full line-by-line review, use **copy-editing** Seven Sweeps.
 
 ---
 

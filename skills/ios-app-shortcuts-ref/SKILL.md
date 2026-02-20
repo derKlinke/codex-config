@@ -10,15 +10,15 @@ metadata:
 
 ## Overview
 
-Comprehensive guide to App Shortcuts framework for making your app's actions instantly available in Siri, Spotlight, Action Button, Control Center, and other system experiences. App Shortcuts are pre-configured App Intents that work immediately after app install—no user setup required.
+Guide to App Shortcuts for making app actions instantly available in Siri, Spotlight, Action Button, Control Center, and related system surfaces. App Shortcuts are preconfigured App Intents that work immediately after install.
 
-**Key distinction** App Intents are the actions; App Shortcuts are the pre-configured "surface" that makes those actions instantly discoverable system-wide.
+**Distinction** App Intents define actions; App Shortcuts expose them instantly across the system.
 
 ---
 
-## When to Use This Skill
+## Use When
 
-Use this skill when:
+Use when:
 - Implementing AppShortcutsProvider for your app
 - Adding suggested phrases for Siri invocation
 - Configuring instant Spotlight availability
@@ -29,7 +29,7 @@ Use this skill when:
 - Debugging shortcuts not appearing in Shortcuts app or Spotlight
 - Choosing between App Intents and App Shortcuts
 
-Do NOT use this skill for:
+Do not use for:
 - General App Intents implementation (use app-intents-ref)
 - Core Spotlight indexing (use core-spotlight-ref)
 - Overall discoverability strategy (use app-discoverability)
@@ -55,7 +55,7 @@ Do NOT use this skill for:
 | **Action button** | Not directly accessible | Can be assigned immediately |
 | **Setup time** | Minutes per user | Zero |
 
-**When to use App Shortcuts** Every app should provide App Shortcuts for core functionality. They dramatically improve discoverability with zero user effort.
+**When to use App Shortcuts** Every app should provide shortcuts for core actions; discoverability improves with zero user setup.
 
 ---
 

@@ -14,7 +14,7 @@ metadata:
 
 Network.framework is battle-tested in every iOS app (powers URLSession internally), handles trillions of requests daily, and provides smart connection establishment with Happy Eyeballs, proxy evaluation, and WiFi Assist. If your connection is failing, timing out, or behaving unexpectedly, the issue is almost always in how you're using the framework, not the framework itself.
 
-This skill provides systematic diagnostics to identify root causes in minutes, not hours.
+Systematic diagnostics to find root causes in minutes.
 
 ## Red Flags — Suspect Networking Issue
 
@@ -34,11 +34,11 @@ If you see ANY of these, suspect a networking misconfiguration, not framework br
   - Apple engineers have 10+ years of production debugging baked into framework
   - Switching to sockets will expose you to 100+ edge cases
 
-**Critical distinction** Simulator uses macOS networking stack (not iOS), hides cellular-specific issues (IPv6-only networks), and doesn't simulate network transitions. **MANDATORY: Test on real device with real network conditions.**
+**Key distinction** Simulator uses macOS networking stack (not iOS), hides cellular-specific issues (IPv6-only networks), and doesn't simulate network transitions. **MANDATORY: Test on real device with real network conditions.**
 
 ## Mandatory First Steps
 
-**ALWAYS run these commands FIRST** (before changing code):
+**Run these commands first** (before changing code):
 
 ```swift
 // 1. Enable Network.framework logging
@@ -69,7 +69,7 @@ print("Cipher suites: \(tlsParameters.tlsCipherSuites ?? [])")
 // - IPv6-only (some cellular carriers)
 ```
 
-#### What this tells you
+#### Interpretation
 
 | Observation | Diagnosis | Next Step |
 |-------------|-----------|-----------|

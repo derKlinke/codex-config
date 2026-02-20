@@ -10,36 +10,36 @@ metadata:
 
 ## Overview
 
-Energy issues manifest as battery drain, hot devices, and poor App Store reviews. **Core principle**: Measure before optimizing. Use Power Profiler to identify the dominant subsystem (CPU/GPU/Network/Location/Display), then apply targeted fixes.
+Energy issues appear as battery drain, hot devices, and poor reviews. **Core principle**: measure before optimizing. Use Power Profiler to identify the dominant subsystem (CPU/GPU/Network/Location/Display), then apply targeted fixes.
 
-**Key insight**: Developers often don't know where to START auditing. This skill provides systematic diagnosis, not guesswork.
+**Key insight**: Most failures are diagnosis failures. Start with subsystem attribution, not random optimizations.
 
 **Requirements**: iOS 26+, Xcode 26+, Power Profiler in Instruments
 
 ## Example Prompts
 
-Real questions developers ask that this skill answers:
+Typical prompts:
 
 #### 1. "My app is always at the top of Battery Settings. How do I find what's draining power?"
-→ The skill covers Power Profiler workflow to identify dominant subsystem and targeted fixes
+→ Covers Power Profiler workflow to identify dominant subsystem and targeted fixes
 
 #### 2. "Users report my app makes their phone hot. Where do I start debugging?"
-→ The skill provides decision tree: CPU vs GPU vs Network diagnosis with specific patterns
+→ Provides decision tree: CPU vs GPU vs Network diagnosis with specific patterns
 
 #### 3. "I have timers and location updates. Are they causing battery drain?"
-→ The skill covers timer tolerance, location accuracy trade-offs, and audit checklists
+→ Covers timer tolerance, location accuracy trade-offs, and audit checklists
 
 #### 4. "My app drains battery in the background even when users aren't using it."
-→ The skill covers background execution patterns, BGTasks, and EMRCA principles
+→ Covers background execution patterns, BGTasks, and EMRCA principles
 
 #### 5. "How do I measure if my optimization actually improved battery life?"
-→ The skill demonstrates before/after Power Profiler comparison workflow
+→ Shows before/after Power Profiler comparison workflow
 
 ---
 
 ## Red Flags — High Energy Likely
 
-If you see ANY of these, suspect energy inefficiency:
+If any appear, suspect energy inefficiency:
 
 - **Battery Settings**: Your app consistently at top of battery consumers
 - **Device temperature**: Phone gets warm during normal app use

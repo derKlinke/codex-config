@@ -11,11 +11,11 @@ metadata:
 
 ## Overview
 
-Type-safe SQLite persistence using [SQLiteData](https://github.com/pointfreeco/sqlite-data) by Point-Free. A fast, lightweight replacement for SwiftData with CloudKit synchronization support, built on [GRDB](https://github.com/groue/GRDB.swift) and [StructuredQueries](https://github.com/pointfreeco/swift-structured-queries).
+Type-safe SQLite persistence with [SQLiteData](https://github.com/pointfreeco/sqlite-data) by Point-Free. Fast, lightweight SwiftData alternative with CloudKit sync, built on [GRDB](https://github.com/groue/GRDB.swift) and [StructuredQueries](https://github.com/pointfreeco/swift-structured-queries).
 
 **Core principle:** Value types (`struct`) + `@Table` macro + `database.write { }` blocks for all mutations.
 
-**For advanced patterns** (CTEs, views, custom aggregates, schema composition), see the `ios-sqlitedata-ref` reference skill.
+**Advanced patterns** (CTEs, views, custom aggregates, schema composition): see `ios-sqlitedata-ref`.
 
 **Requires:** iOS 17+, Swift 6 strict concurrency
 **License:** MIT

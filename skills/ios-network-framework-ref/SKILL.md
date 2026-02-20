@@ -1,6 +1,6 @@
 ---
 name: ios-network-framework-ref
-description: Reference — Comprehensive Network.framework guide covering NetworkConnection (iOS 26+), NWConnection (iOS 12-25), TLV framing, Coder protocol, NetworkListener, NetworkBrowser, Wi-Fi Aware discovery, and migration strategies
+description: Reference — Network.framework guide for NetworkConnection (iOS 26+), NWConnection (iOS 12-25), TLV framing, Coder, listener/browser APIs, Wi-Fi Aware, and migration
 license: MIT
 compatibility: iOS 12+ (NWConnection), iOS 26+ (NetworkConnection)
 metadata:
@@ -12,7 +12,7 @@ metadata:
 
 ## Overview
 
-Network.framework is Apple's modern networking API that replaces Berkeley sockets, providing smart connection establishment, user-space networking, built-in TLS support, and seamless mobility. Introduced in iOS 12 (2018) with NWConnection and evolved in iOS 26 (2025) with NetworkConnection for structured concurrency.
+Network.framework replaces Berkeley sockets with smart connection establishment, user-space networking, built-in TLS, and mobility handling. Introduced with NWConnection (iOS 12), extended with NetworkConnection (iOS 26).
 
 #### Evolution timeline
 - **2018 (iOS 12)** NWConnection with completion handlers, deprecates CFSocket/NSStream/SCNetworkReachability
@@ -26,7 +26,7 @@ Network.framework is Apple's modern networking API that replaces Berkeley socket
 - **Mobility** Automatic network transition handling (WiFi ↔ cellular), viability notifications, Multipath TCP
 - **Performance** ECN (Explicit Congestion Notification), service class marking, TCP Fast Open, UDP batching
 
-#### When to use vs URLSession
+#### Use vs URLSession
 - **URLSession** HTTP, HTTPS, WebSocket, simple TCP/TLS streams → Use URLSession (optimized for these)
 - **Network.framework** UDP, custom protocols, low-level control, peer-to-peer, gaming, streaming → Use Network.framework
 
@@ -38,7 +38,7 @@ Network.framework is Apple's modern networking API that replaces Berkeley socket
 
 ## When to Use This Skill
 
-Use this skill when:
+Use when:
 - **Planning migration** from BSD sockets, CFSocket, NSStream, or SCNetworkReachability
 - **Understanding API differences** between NWConnection (iOS 12-25) and NetworkConnection (iOS 26+)
 - **Implementing all 12 WWDC 2025 examples** (TLS connection, TLV framing, Coder protocol, NetworkListener, Wi-Fi Aware)

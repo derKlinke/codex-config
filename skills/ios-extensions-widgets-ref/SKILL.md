@@ -11,7 +11,7 @@ metadata:
 
 ## Overview
 
-This skill provides comprehensive API reference for Apple's widget and extension ecosystem:
+API reference for Apple's widget and extension ecosystem:
 
 - **Standard Widgets** (iOS 14+) — Home Screen, Lock Screen, StandBy widgets
 - **Interactive Widgets** (iOS 17+) — Buttons and toggles with App Intents
@@ -21,9 +21,9 @@ This skill provides comprehensive API reference for Apple's widget and extension
 
 Widgets are SwiftUI **archived snapshots** rendered on a timeline by the system. Extensions are sandboxed executables bundled with your app.
 
-## When to Use This Skill
+## When to Use
 
-✅ **Use this skill when**:
+✅ **Use when**:
 - Implementing any type of widget (Home Screen, Lock Screen, StandBy)
 - Creating Live Activities for ongoing events
 - Building Control Center controls
@@ -32,7 +32,7 @@ Widgets are SwiftUI **archived snapshots** rendered on a timeline by the system.
 - Integrating widgets with App Intents
 - Supporting watchOS or visionOS widgets
 
-❌ **Do NOT use this skill for**:
+❌ **Do not use for**:
 - Pure App Intents questions (use **app-intents-ref** skill)
 - SwiftUI layout issues (use **swiftui-layout** skill)
 - Performance optimization (use **swiftui-performance** skill)

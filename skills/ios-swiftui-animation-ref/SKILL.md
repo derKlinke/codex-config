@@ -10,9 +10,9 @@ metadata:
 
 ## Overview
 
-Comprehensive guide to SwiftUI's animation system, from foundational concepts to advanced techniques. This skill covers the Animatable protocol, the iOS 26 @Animatable macro, animation types, and the Transaction system.
+Guide to SwiftUI's animation system, from foundational concepts to advanced techniques. Covers the Animatable protocol, the iOS 26 @Animatable macro, animation types, and the Transaction system.
 
-**Core principle** Animation in SwiftUI is mathematical interpolation over time, powered by the VectorArithmetic protocol. Understanding this foundation unlocks the full power of SwiftUI's declarative animation system.
+**Core principle:** Animation in SwiftUI is mathematical interpolation over time, powered by the VectorArithmetic protocol. Understanding this foundation unlocks the full power of SwiftUI's declarative animation system.
 
 ## System Requirements
 

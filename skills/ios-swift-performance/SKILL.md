@@ -10,7 +10,7 @@ metadata:
 
 ## Purpose
 
-**Core Principle**: Optimize Swift code by understanding language-level performance characteristics—value semantics, ARC behavior, generic specialization, and memory layout—to write fast, efficient code without premature micro-optimization.
+**Core Principle**: Optimize Swift by using language-level cost models (value semantics, ARC, specialization, memory layout), not premature micro-optimization.
 
 **Swift Version**: Swift 6.2+ (for InlineArray, Span, `@concurrent`)
 **Xcode**: 16+
@@ -24,7 +24,7 @@ metadata:
 
 ## When to Use This Skill
 
-### ✅ Use this skill when
+### ✅ Use when
 
 - App profiling shows Swift code as the bottleneck (Time Profiler hotspots)
 - Excessive memory allocations or retain/release traffic

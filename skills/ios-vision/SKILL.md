@@ -10,24 +10,24 @@ metadata:
 
 # Vision Framework Computer Vision
 
-Guides you through implementing computer vision: subject segmentation, hand/body pose detection, person detection, text recognition, barcode detection, document scanning, and combining Vision APIs to solve complex problems.
+Implementation guide for subject segmentation, hand/body pose detection, person detection, OCR, barcode detection, document scanning, and combined Vision pipelines.
 
 ## When to Use This Skill
 
 Use when you need to:
-- ☑ Isolate subjects from backgrounds (subject lifting)
-- ☑ Detect and track hand poses for gestures
-- ☑ Detect and track body poses for fitness/action classification
-- ☑ Segment multiple people separately
-- ☑ Exclude hands from object bounding boxes (combining APIs)
-- ☑ Choose between VisionKit and Vision framework
-- ☑ Combine Vision with CoreImage for compositing
-- ☑ Decide which Vision API solves your problem
-- ☑ Recognize text in images (OCR)
-- ☑ Detect barcodes and QR codes
-- ☑ Scan documents with perspective correction
-- ☑ Extract structured data from documents (iOS 26+)
-- ☑ Build live scanning experiences (DataScannerViewController)
+- Isolate subjects from backgrounds (subject lifting)
+- Detect and track hand poses for gestures
+- Detect and track body poses for fitness/action classification
+- Segment multiple people separately
+- Exclude hands from object bounding boxes (combined APIs)
+- Choose between VisionKit and Vision
+- Combine Vision with CoreImage compositing
+- Pick the right Vision API
+- Recognize text in images (OCR)
+- Detect barcodes/QR codes
+- Scan documents with perspective correction
+- Extract structured document data (iOS 26+)
+- Build live scanning with `DataScannerViewController`
 
 ## Example Prompts
 

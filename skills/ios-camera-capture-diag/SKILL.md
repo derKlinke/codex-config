@@ -10,22 +10,22 @@ metadata:
 
 # Camera Capture Diagnostics
 
-Systematic troubleshooting for AVFoundation camera issues: frozen preview, wrong rotation, slow capture, session interruptions, and permission problems.
+Troubleshooting guide for AVFoundation camera issues: frozen preview, rotation errors, slow capture, interruptions, permissions.
 
 ## Overview
 
-**Core Principle**: When camera doesn't work, the problem is usually:
+**Core principle**: when camera fails, root cause is usually:
 1. **Threading** (session work on main thread) - 35%
 2. **Session lifecycle** (not started, interrupted, not configured) - 25%
 3. **Rotation** (deprecated APIs, missing coordinator) - 20%
 4. **Permissions** (denied, not requested) - 15%
 5. **Configuration** (wrong preset, missing input/output) - 5%
 
-**Always check threading and session state BEFORE debugging capture logic.**
+Always check threading and session state BEFORE capture-logic debugging.
 
 ## Red Flags
 
-Symptoms that indicate camera-specific issues:
+Symptoms indicating camera-specific issues:
 
 | Symptom | Likely Cause |
 |---------|--------------|
@@ -42,7 +42,7 @@ Symptoms that indicate camera-specific issues:
 
 ## Mandatory First Steps
 
-Before investigating code, run these diagnostics:
+Before code-level investigation, run these diagnostics:
 
 ### Step 1: Check Session State
 

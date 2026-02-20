@@ -11,11 +11,11 @@ metadata:
 
 ## Overview
 
-Advanced query patterns and schema composition techniques for [SQLiteData](https://github.com/pointfreeco/sqlite-data) by Point-Free. Built on [GRDB](https://github.com/groue/GRDB.swift) and [StructuredQueries](https://github.com/pointfreeco/swift-structured-queries).
+Advanced query and schema-composition patterns for [SQLiteData](https://github.com/pointfreeco/sqlite-data), built on [GRDB](https://github.com/groue/GRDB.swift) and [StructuredQueries](https://github.com/pointfreeco/swift-structured-queries).
 
-**For core patterns** (CRUD, CloudKit setup, @Table basics), see the `ios-sqlitedata` discipline skill.
+**For core patterns** (CRUD, CloudKit setup, `@Table` basics), use `ios-sqlitedata`.
 
-**This reference covers** advanced querying, schema composition, views, and custom aggregates.
+**Covers** advanced querying, schema composition, views, and custom aggregates.
 
 **Requires** iOS 17+, Swift 6 strict concurrency
 **Framework** SQLiteData 1.4+
