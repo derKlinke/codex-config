@@ -33,6 +33,14 @@ Keep `<repo-root>/DESIGN.md` as the authoritative present-state design doctrine:
 - Avoid decision logs, rationale trails, ticket references, and per-feature implementation diaries.
 - Avoid overly granular component inventories unless they describe reusable system primitives.
 - Preserve established design language/vibe unless a rebrand is explicitly requested.
+- Codify typography as system behavior:
+  - semantic hierarchy before visual decoration
+  - explicit role->size->weight->line-height mapping
+  - prose measure targets (typically `~45-75` chars)
+  - body leading ranges for sustained reading (typically `~1.2-1.45`)
+  - spacing policy for letter/word/line/paragraph rhythm
+  - glyph policy (real quotes/dashes/ellipsis; no faux styles or stretched text)
+  - long-form line-break policy (widow/orphan/rivers/ladders handling)
 - Record accessibility implications per platform (for example WCAG contrast/focus for web, Dynamic Type/VoiceOver/reduced motion for iOS).
 - Keep semantics stable: one visual cue should map to one meaning.
 - Keep `DESIGN.md` concise and scannable; short sections and rule lists over long narrative.
@@ -51,6 +59,7 @@ Keep `<repo-root>/DESIGN.md` as the authoritative present-state design doctrine:
 
 ## Local Cross-References
 
+- `design-typography-system-doc` - create/maintain canonical `TYPO.md` with strict ratio-based typography rules.
 - `frontend-design` - implementation companion for applying doctrine constraints in production UI code.
 - `design-quality-gates` - Mandatory objective gate checks for layout, type, hierarchy, color, and accessibility before design sign-off.
 - `design-interaction-motion-craft` - Motion/interaction doctrine for transitions, gestures, causality, and timing consistency.

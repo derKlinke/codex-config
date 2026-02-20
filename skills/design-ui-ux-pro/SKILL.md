@@ -57,9 +57,12 @@ Design rules + searchable CLI for style, UX, color, typography, charts, landing 
 - `z-index-management`: explicit scale (`10/20/30/50/...`)
 
 ### Typography/color (medium)
-- `line-height`: body 1.5-1.75
-- `line-length`: ~65-75 chars
+- `semantics-first`: type hierarchy follows content roles, not visual decoration
+- `line-height`: body typically ~1.2-1.45 for sustained reading; adjust by face/x-height
+- `line-length`: prose target ~45-75 chars
 - `font-pairing`: heading/body personality alignment
+- `glyph-integrity`: true quotes/apostrophes/dashes/ellipsis; no faux styles
+- `break-quality`: avoid widows/orphans; monitor rivers/ladders in justified copy
 
 ### Animation (medium)
 - `duration-timing`: 150-300ms micro interactions
@@ -203,6 +206,8 @@ python3 skills/ui-ux-pro-max/scripts/search.py "fintech crypto" --design-system 
 - [ ] Brand logos verified
 - [ ] Hover states do not shift layout
 - [ ] Theme tokens used directly
+- [ ] Type roles mapped to semantics (display/head/body/meta/data)
+- [ ] No faux bold/italic/small-caps or stretched text
 
 ### Interaction
 - [ ] Clickable elements indicate clickability
