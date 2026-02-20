@@ -1,5 +1,5 @@
 ---
-name: interaction-motion-craft
+name: design-interaction-motion-craft
 description: Use when designing or reviewing transitions, gestures, state-change animations, micro-interactions, scroll-linked motion, or interaction feedback across web/iOS/macOS.
 ---
 
