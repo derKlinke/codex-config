@@ -1,0 +1,3 @@
+interface:
+  display_name: "CSS Grid Overlay Debug"
+  short_description: "Deterministic global grid visualization with subgrid-safe gutters"
