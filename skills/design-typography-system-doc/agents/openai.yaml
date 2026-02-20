@@ -1,0 +1,5 @@
+interface:
+  display_name: "Typography System Doc"
+  short_description: "Define strict ratio-based typography doctrine and maintain TYPO.md"
+  default_prompt: "Create or update a canonical TYPO.md with mathematical type scale rules, H1/H2/H3/body/caption roles, list/link typesetting policy, and accessibility gates."
+
