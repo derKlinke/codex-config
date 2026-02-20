@@ -53,6 +53,7 @@ Convert design decisions from taste-led to constraint-led. Apply measurable gate
 - Text contrast: at least 4.5:1 (normal), 3:1 (large).
 - Non-text UI contrast: at least 3:1.
 - Touch/pointer targets meet platform minimums.
+- For mobile navigation overlays: row targets prefer `>=56px`; trigger/close controls `>=48px`.
 - Reading/navigation order matches visual order.
 - Zoom/reflow and text-spacing overrides do not break UI.
 - Motion respects reduced-motion preferences.
@@ -63,6 +64,13 @@ Convert design decisions from taste-led to constraint-led. Apply measurable gate
 - Repeated interactions use restrained timing; avoid novelty fatigue.
 - Motion remains interruptible and reversible when possible.
 - Apply `design-interaction-motion-craft` for principle-level review.
+- For mobile overlays: open/close must be zero-layout-shift across repeated toggles (no page jump, no header baseline jump).
+
+### 7) Navigation Overlay Ergonomics (When Applicable)
+- Section labels and destination links use distinct type scales/hierarchy.
+- Section rhythm is explicit (group spacing + optional separators); avoid margin-stack drift.
+- Focus trap + Escape + backdrop close + focus restore are verified.
+- Safe-area insets are applied on top and bottom.
 
 ## Definition of Done
 

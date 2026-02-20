@@ -41,9 +41,23 @@ Focus on:
 
 - **Typography**: Default to system fonts or Helvetica Neue unless the repository design system specifies otherwise. Introduce custom type only when there is a clear product-specific rationale, and pair display/body fonts intentionally.
 - **Color & Theme**: Commit to a cohesive aesthetic. Use CSS variables for consistency. Dominant colors with sharp accents outperform timid, evenly-distributed palettes.
-- **Motion**: Use animations for effects and micro-interactions. Prioritize CSS-only solutions for HTML. Use Motion library for React when available. Focus on high-impact moments: one well-orchestrated page load with staggered reveals (animation-delay) creates more delight than scattered micro-interactions. Use scroll-triggering and hover states that surprise. Before finalizing, apply `interaction-motion-craft` to validate intent, interruptibility, and timing discipline.
+- **Motion**: Use animations for effects and micro-interactions. Prioritize CSS-only solutions for HTML. Use Motion library for React when available. Focus on high-impact moments: one well-orchestrated page load with staggered reveals (animation-delay) creates more delight than scattered micro-interactions. Use scroll-triggering and hover states that surprise. Before finalizing, apply `design-interaction-motion-craft` to validate intent, interruptibility, and timing discipline.
 - **Spatial Composition**: Unexpected layouts. Asymmetry. Overlap. Diagonal flow. Grid-breaking elements. Generous negative space OR controlled density.
 - **Backgrounds & Visual Details**: Create atmosphere and depth rather than defaulting to solid colors. Add contextual effects and textures that match the overall aesthetic. Apply creative forms like gradient meshes, noise textures, geometric patterns, layered transparencies, dramatic shadows, decorative borders, custom cursors, and grain overlays.
+
+## Mobile Nav Overlay Baseline (Web)
+
+Use this baseline whenever a mobile full-screen menu/sheet/overlay is implemented or polished.
+
+- **Target sizes**: hard floor `44x44`; prefer `>=56px` for primary nav rows; trigger/close controls `>=48px`.
+- **Type hierarchy**: section labels use compact uppercase meta scale; link rows use body-size or larger. Do not use identical scales for both.
+- **Rhythm**: section spacing must be explicit; avoid stacked ad-hoc margins; use subtle separators when lists are dense.
+- **Link styling**: avoid default underlines in overlay nav rows; active state should include a clear structural cue (for example background + leading accent), not color/weight only.
+- **Modal behavior**: trap focus, close via Escape + backdrop + navigation tap, restore trigger focus, and set non-dialog regions inert.
+- **No layout shift rule**: opening/closing overlay must not move the underlying page position; avoid `position: fixed` body lock patterns that cause jump on close.
+- **Safe areas**: include `env(safe-area-inset-top)` and `env(safe-area-inset-bottom)` in overlay paddings.
+- **Motion envelope**: backdrop ~`120-160ms`; content ~`200-240ms`; short stagger only; disable non-essential motion for reduced-motion users.
+- **QA pass**: verify smallest mobile viewport + one large phone viewport; explicitly test repeated open/close for zero jump and stable header baseline.
 
 NEVER use generic AI-generated aesthetics like overused font families (Inter, Roboto, Arial), cliched color schemes (particularly purple gradients on white backgrounds), predictable layouts and component patterns, and cookie-cutter design that lacks context-specific character.
 
@@ -52,3 +66,9 @@ Interpret creatively and make unexpected choices that feel genuinely designed fo
 **IMPORTANT**: Match implementation complexity to the aesthetic vision. Maximalist designs need elaborate code with extensive animations and effects. Minimalist or refined designs need restraint, precision, and careful attention to spacing, typography, and subtle details. Elegance comes from executing the vision well.
 
 Remember: Codex is capable of extraordinary creative work. Don't hold back, show what can truly be created when thinking outside the box and committing fully to a distinctive vision.
+
+## Related Skills
+
+- `design-system-doc` - enforce/update durable doctrine (`DESIGN.md`) after nav behavior/token changes.
+- `design-quality-gates` - objective sign-off checks (including target size, spacing rhythm, and accessibility).
+- `design-interaction-motion-craft` - motion timing, causality, and reduced-motion review for overlays/transitions.
