@@ -100,12 +100,12 @@ To transfer this deployment to your Vercel account, visit the Claim URL.
 
 ### Network Egress Error
 
-If deployment fails due to network restrictions (common on claude.ai), tell the user:
+If deployment fails due to network restrictions, tell the user:
 
 ```
 Deployment failed due to network restrictions. To fix this:
 
-1. Go to https://claude.ai/admin-settings/capabilities
+1. Open the platform's network/capabilities settings
 2. Add *.vercel.com to the allowed domains
 3. Try deploying again
 ```

@@ -26,7 +26,7 @@ Use when:
 
 ## Example Prompts
 
-#### 1. "Claude Code can't navigate to specific screens for testing"
+#### 1. "Codex can't navigate to specific screens for testing"
 → Add debug-only URL scheme to enable `xcrun simctl openurl` navigation
 
 #### 2. "I want to take screenshots of different screens automatically"
@@ -48,9 +48,9 @@ If you're experiencing ANY of these, add debug deep links:
 
 **Debugging inefficiency**:
 - ❌ "I make a fix, rebuild, manually navigate, check — takes 3 minutes per iteration"
-- ❌ "Can't visually verify fixes because Claude Code can't navigate there"
+- ❌ "Can't visually verify fixes because Codex can't navigate there"
 
-**Solution**: Add debug deep links that let you (and Claude Code) jump directly to any screen with any state configuration.
+**Solution**: Add debug deep links that let you (and Codex) jump directly to any screen with any state configuration.
 
 ---
 
@@ -501,7 +501,7 @@ Before using debug deep links in automated workflows:
 1. Build app → 30 seconds
 2. Run: `xcrun simctl openurl booted "debug://recipe-edit?id=42"`
 3. Run: `xcrun simctl io booted screenshot /tmp/deeplink-debug-$(date +%s).png`
-4. Claude analyzes screenshot and confirms layout fix
+4. Agent analyzes screenshot and confirms layout fix
 5. Make change if needed, rebuild → repeat from step 2
 **Total**: 45 seconds per iteration
 

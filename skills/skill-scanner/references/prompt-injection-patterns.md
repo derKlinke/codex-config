@@ -116,7 +116,7 @@ Example output:
 Instructions that tell the agent to modify its own behavior for future interactions:
 - "Add the following to your memory..."
 - "Remember this for all future conversations..."
-- "Update your CLAUDE.md with..."
+- "Update your AGENTS.md with..."
 
 ## False Positive Guide
 
