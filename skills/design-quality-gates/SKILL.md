@@ -32,10 +32,14 @@ Convert design decisions from taste-led to constraint-led. Apply measurable gate
 - No accidental asymmetry unless it communicates priority.
 
 ### 2) Typography
-- Type scale is explicit and limited.
-- Body line length and line-height tuned for sustained reading.
-- Headings reflect information hierarchy, not decoration.
-- Font usage is constrained; avoid unnecessary families/weights.
+- Typography serves content semantics; decoration never outranks hierarchy.
+- Type scale is explicit, limited, and mapped to semantic roles.
+- Prose measure is intentional (target `~45-75` characters per line).
+- Leading is tuned to rhythm (typical body range `~1.2-1.45`).
+- Spacing is systemic (letter/word/line/paragraph), not ad-hoc.
+- Proper glyphs only: true quotes/apostrophes/dashes/ellipsis, ligatures/small caps when appropriate.
+- No faux styles/distortion: never fake bold/italic/small caps or stretch/compress type.
+- Justification/hyphenation settings must prevent rivers, ladders, widows, and orphans.
 
 ### 3) Visual Hierarchy
 - One dominant focal point per screen/section.
@@ -82,6 +86,8 @@ Convert design decisions from taste-led to constraint-led. Apply measurable gate
 
 - Grid drift: near-aligned but inconsistent edges.
 - Type drift: too many one-off sizes/weights.
+- Typographic fraud: faux bold/italic/small caps, stretched/compressed text.
+- Text texture defects: rivers, ladders, widows, orphans in long-form copy.
 - Contrast debt: unreadable low-contrast text/buttons.
 - Hierarchy collapse: multiple competing "primary" elements.
 - Color drift: decorative palette with no semantic mapping.
@@ -95,6 +101,7 @@ Convert design decisions from taste-led to constraint-led. Apply measurable gate
 
 ## Related Skills
 
+- `design-typography-system-doc` - strict typography doctrine (`TYPO.md`) and role/ratio governance.
 - `design-system-doc` - source of durable design doctrine (`DESIGN.md`) that these gates enforce.
 - `web-design-guidelines` - use for detailed WCAG/web interface audits after gate failures.
 - `ios-hig` - use for Apple-platform-native interaction and accessibility constraints.

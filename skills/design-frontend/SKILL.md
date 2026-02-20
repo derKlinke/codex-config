@@ -39,11 +39,23 @@ Then implement working code (HTML/CSS/JS, React, Vue, etc.) that is:
 
 Focus on:
 
-- **Typography**: Default to system fonts or Helvetica Neue unless the repository design system specifies otherwise. Introduce custom type only when there is a clear product-specific rationale, and pair display/body fonts intentionally.
+- **Typography**: Default to system fonts or Helvetica Neue unless the repository design system specifies otherwise. Introduce custom type only with product-specific rationale and intentional display/body pairing.
 - **Color & Theme**: Commit to a cohesive aesthetic. Use CSS variables for consistency. Dominant colors with sharp accents outperform timid, evenly-distributed palettes.
 - **Motion**: Use animations for effects and micro-interactions. Prioritize CSS-only solutions for HTML. Use Motion library for React when available. Focus on high-impact moments: one well-orchestrated page load with staggered reveals (animation-delay) creates more delight than scattered micro-interactions. Use scroll-triggering and hover states that surprise. Before finalizing, apply `design-interaction-motion-craft` to validate intent, interruptibility, and timing discipline.
 - **Spatial Composition**: Unexpected layouts. Asymmetry. Overlap. Diagonal flow. Grid-breaking elements. Generous negative space OR controlled density.
 - **Backgrounds & Visual Details**: Create atmosphere and depth rather than defaulting to solid colors. Add contextual effects and textures that match the overall aesthetic. Apply creative forms like gradient meshes, noise textures, geometric patterns, layered transparencies, dramatic shadows, decorative borders, custom cursors, and grain overlays.
+
+## Typography Protocol (Bringhurst Baseline)
+
+Apply these checks to any reading-heavy region (hero copy, article, docs, dense feature explanations):
+
+- Semantics first: heading/eyebrow/body/caption roles map to content structure, not decoration.
+- Measure: sustained prose targets `~45-75` characters/line.
+- Leading: sustained body copy typically `~1.2-1.45`; tune by typeface x-height and weight.
+- Texture: keep paragraph color even; avoid abrupt tracking/weight swings without semantic reason.
+- Glyph integrity: use true quotes/apostrophes/dashes/ellipsis; enable ligatures/small caps only when typeface supports them.
+- Ban typographic fakes: no faux bold/italic/small caps; no horizontal/vertical scaling of glyphs.
+- Line-break quality: avoid widows/orphans and severe rivers/ladders (especially in justified copy).
 
 ## Mobile Nav Overlay Baseline (Web)
 

@@ -183,7 +183,15 @@ Don't mix approaches.
 Sharper feels technical. Rounder feels friendly. Pick a scale and apply consistently.
 
 ## Typography
-Headlines need weight and tight tracking. Body needs readability. Data needs monospace. Build a hierarchy.
+Typography is structural, not decorative. Enforce:
+- Semantics first: map display/headline/subhead/body/meta/data to information roles.
+- Measure: reading-heavy text targets `~45-75` characters per line.
+- Leading: body copy generally `~1.2-1.45`; tune by density and x-height.
+- Rhythm: consistent paragraph/section spacing; avoid arbitrary spacing jumps.
+- Data UI: use tabular numerals/monospace where comparison speed matters.
+- Glyph correctness: true punctuation marks and approved OpenType features only.
+- Ban typographic fraud: no fake bold/italic/small caps; no stretched/compressed text.
+- Long-form quality: control widows/orphans; prevent rivers/ladders in justified blocks.
 
 ## Color & Surfaces
 Build from primitives: foreground (text hierarchy), background (surface elevation), border (separation hierarchy), brand, and semantic (destructive, warning, success). Every color should trace back to these. No random hex values — everything maps to the system.
@@ -248,6 +256,11 @@ Read `.interface-design/system.md` and apply. Decisions are made.
 4. Build — Apply principles
 5. **Evaluate** — Run the mandate checks before showing
 6. Offer to save
+
+## Related Skills
+
+- `design-quality-gates` - mandatory pass/fail validation before sign-off, including typography defects.
+- `design-system-doc` - persist durable type hierarchy, spacing, and glyph policy in `DESIGN.md`.
 
 ---
 
