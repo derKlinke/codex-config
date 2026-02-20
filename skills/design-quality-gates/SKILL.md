@@ -62,7 +62,7 @@ Convert design decisions from taste-led to constraint-led. Apply measurable gate
 - Gesture-driven feedback starts immediately and tracks user input.
 - Repeated interactions use restrained timing; avoid novelty fatigue.
 - Motion remains interruptible and reversible when possible.
-- Apply `interaction-motion-craft` for principle-level review.
+- Apply `design-interaction-motion-craft` for principle-level review.
 
 ## Definition of Done
 
@@ -90,4 +90,4 @@ Convert design decisions from taste-led to constraint-led. Apply measurable gate
 - `design-system-doc` - source of durable design doctrine (`DESIGN.md`) that these gates enforce.
 - `web-design-guidelines` - use for detailed WCAG/web interface audits after gate failures.
 - `ios-hig` - use for Apple-platform-native interaction and accessibility constraints.
-- `interaction-motion-craft` - interaction behavior and animation craft principles for motion/transition quality.
+- `design-interaction-motion-craft` - interaction behavior and animation craft principles for motion/transition quality.
