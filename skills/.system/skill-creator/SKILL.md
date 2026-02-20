@@ -1,41 +1,37 @@
 ---
 name: skill-creator
-description: Guide for creating effective skills. This skill should be used when users want to create a new skill (or update an existing skill) that extends Codex's capabilities with specialized knowledge, workflows, or tool integrations.
+description: Use when creating or updating skills that extend Codex with domain knowledge, workflows, or tool integrations.
 metadata:
   short-description: Create or update a skill
 ---
 
 # Skill Creator
 
-This skill provides guidance for creating effective skills.
+Guidance for creating effective skills.
 
 ## About Skills
 
-Skills are modular, self-contained folders that extend Codex's capabilities by providing
-specialized knowledge, workflows, and tools. Think of them as "onboarding guides" for specific
-domains or tasks—they transform Codex from a general-purpose agent into a specialized agent
-equipped with procedural knowledge that no model can fully possess.
+Skills are modular, self-contained folders that add specialized knowledge, workflows, and tools.
+Treat them as onboarding guides for a domain or task.
 
 ### What Skills Provide
 
-1. Specialized workflows - Multi-step procedures for specific domains
-2. Tool integrations - Instructions for working with specific file formats or APIs
-3. Domain expertise - Company-specific knowledge, schemas, business logic
-4. Bundled resources - Scripts, references, and assets for complex and repetitive tasks
+1. Specialized workflows - Domain-specific procedures
+2. Tool integrations - Instructions for file formats or APIs
+3. Domain expertise - Company schemas and business logic
+4. Bundled resources - Scripts, references, and assets for repetitive tasks
 
 ## Core Principles
 
 ### Concise is Key
 
-The context window is a public good. Skills share the context window with everything else Codex needs: system prompt, conversation history, other Skills' metadata, and the actual user request.
-
-**Default assumption: Codex is already very smart.** Only add context Codex doesn't already have. Challenge each piece of information: "Does Codex really need this explanation?" and "Does this paragraph justify its token cost?"
-
-Prefer concise examples over verbose explanations.
+The context window is shared with system prompt, history, skill metadata, and user request.
+**Default assumption: Codex is already very smart.** Add only non-obvious context; justify token cost.
+Prefer concise examples over long explanations.
 
 ### Set Appropriate Degrees of Freedom
 
-Match the level of specificity to the task's fragility and variability:
+Match specificity to task fragility and variability:
 
 **High freedom (text-based instructions)**: Use when multiple approaches are valid, decisions depend on context, or heuristics guide the approach.
 
@@ -43,7 +39,7 @@ Match the level of specificity to the task's fragility and variability:
 
 **Low freedom (specific scripts, few parameters)**: Use when operations are fragile and error-prone, consistency is critical, or a specific sequence must be followed.
 
-Think of Codex as exploring a path: a narrow bridge with cliffs needs specific guardrails (low freedom), while an open field allows many routes (high freedom).
+Narrow path with high failure cost: low freedom. Open space with many valid routes: high freedom.
 
 ### Anatomy of a Skill
 

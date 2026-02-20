@@ -8,11 +8,11 @@ metadata:
 
 # RealityKit Diagnostics
 
-Systematic diagnosis for common RealityKit issues with time-cost annotations.
+Diagnosis guide for common RealityKit issues with time-cost annotations.
 
-## When to Use This Diagnostic Skill
+## Use When
 
-Use this skill when:
+Use when:
 - Entity added but not visible in the scene
 - AR anchor not tracking or content floating
 - Tap/drag gestures not responding on 3D entities
@@ -21,7 +21,7 @@ Use this skill when:
 - Multiplayer entities not syncing across devices
 - Physics bodies not colliding or passing through each other
 
-For RealityKit architecture patterns and best practices, see `ios-realitykit`. For API reference, see `ios-realitykit-ref`.
+For architecture/patterns, see `ios-realitykit`. For API details, see `ios-realitykit-ref`.
 
 ---
 
@@ -43,7 +43,7 @@ arView.debugOptions = [
 #endif
 ```
 
-If you can't see collision shapes with `.showPhysics`, your `CollisionComponent` is missing or misconfigured. **Fix collision before debugging gestures or physics.**
+If `.showPhysics` does not show collision shapes, `CollisionComponent` is missing/misconfigured. Fix collision before gesture/physics debugging.
 
 ---
 

@@ -1,12 +1,12 @@
 ---
 name: ios-networking-legacy
-description: This skill should be used when working with NWConnection patterns for iOS 12-25, supporting apps that can't use async/await yet, or maintaining backward compatibility with completion handler networking.
+description: Use when implementing NWConnection patterns for iOS 12-25, supporting apps without async/await, or keeping completion-handler compatibility.
 license: MIT
 ---
 
 # Legacy iOS 12-25 NWConnection Patterns
 
-These patterns use NWConnection with completion handlers for apps supporting iOS 12-25. If your app targets iOS 26+, use NetworkConnection with async/await instead (see ios-network-framework-ref skill).
+NWConnection completion-handler patterns for iOS 12-25. If your app targets iOS 26+, prefer NetworkConnection with async/await (see `ios-network-framework-ref`).
 
 ## Pattern 2a: NWConnection with TLS (iOS 12-25)
 

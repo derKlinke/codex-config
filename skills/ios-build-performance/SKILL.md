@@ -1,6 +1,6 @@
 ---
 name: ios-build-performance
-description: Use when build times are slow, investigating build performance, analyzing Build Timeline, identifying type checking bottlenecks, enabling compilation caching, or optimizing incremental builds - comprehensive build optimization workflows including Xcode 26 compilation caching
+description: Use for slow builds: Build Timeline analysis, type-check bottlenecks, compilation caching, and incremental-build optimization
 license: MIT
 compatibility: iOS 14+, macOS 11+, iPadOS 14+, tvOS 14+, watchOS 7+, ios-visionOS 1.0+. Xcode 14+ (Xcode 26+ for compilation caching and explicit modules)
 metadata:
@@ -13,9 +13,9 @@ metadata:
 
 ## Overview
 
-Systematic Xcode build performance analysis and optimization. **Core principle**: Measure before optimizing, then optimize the critical path first.
+Xcode build-performance analysis and optimization. **Core principle**: measure first, then optimize critical path.
 
-## When to Use This Skill
+## Use This Skill When
 
 - Build times have increased significantly
 - Incremental builds taking too long
@@ -27,9 +27,9 @@ Systematic Xcode build performance analysis and optimization. **Core principle**
 - Reducing module variants in explicitly built modules
 - Understanding the three-phase build process (scan → modules → compile)
 
-## Quick Win: Run an Automated Baseline First
+## Quick Win: Run Baseline Script First
 
-For quick wins, run your repo build profiling scripts (if available), then use this skill for deeper analysis and fix prioritization.
+Run repo build-profiling scripts first (if available), then use this skill for deeper analysis and prioritization.
 
 ## The Build Performance Workflow
 

@@ -8,9 +8,9 @@ metadata:
 
 # Display Performance
 
-Systematic diagnosis for frame rate issues on variable refresh rate displays (ProMotion, iPad Pro, future devices). Covers render loop configuration, frame pacing, hitch mechanics, and production telemetry.
+Diagnosis guide for frame-rate issues on variable-refresh displays (ProMotion, iPad Pro, future devices): render loops, pacing, hitches, telemetry.
 
-**Key insight**: "ProMotion available" does NOT mean your app automatically runs at 120Hz. You must configure it correctly, account for system caps, and ensure proper frame pacing.
+**Insight**: ProMotion availability does not imply automatic 120 Hz. You must configure rates, respect system caps, and pace frames correctly.
 
 ---
 
@@ -18,7 +18,7 @@ Systematic diagnosis for frame rate issues on variable refresh rate displays (Pr
 
 ### Diagnostic Order
 
-Check these in order when stuck at 60fps on ProMotion:
+Check in order when stuck at 60 fps on ProMotion:
 
 1. **Info.plist key missing?** (iPhone only) → Part 2
 2. **Render loop configured for 60?** (MTKView defaults, CADisplayLink) → Part 3

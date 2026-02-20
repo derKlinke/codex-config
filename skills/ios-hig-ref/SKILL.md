@@ -1,30 +1,30 @@
 ---
 name: ios-hig-ref
-description: Reference — Comprehensive Apple Human Interface Guidelines covering colors (semantic, custom, patterns), backgrounds (material hierarchy, dynamic), typography (built-in styles, custom fonts, Dynamic Type), SF Symbols (rendering modes, color, ios-localization), Dark Mode, accessibility, and platform-specific considerations
+description: Reference — Apple Human Interface Guidelines for colors, backgrounds, typography, SF Symbols, Dark Mode, accessibility, and platform-specific behavior
 license: MIT
 compatibility: iOS, iPadOS, macOS, watchOS, tvOS, ios-visionOS
 metadata:
   version: "1.0.0"
 ---
 
-# Apple Human Interface Guidelines — Comprehensive Reference
+# Apple Human Interface Guidelines Reference
 
 ## Overview
 
-The Human Interface Guidelines (HIG) define Apple's design philosophy and provide concrete guidance for creating intuitive, accessible, platform-appropriate experiences across all Apple devices.
+HIG defines Apple's design principles and concrete guidance for intuitive, accessible, platform-appropriate experiences.
 
 ### Three Core Principles
 
-Every design decision should support these principles:
+Every design decision should support:
 
 **1. Clarity**
-Content is paramount. Interface elements should defer to content, not compete with it. Every element has a purpose, unnecessary complexity is eliminated, and users should immediately know what they can do without extensive instructions.
+Content first. UI should support content, not compete with it; remove unnecessary complexity; keep actions obvious.
 
 **2. Consistency**
-Apps use standard UI elements and familiar patterns. Navigation follows platform conventions, gestures work as expected, and components appear in expected locations. This familiarity reduces cognitive load.
+Use standard components and familiar patterns. Keep navigation, gestures, and control placement platform-consistent.
 
 **3. Deference**
-The UI should not distract from essential content. Use subtle backgrounds, receding navigation when not needed, restrained branding, and let content be the hero.
+UI should not distract from content. Use subtle backgrounds, receding chrome, and restrained branding.
 
 **From Apple HIG:** "Deference makes an app beautiful by ensuring the content stands out while the surrounding visual elements do not compete with it."
 

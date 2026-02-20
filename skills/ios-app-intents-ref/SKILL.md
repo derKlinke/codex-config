@@ -10,11 +10,11 @@ metadata:
 
 ## Overview
 
-Comprehensive guide to App Intents framework for exposing app functionality to Siri, Apple Intelligence, Shortcuts, Spotlight, and other system experiences. Replaces older SiriKit custom intents with modern Swift-first API.
+Guide to App Intents framework for exposing app functionality to Siri, Apple Intelligence, Shortcuts, Spotlight, and other system experiences. Replaces older SiriKit custom intents with modern Swift-first API.
 
-**Core principle** App Intents make your app's actions discoverable across Apple's ecosystem. Well-designed intents feel natural in Siri conversations, Shortcuts automation, and Spotlight search.
+**Core principle:** App Intents make your app's actions discoverable across Apple's ecosystem. Well-designed intents feel natural in Siri conversations, Shortcuts automation, and Spotlight search.
 
-## When to Use This Skill
+## When to Use
 
 - Exposing app functionality to Siri and Apple Intelligence
 - Making app actions available in Shortcuts app

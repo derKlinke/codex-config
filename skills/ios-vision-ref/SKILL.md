@@ -10,7 +10,7 @@ metadata:
 
 # Vision Framework API Reference
 
-Comprehensive reference for Vision framework computer vision: subject segmentation, hand/body pose detection, person detection, face analysis, text recognition (OCR), barcode detection, and document scanning.
+Reference for Vision computer-vision APIs: subject segmentation, hand/body pose, person/face detection, OCR, barcode detection, and document scanning.
 
 ## When to Use This Reference
 
@@ -26,11 +26,11 @@ Comprehensive reference for Vision framework computer vision: subject segmentati
 - **Scanning documents** with VNDocumentCameraViewController
 - **Extracting structured document data** with RecognizeDocumentsRequest (iOS 26+)
 
-**Related skills**: See `ios-vision` for decision trees and patterns, `ios-vision-diag` for troubleshooting
+**Related skills**: `ios-vision` (patterns/decision trees), `ios-vision-diag` (troubleshooting)
 
 ## Vision Framework Overview
 
-Vision provides computer vision algorithms for still images and video:
+Vision provides CV algorithms for still images and video:
 
 **Core workflow**:
 1. Create request (e.g., `VNDetectHumanHandPoseRequest()`)
@@ -40,7 +40,7 @@ Vision provides computer vision algorithms for still images and video:
 
 **Coordinate system**: Lower-left origin, normalized (0.0-1.0) coordinates
 
-**Performance**: Run on background queue - resource intensive, blocks UI if on main thread
+**Performance**: Run on a background queue; these requests are resource-intensive and can block UI on main thread.
 
 ## Request Handlers
 

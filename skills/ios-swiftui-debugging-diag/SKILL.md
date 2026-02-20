@@ -9,19 +9,19 @@ metadata:
 
 # SwiftUI Debugging Diagnostics
 
-## When to Use This Diagnostic Skill
+## Use This Skill When
 
-Use this skill when:
-- **Basic troubleshooting failed** — Applied `ios-swiftui-debugging` skill patterns but issue persists
-- **Self._printChanges() shows unexpected patterns** — View updating when it shouldn't, or not updating when it should
-- **Intermittent issues** — Works sometimes, fails other times ("heisenbug")
-- **Complex dependency chains** — Need to trace data flow through multiple views/models
-- **Performance investigation** — Views updating too often or taking too long
-- **Preview mysteries** — Crashes or failures that aren't immediately obvious
+Use when:
+- **Basic troubleshooting failed** — `ios-swiftui-debugging` patterns did not resolve it
+- **`Self._printChanges()` is unexpected** — View updates when it should not, or does not update when it should
+- **Intermittent behavior** — Works sometimes, fails sometimes ("heisenbug")
+- **Complex dependencies** — Need full data-flow tracing across views/models
+- **Performance investigation** — Updates are too frequent or too slow
+- **Preview failures** — Crashes/failures are not obvious
 
 ## FORBIDDEN Actions
 
-Under pressure, you'll be tempted to shortcuts that hide problems instead of diagnosing them. **NEVER do these**:
+Under pressure, shortcuts can mask root cause. **NEVER do these**:
 
 ❌ **Guessing with random @State/@Observable changes**
 - "Let me try adding @Observable here and see if it works"
@@ -46,7 +46,7 @@ Under pressure, you'll be tempted to shortcuts that hide problems instead of dia
 
 ## Mandatory First Steps
 
-Before diving into diagnostic patterns, establish baseline environment:
+Before diagnostics, set a baseline environment:
 
 ```bash
 # 1. Verify Instruments setup
@@ -60,7 +60,7 @@ rm -rf ~/Library/Developer/Xcode/DerivedData
 ```
 
 **Time cost**: 5 minutes
-**Why**: Wrong Xcode version or Debug mode produces misleading profiling data
+**Why**: Wrong Xcode version or Debug mode gives misleading profiling data
 
 ---
 

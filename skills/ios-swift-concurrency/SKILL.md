@@ -1,6 +1,6 @@
 ---
 name: ios-swift-concurrency
-description: Use when you see 'actor-isolated', 'Sendable', 'data race', '@MainActor' errors, or when asking 'why is this not thread safe', 'how do I use async/await', 'what is @MainActor for', 'my app is crashing with concurrency errors', 'how do I fix data races' - Swift 6 strict concurrency patterns with actor isolation and async/await
+description: Use for Swift 6 concurrency errors and design: actor isolation, Sendable, data races, @MainActor, async/await, and thread-safety fixes
 license: MIT
 metadata:
   version: "1.0.0"
@@ -8,15 +8,15 @@ metadata:
 
 # Swift 6 Concurrency Guide
 
-**Purpose**: Progressive journey from single-threaded to concurrent Swift code
+**Purpose**: Practical path from single-threaded code to safe concurrency
 **Swift Version**: Swift 6.0+, Swift 6.2+ for `@concurrent`
 **iOS Version**: iOS 17+ (iOS 18.2+ for `@concurrent`)
 **Xcode**: Xcode 16+ (Xcode 16.2+ for `@concurrent`)
 **Context**: WWDC 2025-268 "Embracing Swift concurrency" - approachable path to data-race safety
 
-## When to Use This Skill
+## Use This Skill When
 
-✅ **Use this skill when**:
+✅ **Use when**:
 - Starting a new project and deciding concurrency strategy
 - Debugging Swift 6 concurrency errors (actor isolation, data races, Sendable warnings)
 - Deciding when to introduce async/await vs concurrency
@@ -28,12 +28,12 @@ metadata:
 - Offloading CPU-intensive work to background threads
 - UI feels unresponsive and profiling shows main thread bottleneck
 
-❌ **Do NOT use this skill for**:
+❌ **Do not use for**:
 - General Swift syntax (use Swift documentation)
 - SwiftUI-specific patterns (use `ios-swiftui-debugging` or `ios-swiftui-performance`)
 - API-specific patterns (use API documentation)
 
-## Core Philosophy: Start Single-Threaded
+## Principle: Start Single-Threaded
 
 > **Apple's Guidance (WWDC 2025-268)**: "Your apps should start by running all of their code on the main thread, and you can get really far with single-threaded code."
 

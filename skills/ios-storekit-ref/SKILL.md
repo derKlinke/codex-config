@@ -1,6 +1,6 @@
 ---
 name: ios-storekit-ref
-description: Reference — Complete StoreKit 2 API guide covering Product, Transaction, AppTransaction, RenewalInfo, SubscriptionStatus, StoreKit Views, purchase options, server APIs, and all iOS 18.4 enhancements with WWDC 2025 code examples
+description: Reference — StoreKit 2 API guide covering Product, Transaction, AppTransaction, RenewalInfo, SubscriptionStatus, StoreKit Views, purchase options, server APIs, and iOS 18.4 additions
 license: MIT
 compatibility: iOS 15+ (iOS 18.4+ for latest features)
 metadata:
@@ -8,11 +8,11 @@ metadata:
   last-updated: "2025-12-08"
 ---
 
-# StoreKit 2 — Complete API Reference
+# StoreKit 2 API Reference
 
 ## Overview
 
-StoreKit 2 is Apple's modern in-app purchase framework with async/await APIs, automatic receipt validation, and SwiftUI integration. This reference covers every API, iOS 18.4 enhancements, and comprehensive WWDC 2025 code examples.
+StoreKit 2 provides async/await in-app purchase APIs, automatic verification, and SwiftUI integration. This reference covers APIs, iOS 18.4 additions, and WWDC 2025 examples.
 
 ### Product Types Supported
 
@@ -50,7 +50,7 @@ StoreKit 2 is Apple's modern in-app purchase framework with async/await APIs, au
 
 ## When to Use This Reference
 
-Use this reference when:
+Use when:
 - Implementing in-app purchases with StoreKit 2
 - Understanding new iOS 18.4 fields (appTransactionID, offerPeriod, etc.)
 - Looking up specific API signatures and parameters
@@ -59,7 +59,7 @@ Use this reference when:
 - Implementing StoreKit Views
 - Integrating with App Store Server APIs
 
-**Related Skills**:
+**Related skills**:
 - `ios-in-app-purchases` — Discipline skill with testing-first workflow, architecture patterns
 - (Future: `iap-auditor` agent for auditing existing IAP code)
 - (Future: `iap-implementation` agent for implementing IAP from scratch)

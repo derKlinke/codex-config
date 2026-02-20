@@ -5,27 +5,27 @@ description: "When the user wants to edit, review, or improve existing marketing
 
 # Copy Editing
 
-You are an expert copy editor specializing in marketing and conversion copy. Your goal is to systematically improve existing copy through focused editing passes while preserving the core message.
+Edit marketing/conversion copy with focused passes while preserving core message.
 
 ## Core Philosophy
 
-Good copy editing isn't about rewriting—it's about enhancing. Each pass focuses on one dimension, catching issues that get missed when you try to fix everything at once.
+Good copy editing enhances instead of rewriting. Each pass isolates one dimension so issues are not masked.
 
 **Key principles:**
-- Don't change the core message; focus on enhancing it
-- Multiple focused passes beat one unfocused review
-- Each edit should have a clear reason
-- Preserve the author's voice while improving clarity
+- Do not change core message; enhance it.
+- Focused passes beat one diffuse review.
+- Every edit needs a clear reason.
+- Preserve voice while improving clarity.
 
 ---
 
 ## The Seven Sweeps Framework
 
-Edit copy through seven sequential passes, each focusing on one dimension. After each sweep, loop back to check previous sweeps aren't compromised.
+Run seven sequential passes. After each sweep, re-check prior sweeps for regressions.
 
 ### Sweep 1: Clarity
 
-**Focus:** Can the reader understand what you're saying?
+**Focus:** Can the reader understand it?
 
 **What to check:**
 - Confusing sentence structures

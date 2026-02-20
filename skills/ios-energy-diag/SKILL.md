@@ -1,6 +1,6 @@
 ---
 name: ios-energy-diag
-description: Symptom-based energy troubleshooting - decision trees for 'app at top of battery settings', 'phone gets hot', 'background drain', 'high cellular usage', with time-cost analysis for each diagnosis path
+description: Use for symptom-based energy diagnostics: high battery ranking, heat, background drain, cellular-heavy drain, and action-specific spikes.
 license: MIT
 metadata:
   version: "1.0.0"
@@ -8,371 +8,171 @@ metadata:
 
 # Energy Diagnostics
 
-Symptom-based troubleshooting for energy issues. Start with your symptom, follow the decision tree, get the fix.
+Symptom-first triage for iOS energy issues.
 
-**Related skills**: `ios-energy` (patterns, checklists), `ios-energy-ref` (API reference)
+Related: `ios-energy`, `ios-energy-ref`.
 
----
+## Symptom 1: App High in Battery Settings
 
-## Symptom 1: App at Top of Battery Settings
+### Decision path
 
-Users or you notice your app consuming significant battery.
+1. Run Power Profiler first.
+2. Identify dominant subsystem:
+- CPU high: timer leak, polling loop, repeated parsing
+- Network high: many small requests, fixed-interval polling
+- GPU high: heavy effects/animations running offscreen
+- Display high: bright/light-heavy UI on OLED
 
-### Diagnosis Decision Tree
+3. Check Battery Settings background section:
+- high background time + location icon -> continuous location
+- audio active when idle -> session leak
+- long BGTasks -> late completion calls
 
-```
-App at top of Battery Settings?
-│
-├─ Step 1: Run Power Profiler (15 min)
-│  ├─ CPU Power Impact high?
-│  │  ├─ Continuous? → Timer leak or polling loop
-│  │  │  └─ Fix: Check timers, add tolerance, convert to push
-│  │  └─ Spikes during actions? → Eager loading or repeated parsing
-│  │     └─ Fix: Use LazyVStack, cache parsed data
-│  │
-│  ├─ Network Power Impact high?
-│  │  ├─ Many small requests? → Batching issue
-│  │  │  └─ Fix: Batch requests, use discretionary URLSession
-│  │  └─ Regular intervals? → Polling pattern
-│  │     └─ Fix: Convert to push notifications
-│  │
-│  ├─ GPU Power Impact high?
-│  │  ├─ Animations? → Running when not visible
-│  │  │  └─ Fix: Stop in viewWillDisappear
-│  │  └─ Blur effects? → Over dynamic content
-│  │     └─ Fix: Remove or use static backgrounds
-│  │
-│  └─ Display Power Impact high?
-│     └─ Light backgrounds on OLED?
-│        └─ Fix: Implement Dark Mode (up to 70% savings)
-│
-└─ Step 2: Check background section in Battery Settings
-   ├─ High background time?
-   │  ├─ Location icon visible? → Continuous location
-   │  │  └─ Fix: Switch to significant-change monitoring
-   │  ├─ Audio active? → Session not deactivated
-   │  │  └─ Fix: Deactivate audio session when not playing
-   │  └─ BGTasks running long? → Not completing promptly
-   │     └─ Fix: Call setTaskCompleted sooner
-   │
-   └─ Background time appropriate?
-      └─ Issue is in foreground usage → Focus on CPU/GPU fixes above
-```
-
-### Time-Cost Analysis
+### Time-cost
 
 | Approach | Time | Accuracy |
-|----------|------|----------|
-| Run Power Profiler, identify subsystem | 15-20 min | High |
-| Guess and optimize random areas | 4+ hours | Low |
-| Read all code looking for issues | 2+ hours | Medium |
-
-**Recommendation**: Always use Power Profiler first. It costs 15 minutes but guarantees you optimize the right subsystem.
-
----
+|---|---|---|
+| Power Profiler first | 15-20 min | high |
+| random optimization | 4h+ | low |
+| broad code read only | 2h+ | medium |
 
 ## Symptom 2: Device Gets Hot
 
-Device temperature increases noticeably during app use.
+### Decision path
 
-### Diagnosis Decision Tree
+1. Heat during specific action?
+- video/camera: verify hardware encode + release capture session
+- scrolling/animation: reduce GPU effects, cap frame rate
+- data processing: move heavy work off main, cache outputs
 
-```
-Device gets hot during app use?
-│
-├─ Hot during specific action?
-│  │
-│  ├─ During video/camera use?
-│  │  ├─ Video encoding? → Expected, but check efficiency
-│  │  │  └─ Fix: Use hardware encoding, reduce resolution if possible
-│  │  └─ Camera active unnecessarily? → Not releasing session
-│  │     └─ Fix: Call stopRunning() when done
-│  │
-│  ├─ During scroll/animation?
-│  │  ├─ GPU-intensive effects? → Blur, shadows, many layers
-│  │  │  └─ Fix: Reduce effects, cache rendered content
-│  │  └─ High frame rate? → Unnecessary 120fps
-│  │     └─ Fix: Use CADisplayLink preferredFrameRateRange
-│  │
-│  └─ During data processing?
-│     ├─ JSON parsing? → Repeated or large payloads
-│     │  └─ Fix: Cache parsed results, paginate
-│     └─ Image processing? → Synchronous on main thread
-│        └─ Fix: Move to background, cache results
-│
-├─ Hot during normal use (no specific action)?
-│  │
-│  ├─ Run Power Profiler to identify:
-│  │  ├─ CPU high continuously → Timer, polling, tight loop
-│  │  ├─ GPU high continuously → Animation leak
-│  │  └─ Network high continuously → Polling pattern
-│  │
-│  └─ Check for infinite loops or runaway recursion
-│     └─ Use Time Profiler in Instruments
-│
-└─ Hot only in background?
-   ├─ Location updates continuous? → High accuracy or no stop
-   │  └─ Fix: Reduce accuracy, stop when done
-   ├─ Audio session active? → Hardware kept powered
-   │  └─ Fix: Deactivate when not playing
-   └─ BGTask running too long? → System may throttle
-      └─ Fix: Complete tasks faster, use requiresExternalPower
-```
+2. Heat during normal idle-ish use?
+- profile CPU/GPU/Network continuously
+- check for loops/runaway recursion with Time Profiler
 
-### Time-Cost Analysis
+3. Heat in background?
+- continuous location
+- active audio session
+- long-running BGTasks
+
+### Time-cost
 
 | Approach | Time | Outcome |
-|----------|------|---------|
-| Power Profiler + Time Profiler | 20-30 min | Identifies exact cause |
-| Check code for obvious issues | 1-2 hours | May miss non-obvious causes |
-| Wait for user complaints | N/A | Reputation damage |
-
----
+|---|---|---|
+| Power + Time Profiler | 20-30 min | root cause likely |
+| manual code scan | 1-2h | partial |
 
 ## Symptom 3: Background Battery Drain
 
-App drains battery even when user isn't actively using it.
+### Decision path
 
-### Diagnosis Decision Tree
+1. Audit background modes in Info.plist:
+- `location`: remove unless required; if required, reduce accuracy and stop when done
+- `audio`: deactivate session when idle; never use silent-audio keepalive hack
+- `fetch` / `remote-notification`: verify schedule cadence and handler efficiency
 
-```
-High background battery usage?
-│
-├─ Step 1: Check Info.plist background modes
-│  │
-│  ├─ "location" enabled?
-│  │  ├─ Actually need background location?
-│  │  │  ├─ YES → Use significant-change, lowest accuracy
-│  │  │  └─ NO → Remove background mode, use when-in-use only
-│  │  └─ Check: Is stopUpdatingLocation called?
-│  │
-│  ├─ "audio" enabled?
-│  │  ├─ Audio playing? → Expected
-│  │  ├─ Audio NOT playing? → Session still active
-│  │  │  └─ Fix: Deactivate session, use autoShutdownEnabled
-│  │  └─ Playing silent audio? → Anti-pattern for keeping app alive
-│  │     └─ Fix: Use proper background API (BGTask)
-│  │
-│  ├─ "fetch" enabled?
-│  │  └─ Check: Is earliestBeginDate reasonable? (not too frequent)
-│  │
-│  └─ "remote-notification" enabled?
-│     └─ Expected for push updates, check didReceiveRemoteNotification efficiency
-│
-├─ Step 2: Check BGTaskScheduler usage
-│  │
-│  ├─ BGAppRefreshTask scheduled too frequently?
-│  │  └─ Fix: Increase earliestBeginDate interval
-│  │
-│  ├─ BGProcessingTask not using requiresExternalPower?
-│  │  └─ Fix: Add requiresExternalPower = true for non-urgent work
-│  │
-│  └─ Tasks not completing? (setTaskCompleted not called)
-│     └─ Fix: Always call setTaskCompleted, implement expirationHandler
-│
-└─ Step 3: Check beginBackgroundTask usage
-   │
-   ├─ endBackgroundTask called promptly?
-   │  └─ Fix: Call immediately after work completes, not at expiration
-   │
-   └─ Multiple overlapping background tasks?
-      └─ Fix: Track task IDs, ensure each is ended
-```
+2. Audit `BGTaskScheduler`:
+- refresh frequency too high?
+- processing task missing `requiresExternalPower` for non-urgent work?
+- missing `setTaskCompleted` or expiration handling?
 
-### Common Background Drain Patterns
+3. Audit `beginBackgroundTask`:
+- `endBackgroundTask` called immediately after work?
+- overlapping task identifiers cleaned up?
 
-| Pattern | Power Profiler Signature | Fix |
-|---------|-------------------------|-----|
-| Continuous location | CPU lane + location icon | significant-change |
-| Audio session leak | CPU lane steady | setActive(false) |
-| Timer not invalidated | CPU spikes at intervals | invalidate in background |
-| Polling from background | Network lane at intervals | Push notifications |
-| BGTask too long | CPU sustained | Faster completion |
+### Common signatures
 
-### Time-Cost Analysis
+| Pattern | Power profile signature | Fix |
+|---|---|---|
+| continuous location | CPU + location indicator | significant-change/stop logic |
+| audio session leak | steady CPU/audio path | `setActive(false)` when idle |
+| timer leak | periodic CPU spikes | invalidate timers on background |
+| background polling | periodic network lane | push-driven updates |
+| BGTask too long | sustained CPU | chunk/checkpoint + faster completion |
+
+## Symptom 4: Drain Mainly on Cellular
+
+### Decision path
+
+1. URLSession config
+- `allowsExpensiveNetworkAccess` false for non-urgent traffic
+- `isDiscretionary` true for deferred/background transfers
+- `waitsForConnectivity` true to avoid churn
+
+2. Request pattern
+- batch small requests
+- replace polling with push
+- defer large non-urgent downloads
+
+3. Low Data Mode behavior
+- respect constrained/expensive access flags
+- reduce payload size under low-data conditions
+
+### Time-cost
 
 | Approach | Time | Outcome |
-|----------|------|---------|
-| Check Info.plist + BGTask code | 30 min | Finds common issues |
-| On-device Power Profiler trace | 1-2 hours (real usage) | Captures real behavior |
-| User-collected trace | Variable | Best for unreproducible issues |
+|---|---|---|
+| config review | ~15 min | quick wins |
+| discretionary tuning | ~30 min | significant savings |
+| poll->push redesign | 2-4h | largest impact |
 
----
+## Symptom 5: Spike During One Action
 
-## Symptom 4: High Energy Only on Cellular
+### Decision path
 
-Battery drains faster on cellular than WiFi.
+1. Record Power Profiler around action.
+2. Branch on subsystem spike:
+- CPU: repeated parsing, eager view creation, sync image processing
+- GPU: blur/shadow/mask complexity, unnecessary high FPS
+- Network: large/parallel/retry-heavy traffic
+- Display: unusual unless app manipulates brightness
 
-### Diagnosis Decision Tree
+3. Deep profile matching subsystem:
+- CPU -> Time Profiler
+- GPU -> render/fps analysis
+- Network -> request pattern and concurrency
 
-```
-High battery drain on cellular only?
-│
-├─ Expected: Cellular radio uses more power than WiFi
-│  └─ But: Excessive drain indicates optimization opportunity
-│
-├─ Check URLSession configuration
-│  │
-│  ├─ allowsExpensiveNetworkAccess = true (default)?
-│  │  └─ Fix: Set to false for non-urgent requests
-│  │
-│  ├─ isDiscretionary = false (default)?
-│  │  └─ Fix: Set to true for background downloads
-│  │
-│  └─ waitsForConnectivity = false (default)?
-│     └─ Fix: Set to true to avoid failed connection retries
-│
-├─ Check request patterns
-│  │
-│  ├─ Many small requests? → High connection overhead
-│  │  └─ Fix: Batch into fewer larger requests
-│  │
-│  ├─ Polling? → Radio stays active
-│  │  └─ Fix: Push notifications
-│  │
-│  └─ Large downloads in foreground? → Could wait for WiFi
-│     └─ Fix: Use background URLSession with discretionary
-│
-└─ Check Low Data Mode handling
-   ├─ Respecting allowsConstrainedNetworkAccess?
-   │  └─ Fix: Set to false for non-essential requests
-   │
-   └─ Checking ProcessInfo.processInfo.isLowDataModeEnabled?
-      └─ Fix: Reduce payload sizes, defer non-essential transfers
-```
-
-### Time-Cost Analysis
+### Time-cost
 
 | Approach | Time | Outcome |
-|----------|------|---------|
-| Review URLSession configs | 15 min | Quick wins |
-| Add discretionary flags | 30 min | Significant savings |
-| Convert poll to push | 2-4 hours | Largest impact |
+|---|---|---|
+| profiler capture during action | 5-10 min | subsystem isolated |
+| targeted deep profile | 10-15 min | function/path isolated |
+| no-profile code guessing | 1h+ | low certainty |
 
----
+## Quick Checklist
 
-## Symptom 5: Energy Spike During Specific Action
+### 30-second
+- [ ] device plugged in? (power metrics skew)
+- [ ] debug vs release build considered
+- [ ] Low Power Mode state known
 
-Noticeable battery drain or heat when performing particular operation.
+### 5-minute
+- [ ] dominant subsystem identified
+- [ ] sustained vs spiky pattern identified
+- [ ] foreground vs background clarified
 
-### Diagnosis Decision Tree
+### 15-minute
+- [ ] CPU path sampled with Time Profiler
+- [ ] network frequency/size inspected
+- [ ] animation frame behavior inspected
+- [ ] background modes audited
 
-```
-Energy spike during specific action?
-│
-├─ Step 1: Record Power Profiler during action
-│  └─ Note which subsystem spikes (CPU/GPU/Network/Display)
-│
-├─ CPU spike?
-│  │
-│  ├─ Is it parsing data?
-│  │  ├─ Same data parsed repeatedly?
-│  │  │  └─ Fix: Cache parsed results (lazy var)
-│  │  └─ Large JSON/XML payload?
-│  │     └─ Fix: Paginate, stream parse, or use binary format
-│  │
-│  ├─ Is it creating views?
-│  │  ├─ Many views at once?
-│  │  │  └─ Fix: Use LazyVStack/LazyHStack
-│  │  └─ Complex view hierarchies?
-│  │     └─ Fix: Simplify, use drawingGroup()
-│  │
-│  └─ Is it image processing?
-│     ├─ On main thread?
-│     │  └─ Fix: Move to background queue
-│     └─ No caching?
-│        └─ Fix: Cache processed images
-│
-├─ GPU spike?
-│  │
-│  ├─ Starting animation?
-│  │  └─ Fix: Ensure frame rate appropriate
-│  │
-│  ├─ Showing blur effect?
-│  │  └─ Fix: Use solid color or pre-rendered blur
-│  │
-│  └─ Complex render? (shadows, masks, many layers)
-│     └─ Fix: Simplify, use shouldRasterize, cache
-│
-├─ Network spike?
-│  │
-│  ├─ Large download started?
-│  │  └─ Fix: Use background URLSession, show progress
-│  │
-│  ├─ Many parallel requests?
-│  │  └─ Fix: Limit concurrency, batch
-│  │
-│  └─ Retrying failed requests?
-│     └─ Fix: Exponential backoff, waitsForConnectivity
-│
-└─ Display spike?
-   └─ Unusual unless changing brightness programmatically
-      └─ Fix: Don't modify brightness, let system control
-```
+## Fast Fix Table
 
-### Time-Cost Analysis
+| Finding | Fix | Time |
+|---|---|---:|
+| timer without tolerance | add `timer.tolerance` | ~1 min |
+| eager list rendering | use lazy stacks | ~1 min |
+| expensive network allowed by default | set expensive/constrained policies | ~1 min |
+| missing location stop | explicit stop calls | ~2 min |
+| no dark assets on OLED-heavy UI | add dark variants | ~30 min |
+| audio session always active | deactivate when idle | ~5 min |
 
-| Approach | Time | Outcome |
-|----------|------|---------|
-| Power Profiler during action | 5-10 min | Identifies subsystem |
-| Time Profiler for CPU details | 10-15 min | Identifies function |
-| Code review without profiling | 1+ hours | May miss actual cause |
+## Escalation
 
----
+- Use `ios-energy` for full architecture-level optimization patterns.
+- Use `ios-energy-ref` for API-level implementation detail.
+- Run repository energy audit/profile workflow when available.
 
-## Quick Diagnostic Checklist
-
-Use this when you need fast answers:
-
-### 30-Second Check
-- [ ] Device plugged in? (Power metrics show 0)
-- [ ] Debug build? (Less optimized than release)
-- [ ] Low Power Mode on? (May affect measurements)
-
-### 5-Minute Check (Power Profiler)
-- [ ] Which subsystem is dominant? (CPU/GPU/Network/Display)
-- [ ] Sustained or spiky?
-- [ ] Foreground or background?
-
-### 15-Minute Investigation
-- [ ] If CPU: Run Time Profiler to identify function
-- [ ] If Network: Check request frequency and size
-- [ ] If GPU: Check animation frame rates
-- [ ] If Background: Check Info.plist modes
-
-### Common Quick Fixes
-
-| Finding | Quick Fix | Time |
-|---------|-----------|------|
-| Timer without tolerance | Add `.tolerance = 0.1` | 1 min |
-| VStack with large ForEach | Change to LazyVStack | 1 min |
-| allowsExpensiveNetworkAccess = true | Set to false | 1 min |
-| Missing stopUpdatingLocation | Add stop call | 2 min |
-| No Dark Mode | Add asset variants | 30 min |
-| Audio session always active | Add setActive(false) | 5 min |
-
----
-
-## When to Escalate
-
-### Use `ios-energy` skill when
-- Need full audit checklist
-- Want comprehensive patterns with code
-- Planning proactive optimization
-
-### Use `ios-energy-ref` skill when
-- Need specific API details
-- Want complete code examples
-- Implementing from scratch
-
-### Use automated energy audit tooling when
-- Want automated codebase scan
-- Looking for anti-patterns at scale
-- Pre-release energy audit
-
-Run your repo energy audit/profile workflow if available.
-
----
-
-**Last Updated**: 2025-12-26
-**Platforms**: iOS 26+, iPadOS 26+
+Last Updated: 2025-12-26
+Platforms: iOS 26+, iPadOS 26+

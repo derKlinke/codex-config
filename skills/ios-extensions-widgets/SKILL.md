@@ -13,7 +13,7 @@ metadata:
 
 > "Widgets are not mini apps. They're glanceable views into your app's data, rendered at strategic moments and displayed by the system. Extensions run in sandboxed environments with limited memory and execution time."
 
-**Mental model**: Think of widgets as **archived snapshots** on a timeline, not live views. Your widget doesn't "run" continuously — it renders, gets archived, and the system displays the snapshot.
+**Mental model**: Widgets are archived timeline snapshots, not continuously running views.
 
 **Extension sandboxing**: Extensions have:
 - Limited memory (~30MB)
@@ -21,9 +21,9 @@ metadata:
 - Separate bundle container from main app
 - Require App Groups for data sharing
 
-## When to Use This Skill
+## When to Use
 
-✅ **Use this skill when**:
+✅ **Use when**:
 - Implementing any widget (Home Screen, Lock Screen, StandBy, Control Center)
 - Creating Live Activities
 - Debugging why widgets show stale data
@@ -33,7 +33,7 @@ metadata:
 - Control Center control is unresponsive
 - Sharing data between app and widget/extension
 
-❌ **Do NOT use this skill for**:
+❌ **Do not use for**:
 - Pure App Intents implementation (use **app-intents-ref**)
 - SwiftUI layout questions (use **swiftui-layout**)
 - Performance profiling (use **swiftui-performance**)
@@ -49,22 +49,22 @@ metadata:
 ## Example Prompts
 
 #### 1. "My widget isn't updating"
-→ This skill covers timeline policies, refresh budgets, manual reload, and App Groups configuration
+→ Covers timeline policies, refresh budgets, manual reload, and App Groups configuration
 
 #### 2. "How do I share data between app and widget?"
-→ This skill explains App Groups entitlement, shared UserDefaults, and container URLs
+→ Explains App Groups entitlement, shared UserDefaults, and container URLs
 
 #### 3. "Widget shows old data even after I update the app"
-→ This skill covers container paths, UserDefaults suite names, and WidgetCenter reload
+→ Covers container paths, UserDefaults suite names, and WidgetCenter reload
 
 #### 4. "Live Activity fails to start"
-→ This skill covers 4KB data limit, ActivityAttributes constraints, authorization checks
+→ Covers 4KB data limit, ActivityAttributes constraints, authorization checks
 
 #### 5. "Control Center control takes forever to respond"
-→ This skill covers async ValueProvider patterns and optimistic UI
+→ Covers async ValueProvider patterns and optimistic UI
 
 #### 6. "Interactive widget button does nothing"
-→ This skill covers App Intent perform() implementation and WidgetCenter reload
+→ Covers App Intent perform() implementation and WidgetCenter reload
 
 ---
 

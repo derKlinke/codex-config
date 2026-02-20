@@ -10,41 +10,41 @@ metadata:
 
 ## Overview
 
-Background execution is a **privilege**, not a right. iOS actively limits background work to protect battery life and user experience. **Core principle**: Treat background tasks as discretionary jobs — you request a time window, the system decides when (or if) to run your code.
+Background execution is a **privilege**, not a right. iOS limits background work for battery and UX. **Core principle**: treat tasks as discretionary jobs; you request time, the system decides when or whether to run.
 
-**Key insight**: Most "my task never runs" issues stem from registration mistakes or misunderstanding the 7 scheduling factors that govern execution. This skill provides systematic debugging, not guesswork.
+**Key insight**: Most "task never runs" issues come from registration errors or misunderstanding the seven scheduling factors.
 
-**Energy optimization**: For reducing battery impact of background tasks, see `ios-energy` skill. This skill focuses on task **mechanics** — making tasks run correctly and complete reliably.
+For battery optimization, see `ios-energy`. This skill focuses on task **mechanics**: reliable launch, execution, and completion.
 
 **Requirements**: iOS 13+ (BGTaskScheduler), iOS 26+ (BGContinuedProcessingTask), Xcode 15+
 
 ## Example Prompts
 
-Real questions developers ask that this skill answers:
+Typical prompts:
 
 #### 1. "My background task never runs. I register it, schedule it, but nothing happens."
-→ The skill covers the registration checklist and debugging decision tree for "task never runs" issues
+→ Covers the registration checklist and debugging decision tree for "task never runs" issues
 
 #### 2. "How do I test background tasks? They don't seem to trigger in the simulator."
-→ The skill covers LLDB debugging commands and simulator limitations
+→ Covers LLDB debugging commands and simulator limitations
 
 #### 3. "My task gets terminated before it completes. How do I extend the time?"
-→ The skill covers task types (BGAppRefresh 30s vs BGProcessing minutes), expiration handlers, and incremental progress saving
+→ Covers task types (BGAppRefresh 30s vs BGProcessing minutes), expiration handlers, and incremental progress saving
 
 #### 4. "Should I use BGAppRefreshTask or BGProcessingTask? What's the difference?"
-→ The skill provides decision tree for choosing the correct task type based on work duration and system requirements
+→ Provides decision tree for choosing the correct task type based on work duration and system requirements
 
 #### 5. "How do I integrate Swift 6 concurrency with background task expiration?"
-→ The skill covers withTaskCancellationHandler patterns for bridging BGTask expiration to structured concurrency
+→ Covers withTaskCancellationHandler patterns for bridging BGTask expiration to structured concurrency
 
 #### 6. "My background task works in development but not in production."
-→ The skill covers the 7 scheduling factors, throttling behavior, and production debugging
+→ Covers the 7 scheduling factors, throttling behavior, and production debugging
 
 ---
 
 ## Red Flags — Task Won't Run or Terminates
 
-If you see ANY of these, suspect registration or scheduling issues:
+If any appear, suspect registration or scheduling issues:
 
 - **Task never runs**: Handler never called despite successful `submit()`
 - **Task terminates immediately**: Handler called but work doesn't complete

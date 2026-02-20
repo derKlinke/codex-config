@@ -1,6 +1,6 @@
 ---
 name: ios-localization
-description: Use when localizing apps, using String Catalogs, generating type-safe symbols (Xcode 26+), handling plurals, RTL layouts, locale-aware formatting, or migrating from .strings files - comprehensive i18n patterns for Xcode 15-26
+description: Use when localizing apps with String Catalogs, type-safe symbols (Xcode 26+), plurals, RTL layouts, locale-aware formatting, or .strings migration in Xcode 15-26
 license: MIT
 metadata:
   version: "1.1.0"
@@ -9,19 +9,19 @@ metadata:
 
 # Localization & Internationalization
 
-Comprehensive guide to app localization using String Catalogs. Apple Design Award Inclusivity winners always support multiple languages with excellent RTL (Right-to-Left) support.
+Reference for app localization with String Catalogs and strong RTL support.
 
 ## Overview
 
-String Catalogs (`.xcstrings`) are Xcode 15's unified format for managing app localization. They replace legacy `.strings` and `.stringsdict` files with a single JSON-based format that's easier to maintain, diff, and integrate with translation workflows.
+String Catalogs (`.xcstrings`) are Xcode 15's unified localization format. They replace `.strings` and `.stringsdict` with one JSON-based source that is easier to diff, maintain, and integrate into translation workflows.
 
-This skill covers String Catalogs, SwiftUI/UIKit localization APIs, plural handling, RTL support, locale-aware formatting, and migration strategies from legacy formats.
+Covers String Catalogs, SwiftUI/UIKit APIs, plural rules, RTL, locale-aware formatting, and legacy migration.
 
 ## When to Use This Skill
 
 - Setting up String Catalogs in Xcode 15+
 - Localizing SwiftUI and UIKit apps
-- Handling plural forms correctly (critical for many languages)
+- Handling plural forms correctly
 - Supporting RTL languages (Arabic, Hebrew)
 - Formatting dates, numbers, and currencies by locale
 - Migrating from legacy `.strings`/`.stringsdict` files
@@ -30,8 +30,8 @@ This skill covers String Catalogs, SwiftUI/UIKit localization APIs, plural handl
 
 ## System Requirements
 
-- **Xcode 15+** for String Catalogs (`.xcstrings`)
-- **Xcode 26+** for automatic symbol generation, `#bundle` macro, and AI-powered comment generation
+- **Xcode 15+** String Catalogs (`.xcstrings`)
+- **Xcode 26+** automatic symbol generation, `#bundle`, AI comment generation
 - **iOS 15+** for `LocalizedStringResource`
 - **iOS 16+** for App Shortcuts localization
 - Earlier iOS versions use legacy `.strings` files

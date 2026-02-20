@@ -47,7 +47,7 @@ let status = PHPhotoLibrary.authorizationStatus(for: .readWrite)
 
 ## PHPickerViewController (iOS 14+)
 
-System photo picker for UIKit apps. No permission required.
+System picker for UIKit apps. No permission required.
 
 ### Configuration
 
@@ -145,7 +145,7 @@ extension ViewController: PHPickerViewControllerDelegate {
 
 ## PhotosPicker (SwiftUI, iOS 16+)
 
-SwiftUI view for photo selection. No permission required.
+SwiftUI photo picker. No permission required.
 
 ### Basic Usage
 

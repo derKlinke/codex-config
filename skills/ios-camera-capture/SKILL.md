@@ -14,7 +14,7 @@ Guides you through implementing camera capture: session setup, photo capture, vi
 
 ## When to Use This Skill
 
-Use when you need to:
+Use when:
 - ☑ Build a custom camera UI (not system picker)
 - ☑ Capture photos with quality/speed tradeoffs
 - ☑ Record video with audio
@@ -37,7 +37,7 @@ Use when you need to:
 
 ## Red Flags
 
-Signs you're making this harder than it needs to be:
+Red flags:
 
 - ❌ Calling `startRunning()` on main thread (blocks UI for seconds)
 - ❌ Using deprecated `videoOrientation` instead of RotationCoordinator (iOS 17+)
@@ -51,7 +51,7 @@ Signs you're making this harder than it needs to be:
 
 ## Mandatory First Steps
 
-Before implementing any camera feature:
+Before implementing camera features:
 
 ### 1. Choose Your Capture Mode
 

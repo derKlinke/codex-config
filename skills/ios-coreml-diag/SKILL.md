@@ -1,178 +1,127 @@
 ---
 name: ios-coreml-diag
-description: CoreML diagnostics - model load failures, slow inference, memory issues, compression accuracy loss, compute unit problems, conversion errors.
+description: Use for Core ML diagnostics: load failures, slow inference, memory pressure, compression accuracy regressions, and conversion errors.
 version: 1.0.0
 ---
 
-# CoreML Diagnostics
+# Core ML Diagnostics
 
-## Quick Reference
+## Quick Triage
 
-| Symptom | First Check | Pattern |
-|---------|-------------|---------|
-| Model won't load | Deployment target | 1a-1c |
-| Slow first load | Cache miss | 2a |
-| Slow inference | Compute units | 2b-2c |
-| High memory | Concurrent predictions | 3a-3b |
-| Bad accuracy after compression | Granularity | 4a-4c |
-| Conversion fails | Operation support | 5a-5b |
+| Symptom | First check | Patterns |
+|---|---|---|
+| Model will not load | deployment target/spec version | 1a-1c |
+| First load slow only once | cache miss | 2a |
+| Inference always slow | compute-unit placement | 2b-2c |
+| Memory growth/OOM | concurrency + model size | 3a-3b |
+| Accuracy drop post-compression | granularity/bit depth/calibration | 4a-4c |
+| Conversion fails/wrong output | op support + parity checks | 5a-5b |
 
 ## Decision Tree
 
 ```
-CoreML issue
-├─ Load failure?
-│   ├─ "Unsupported model version" → 1a
-│   ├─ "Failed to create compute plan" → 1b
-│   └─ Other load error → 1c
-├─ Performance issue?
-│   ├─ First load slow, subsequent fast? → 2a
-│   ├─ All predictions slow? → 2b
-│   └─ Slow only on specific device? → 2c
-├─ Memory issue?
-│   ├─ Memory grows during predictions? → 3a
-│   └─ Out of memory on load? → 3b
-├─ Accuracy degraded?
-│   ├─ After palettization? → 4a
-│   ├─ After quantization? → 4b
-│   └─ After pruning? → 4c
-└─ Conversion issue?
-    ├─ Operation not supported? → 5a
-    └─ Wrong output? → 5b
+Core ML issue
+├─ Load failure -> 1a/1b/1c
+├─ Performance -> 2a/2b/2c
+├─ Memory -> 3a/3b
+├─ Accuracy regression -> 4a/4b/4c
+└─ Conversion mismatch -> 5a/5b
 ```
 
----
+## 1a) Unsupported Model Version
 
-## Pattern 1a - "Unsupported model version"
+Symptom: load error mentions unsupported model/spec version.
 
-**Symptom**: Model fails to load with version error.
-
-**Cause**: Model compiled for newer OS than device supports.
-
-**Diagnosis**:
 ```python
-# Check model's minimum deployment target
 import coremltools as ct
 model = ct.models.MLModel("Model.mlpackage")
 print(model.get_spec().specificationVersion)
 ```
 
-| Spec Version | Minimum iOS |
-|--------------|-------------|
-| 4 | iOS 13 |
-| 5 | iOS 14 |
-| 6 | iOS 15 |
-| 7 | iOS 16 |
-| 8 | iOS 17 |
-| 9 | iOS 18 |
+| Spec | Min iOS |
+|---:|---:|
+| 4 | 13 |
+| 5 | 14 |
+| 6 | 15 |
+| 7 | 16 |
+| 8 | 17 |
+| 9 | 18 |
 
-**Fix**: Re-convert with lower deployment target:
+Fix: reconvert with lower deployment target.
+
 ```python
-mlmodel = ct.convert(
-    traced,
-    minimum_deployment_target=ct.target.iOS16  # Lower target
-)
+mlmodel = ct.convert(traced, minimum_deployment_target=ct.target.iOS16)
 ```
 
-**Tradeoff**: Loses newer optimizations (SDPA fusion, per-block quantization, MLTensor).
+Tradeoff: may lose newer optimizations.
 
----
+## 1b) Failed to Create Compute Plan
 
-## Pattern 1b - "Failed to create compute plan"
+Cause: target compute unit cannot support op/precision mix.
 
-**Symptom**: Model loads on some devices but not others.
+Diagnosis:
+1. Generate Xcode Performance Report
+2. Find unsupported operations/device mapping
 
-**Cause**: Unsupported operations for target compute unit.
+Fallback:
 
-**Diagnosis**:
-1. Open model in Xcode
-2. Create Performance Report
-3. Check "Unsupported" operations
-4. Hover for hints
-
-**Fix**:
 ```swift
-// Force CPU-only to bypass unsupported GPU/NE operations
-let config = MLModelConfiguration()
-config.computeUnits = .cpuOnly
-let model = try MLModel(contentsOf: url, configuration: config)
+let cfg = MLModelConfiguration()
+cfg.computeUnits = .cpuOnly
+let model = try MLModel(contentsOf: url, configuration: cfg)
 ```
 
-**Better fix**: Update model precision or operations during conversion:
+Better long-term: adjust conversion precision/op selection.
+
 ```python
-# Float16 often better supported
 mlmodel = ct.convert(traced, compute_precision=ct.precision.FLOAT16)
 ```
 
----
+## 1c) General Load Failure
 
-## Pattern 1c - General Load Failures
-
-**Symptom**: Model fails to load with unclear error.
-
-**Checklist**:
-1. Check file exists and is readable
-2. Check compiled vs source model (runtime needs `.mlmodelc`)
-3. Check available disk space (cache needs room)
-4. Check model isn't corrupted (re-convert)
+Checklist:
+- file exists and readable
+- runtime loads compiled `.mlmodelc`
+- disk space available for caches
+- model artifact not corrupted
 
 ```swift
-// Debug logging
-let config = MLModelConfiguration()
-config.parameters = [.reporter: { print($0) }]  // iOS 17+
+let cfg = MLModelConfiguration()
+cfg.parameters = [.reporter: { print($0) }] // iOS 17+
 ```
 
----
+## 2a) Slow First Load, Fast Later
 
-## Pattern 2a - Slow First Load (Cache Miss)
+Cause: specialization cache miss.
 
-**Symptom**: First prediction after install/update is slow, subsequent are fast.
+Look for Load event labels:
+- `prepare and cache`: miss
+- `cached`: hit
 
-**Cause**: Device specialization not cached.
+Miss triggers: first install run, system update, cache eviction, config/path change.
 
-**Diagnosis**:
-1. Profile with Core ML Instrument
-2. Look at Load event label:
-   - "prepare and cache" = cache miss (slow)
-   - "cached" = cache hit (fast)
+Mitigation:
 
-**Why cache misses**:
-- First launch after install
-- System update invalidated cache
-- Low disk space cleared cache
-- Model file was modified
-
-**Mitigation**:
 ```swift
-// Warm cache in background at app launch
 Task.detached(priority: .background) {
     _ = try? await MLModel.load(contentsOf: modelURL)
 }
 ```
 
-**Note**: Cache is tied to (model path + configuration + device). Different configs = different cache entries.
+Cache key includes model path + config + device.
 
----
+## 2b) Predictions Always Slow
 
-## Pattern 2b - All Predictions Slow
+Diagnosis:
+- profile compute device distribution
+- inspect expensive ops
 
-**Symptom**: Predictions consistently slow, not just first one.
+Common causes and fixes:
+- CPU fallback unexpectedly -> set/verify `computeUnits`
+- model too large for NE -> compress model
+- frequent CPU/GPU/NE transfers -> rebalance segmentation
+- dynamic shapes recompiling -> use fixed/enumerated shapes
 
-**Diagnosis**:
-1. Create Xcode Performance Report
-2. Check compute unit distribution
-3. Look for high-cost operations
-
-**Common causes**:
-
-| Cause | Fix |
-|-------|-----|
-| Running on CPU when GPU/NE available | Check `computeUnits` config |
-| Model too large for Neural Engine | Compress model |
-| Frequent CPU↔GPU↔NE transfers | Adjust segmentation |
-| Dynamic shapes recompiling | Use fixed/enumerated shapes |
-
-**Profile compute unit usage**:
 ```swift
 let plan = try await MLComputePlan.load(contentsOf: modelURL)
 for op in plan.modelStructure.operations {
@@ -181,56 +130,30 @@ for op in plan.modelStructure.operations {
 }
 ```
 
----
+## 2c) Slow on Specific Device Class
 
-## Pattern 2c - Slow on Specific Device
-
-**Symptom**: Fast on Mac, slow on iPhone (or vice versa).
-
-**Cause**: Different hardware characteristics.
-
-**Diagnosis**:
 ```swift
-// Check available compute
-let devices = MLModel.availableComputeDevices
-print(devices)  // Different per device
+print(MLModel.availableComputeDevices)
 ```
 
-**Common issues**:
+Device-specific strategy:
+- Mac fast / iPhone slow -> often GPU-oriented model; consider palettization
+- iPhone fast / Intel Mac slow -> no NE path; tune for GPU/CPU fallback
+- older devices slow -> stronger compression or lighter model
 
-| Scenario | Cause | Fix |
-|----------|-------|-----|
-| Fast on M-series Mac, slow on iPhone | Model optimized for GPU | Use palettization (Neural Engine) |
-| Fast on iPhone, slow on Intel Mac | No Neural Engine | Use quantization (GPU) |
-| Slow on older devices | Less compute power | Use more aggressive compression |
+Always profile target hardware.
 
-**Recommendation**: Profile on target devices, not just development Mac.
+## 3a) Memory Grows During Prediction
 
----
+Cause: uncontrolled concurrent predictions + buffer accumulation.
 
-## Pattern 3a - Memory Grows During Predictions
-
-**Symptom**: Memory increases with each prediction, doesn't release.
-
-**Cause**: Input/output buffers accumulating from concurrent predictions.
-
-**Diagnosis**:
-```
-Instruments → Allocations + Core ML template
-Look for: Many concurrent prediction intervals
-Check: MLMultiArray allocations growing
-```
-
-**Fix**: Limit concurrent predictions:
 ```swift
 actor PredictionLimiter {
     private let maxConcurrent = 2
     private var inFlight = 0
 
     func predict(_ model: MLModel, input: MLFeatureProvider) async throws -> MLFeatureProvider {
-        while inFlight >= maxConcurrent {
-            await Task.yield()
-        }
+        while inFlight >= maxConcurrent { await Task.yield() }
         inFlight += 1
         defer { inFlight -= 1 }
         return try await model.prediction(from: input)
@@ -238,235 +161,113 @@ actor PredictionLimiter {
 }
 ```
 
----
+Use Allocations + Core ML instruments to confirm.
 
-## Pattern 3b - Out of Memory on Load
+## 3b) OOM on Model Load
 
-**Symptom**: App crashes or model fails to load on memory-constrained devices.
-
-**Cause**: Model too large for device memory.
-
-**Diagnosis**:
 ```bash
-# Check model size
 ls -lh Model.mlpackage/Data/com.apple.CoreML/weights/
 ```
 
-**Fix options**:
+Compression options:
 
-| Approach | Compression | Memory Impact |
-|----------|-------------|---------------|
-| 8-bit palettization | 2x smaller | 2x less memory |
-| 4-bit palettization | 4x smaller | 4x less memory |
-| Pruning (50%) | ~2x smaller | ~2x less memory |
+| Method | Typical size/memory effect |
+|---|---|
+| 8-bit palettization | ~2x smaller |
+| 4-bit palettization | ~4x smaller |
+| ~50% pruning | ~2x smaller |
 
-**Note**: Compressed weights are decompressed just-in-time (iOS 17+), so smaller on-disk = smaller in memory.
+iOS 17+ supports just-in-time decompression of compressed weights.
 
----
+## 4a) Accuracy Drop After Palettization
 
-## Pattern 4a - Bad Accuracy After Palettization
-
-**Symptom**: Model output degraded after palettization.
-
-**Diagnosis**:
-1. What bit depth? (2-bit most likely to fail)
-2. What granularity? (per-tensor loses more than per-grouped-channel)
-
-**Fix progression**:
+Fix progression:
 
 ```python
-# Step 1: Try grouped channels (iOS 18+)
 config = OpPalettizerConfig(
     nbits=4,
     granularity="per_grouped_channel",
     group_size=16
 )
-
-# Step 2: If still bad, try more bits
-config = OpPalettizerConfig(nbits=6, ...)
-
-# Step 3: If still need 4-bit, use calibration
-from coremltools.optimize.torch.palettization import DKMPalettizer
-# ... training-time compression
 ```
 
-**Key insight**: 4-bit per-tensor has only 16 clusters for entire weight matrix. Grouped channels = 16 clusters per 16 channels = much better granularity.
+Then:
+1. increase bits (e.g., 6-bit)
+2. add calibration/training-time palettization (`DKMPalettizer`)
 
----
-
-## Pattern 4b - Bad Accuracy After Quantization
-
-**Symptom**: Model output degraded after INT8/INT4 quantization.
-
-**Diagnosis**:
-1. What bit depth?
-2. What granularity?
-
-**Fix progression**:
+## 4b) Accuracy Drop After Quantization
 
 ```python
-# Step 1: Use per-block (iOS 18+)
 config = OpLinearQuantizerConfig(
     dtype="int4",
     granularity="per_block",
     block_size=32
 )
-
-# Step 2: Use calibration data
-from coremltools.optimize.torch.quantization import LayerwiseCompressor
-compressor = LayerwiseCompressor(model, config)
-quantized = compressor.compress(calibration_loader)
 ```
 
-**Note**: INT4 quantization works best on Mac GPU. For Neural Engine, prefer palettization.
+Add calibration (`LayerwiseCompressor`).
 
----
+Note: INT4 is often better on Mac GPU; NE often favors palettization.
 
-## Pattern 4c - Bad Accuracy After Pruning
+## 4c) Accuracy Drop After Pruning
 
-**Symptom**: Model output degraded after weight pruning.
+Typical ranges (model-dependent):
+- 0-30%: often safe
+- 30-50%: may need calibration
+- >50%: usually training-time adaptation needed
 
-**Diagnosis**:
-1. What sparsity level?
-2. Post-training or training-time?
-
-**Thresholds** (model-dependent):
-- 0-30% sparsity: Usually safe
-- 30-50% sparsity: May need calibration
-- 50%+ sparsity: Usually needs training-time
-
-**Fix**:
 ```python
-# Use calibration-based pruning
-from coremltools.optimize.torch.pruning import LayerwiseCompressor
-
-config = MagnitudePrunerConfig(
-    target_sparsity=0.4,
-    n_samples=128
-)
-compressor = LayerwiseCompressor(model, config)
-sparse = compressor.compress(calibration_loader)
+config = MagnitudePrunerConfig(target_sparsity=0.4, n_samples=128)
 ```
 
----
+## 5a) Conversion Fails (Unsupported Op)
 
-## Pattern 5a - Operation Not Supported
+1. update `coremltools`
+2. replace op with supported composite ops
+3. only if needed: register custom op in MIL
 
-**Symptom**: Conversion fails with unsupported operation error.
-
-**Diagnosis**:
-```
-Error: "Op 'custom_op' is not supported for conversion"
-```
-
-**Options**:
-
-1. **Check if op is in coremltools**: May need newer version
 ```bash
 pip install --upgrade coremltools
 ```
 
-2. **Use composite ops**: Split into supported primitives
+## 5b) Conversion Succeeds but Output Is Wrong
+
+Check parity in this order:
+1. preprocessing/normalization
+2. shape/layout assumptions (NCHW/NHWC paths)
+3. precision mismatch (FP16 vs FP32)
+4. model eval mode and stochastic layers disabled
+
 ```python
-# Instead of custom_op(x)
-# Use: supported_op1(supported_op2(x))
-```
-
-3. **Register custom op**: Advanced, requires MIL programming
-```python
-from coremltools.converters.mil import Builder as mb
-
-@mb.register_torch_op
-def custom_op(context, node):
-    # Map to MIL operations
-    ...
-```
-
----
-
-## Pattern 5b - Conversion Succeeds but Wrong Output
-
-**Symptom**: Model converts but predictions differ from PyTorch.
-
-**Diagnosis checklist**:
-
-1. **Input normalization**: Ensure preprocessing matches
-```python
-# PyTorch often uses ImageNet normalization
-# CoreML may need explicit preprocessing
-```
-
-2. **Shape ordering**: PyTorch (NCHW) vs CoreML (NHWC for some ops)
-```python
-# Check shapes in conversion
-ct.convert(..., inputs=[ct.ImageType(shape=(1, 3, 224, 224))])
-```
-
-3. **Precision differences**: Float16 may differ from Float32
-```python
-# Force Float32 to match PyTorch
-ct.convert(..., compute_precision=ct.precision.FLOAT32)
-```
-
-4. **Random ops**: Dropout, random initialization differ
-```python
-# Ensure eval mode
-model.eval()
-```
-
-**Debug**:
-```python
-# Compare outputs layer by layer
-import numpy as np
-
 torch_output = model(input).detach().numpy()
 coreml_output = mlmodel.predict({"input": input.numpy()})["output"]
-
-print(f"Max diff: {np.max(np.abs(torch_output - coreml_output))}")
+print(np.max(np.abs(torch_output - coreml_output)))
 ```
 
----
+## Pressure Scenarios
 
-## Pressure Scenario - "Model works on simulator but not device"
+### "Works on simulator, not on device"
+- simulator compute stack != device stack
+- validate spec version vs device OS
+- profile on physical target device
 
-**Wrong approach**: Assume simulator bug, ignore.
-
-**Right approach**:
-1. Check model spec version vs device iOS version (Pattern 1a)
-2. Check compute unit availability (Pattern 2c)
-3. Profile on actual device, not simulator
-4. Simulator uses host Mac's GPU/CPU, not device Neural Engine
-
----
-
-## Pressure Scenario - "Ship now, optimize later"
-
-**Wrong approach**: Compress to smallest possible size without testing.
-
-**Right approach**:
-1. Ship Float16 baseline first
-2. Profile on target devices
-3. Apply compression incrementally with accuracy testing
-4. Document compression settings for future optimization
-
----
+### "Ship now, optimize later"
+- do not jump to max compression blindly
+- baseline FP16 first
+- compress incrementally with accuracy checks
 
 ## Diagnostic Checklist
 
-When CoreML isn't working:
-
-- [ ] Check deployment target matches device iOS
-- [ ] Check model file is compiled (.mlmodelc)
-- [ ] Profile load: cached vs uncached
-- [ ] Profile prediction: which compute units
-- [ ] Check memory: concurrent predictions limited
-- [ ] For compression issues: try higher granularity
-- [ ] For conversion issues: check op support, precision
+- [ ] deployment target/spec compatible with device OS
+- [ ] loading compiled artifact (`.mlmodelc`) at runtime
+- [ ] load profile distinguishes cached vs uncached
+- [ ] compute-unit placement inspected
+- [ ] prediction concurrency bounded
+- [ ] compression tuned by granularity/bit-depth/calibration
+- [ ] conversion parity validated numerically
 
 ## Resources
 
-**WWDC**: 2023-10047, 2023-10049, 2024-10159, 2024-10161
-
-**Docs**: /coreml, /coreml/mlmodel
-
-**Skills**: coreml, coreml-ref
+- WWDC: 2023-10047, 2023-10049, 2024-10159, 2024-10161
+- Docs: `/coreml`, `/coreml/mlmodel`
+- Skills: `coreml`, `coreml-ref`

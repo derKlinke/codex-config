@@ -1,6 +1,6 @@
 ---
 name: ios-objc-block-retain-cycles
-description: Use when debugging memory leaks from blocks, blocks assigned to self or properties, network callbacks, or crashes from deallocated objects - systematic weak-strong pattern diagnosis with mandatory diagnostic rules
+description: Use for Objective-C block retain-cycle debugging: weak-strong capture issues, leaked controllers, callback crashes, and required diagnostics
 license: MIT
 metadata:
   version: "1.0.0"
@@ -10,11 +10,11 @@ metadata:
 
 ## Overview
 
-Block retain cycles are the #1 cause of Objective-C memory leaks. When a block captures `self` and is stored on that same object (directly or indirectly through an operation/request), you create a circular reference: self → block → self. **Core principle** 90% of block memory leaks stem from missing or incorrectly applied weak-strong patterns, not genuine Apple framework bugs.
+Block retain cycles are the most common Objective-C memory leak. If a block captures `self` and that block is retained by `self` (directly or indirectly), you create `self → block → self`. **Core principle**: most block leaks come from missing or incorrect weak-strong capture patterns, not framework bugs.
 
 ## Red Flags — Suspect Block Retain Cycle
 
-If you see ANY of these, suspect a block retain cycle, not something else:
+If you see any of these, suspect a block retain cycle first:
 - Memory grows steadily over time during normal app use
 - UIViewController instances not deallocating (verified in Instruments)
 - Crash: "Sending message to deallocated instance" from network/async callback
@@ -27,11 +27,11 @@ If you see ANY of these, suspect a block retain cycle, not something else:
   - Apps should return to baseline memory after user dismisses a screen
   - Do not rationalize this as "good enough" or "monitor it later"
 
-**Critical distinction** Block retain cycles accumulate silently. A single cycle might be 100KB, but after 50 screens viewed, you have 5MB of dead memory. **MANDATORY: Test on real device (oldest supported model) after fixes, not just simulator.**
+**Critical** Block retain cycles accumulate silently. A single cycle can be small, but repeated navigation compounds dead memory quickly. **MANDATORY: test on a real device (oldest supported model), not only simulator.**
 
 ## Mandatory First Steps
 
-**ALWAYS run these FIRST** (before changing code):
+**ALWAYS run these first** (before changing code):
 
 ```objc
 // 1. Identify the leak with Allocations instrument

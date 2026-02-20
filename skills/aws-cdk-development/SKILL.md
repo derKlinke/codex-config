@@ -1,6 +1,6 @@
 ---
 name: aws-cdk-development
-description: AWS Cloud Development Kit (CDK) expert for building cloud infrastructure with TypeScript/Python. Use when creating CDK stacks, defining CDK constructs, implementing infrastructure as code, or when the user mentions CDK, CloudFormation, IaC, cdk synth, cdk deploy, or wants to define AWS infrastructure programmatically. Covers CDK app structure, construct patterns, stack composition, and deployment workflows.
+description: Use when building/refactoring AWS infrastructure with CDK (TypeScript/Python), validating stacks, or handling `cdk synth/deploy` workflows with current AWS documentation checks.
 context: fork
 skills:
   - aws-mcp-setup
@@ -22,274 +22,177 @@ hooks:
 
 # AWS CDK Development
 
-This skill provides comprehensive guidance for developing AWS infrastructure using the Cloud Development Kit (CDK), with integrated MCP servers for accessing latest AWS knowledge and CDK utilities.
+CDK workflow guidance with mandatory up-to-date AWS verification via MCP tools.
 
-## AWS Documentation Requirement
+## AWS Docs Verification (Required)
 
-**CRITICAL**: This skill requires AWS MCP tools for accurate, up-to-date AWS information.
+Before answering AWS/CDK capability questions:
+1. Use AWS MCP docs/search/read tools when available.
+2. Verify regional availability for required services.
+3. Verify current limits/features/API behavior.
 
-### Before Answering AWS Questions
+If AWS MCP unavailable:
+- guide setup via `aws-mcp-setup`
+- choose path by environment:
+  - has `uvx` + AWS credentials -> full AWS MCP server
+  - no credentials/Python -> docs-only MCP
+- if uncertain, ask user which path to configure
 
-1. **Always verify** using AWS MCP tools (if available):
-   - `mcp__aws-mcp__aws___search_documentation` or `mcp__*awsdocs*__aws___search_documentation` - Search AWS docs
-   - `mcp__aws-mcp__aws___read_documentation` or `mcp__*awsdocs*__aws___read_documentation` - Read specific pages
-   - `mcp__aws-mcp__aws___get_regional_availability` - Check service availability
+## Integrated Servers
 
-2. **If AWS MCP tools are unavailable**:
-   - Guide user to configure AWS MCP using the `aws-mcp-setup` skill (auto-loaded as dependency)
-   - Help determine which option fits their environment:
-     - Has uvx + AWS credentials → Full AWS MCP Server
-     - No Python/credentials → AWS Documentation MCP (no auth)
-   - If cannot determine → Ask user which option to use
+### AWS Documentation MCP
+Use for current AWS service features, limits, regions, and security guidance.
 
-## Integrated MCP Servers
+### CDK MCP
+Use for construct selection, property guidance, CDK best-practice patterns, and CDK-specific optimization.
 
-This skill includes the CDK MCP server automatically configured with the plugin:
+## When to Use
 
-### AWS CDK MCP Server
-**When to use**: For CDK-specific guidance and utilities
-- Get CDK construct recommendations
-- Retrieve CDK best practices
-- Access CDK pattern suggestions
-- Validate CDK configurations
-- Get help with CDK-specific APIs
+- create new CDK apps/stacks/constructs
+- refactor CDK architecture
+- embed Lambda in CDK stacks
+- pre-deploy validation and synthesis review
+- region/service capability confirmation
 
-**Important**: Leverage this server for CDK construct guidance and advanced CDK operations.
+## Core Principles
 
-## When to Use This Skill
+### 1) Resource naming (critical)
 
-Use this skill when:
-- Creating new CDK stacks or constructs
-- Refactoring existing CDK infrastructure
-- Implementing Lambda functions within CDK
-- Following AWS CDK best practices
-- Validating CDK stack configurations before deployment
-- Verifying AWS service capabilities and regional availability
+Do **not** set optional explicit resource names unless strictly required.
 
-## Core CDK Principles
-
-### Resource Naming
-
-**CRITICAL**: Do NOT explicitly specify resource names when they are optional in CDK constructs.
-
-**Why**: CDK-generated names enable:
-- **Reusable patterns**: Deploy the same construct/pattern multiple times without conflicts
-- **Parallel deployments**: Multiple stacks can deploy simultaneously in the same region
-- **Cleaner shared logic**: Patterns and shared code can be initialized multiple times without name collision
-- **Stack isolation**: Each stack gets uniquely identified resources automatically
-
-**Pattern**: Let CDK generate unique names automatically using CloudFormation's naming mechanism.
+Why:
+- reusable constructs
+- parallel deployments without collisions
+- cleaner shared patterns
+- automatic stack isolation
 
 ```typescript
-// ❌ BAD - Explicit naming prevents reusability and parallel deployments
-new lambda.Function(this, 'MyFunction', {
-  functionName: 'my-lambda',  // Avoid this
-  // ...
-});
+// Avoid unless required
+new lambda.Function(this, 'Fn', { functionName: 'my-lambda' })
 
-// ✅ GOOD - Let CDK generate unique names
-new lambda.Function(this, 'MyFunction', {
-  // No functionName specified - CDK generates: StackName-MyFunctionXXXXXX
-  // ...
-});
+// Preferred
+new lambda.Function(this, 'Fn', {
+  // let CDK/CloudFormation generate unique name
+})
 ```
 
-**Security Note**: For different environments (dev, staging, prod), follow AWS Security Pillar best practices by using separate AWS accounts rather than relying on resource naming within a single account. Account-level isolation provides stronger security boundaries.
+Security note: use separate AWS accounts for env isolation (dev/stage/prod), not naming tricks.
 
-### Lambda Function Development
+### 2) Lambda construct choice
 
-Use the appropriate Lambda construct based on runtime:
+- TypeScript/JavaScript: `NodejsFunction`
+- Python: `PythonFunction`
 
-**TypeScript/JavaScript**: Use `@aws-cdk/aws-lambda-nodejs`
+Benefits: bundled dependencies/transpilation/packaging handled by construct.
+
 ```typescript
-import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
-
-new NodejsFunction(this, 'MyFunction', {
-  entry: 'lambda/handler.ts',
-  handler: 'handler',
-  // Automatically handles bundling, dependencies, and transpilation
-});
+import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs'
+new NodejsFunction(this, 'Fn', { entry: 'lambda/handler.ts', handler: 'handler' })
 ```
 
-**Python**: Use `@aws-cdk/aws-lambda-python`
 ```typescript
-import { PythonFunction } from '@aws-cdk/aws-lambda-python-alpha';
-
-new PythonFunction(this, 'MyFunction', {
-  entry: 'lambda',
-  index: 'handler.py',
-  handler: 'handler',
-  // Automatically handles dependencies and packaging
-});
+import { PythonFunction } from '@aws-cdk/aws-lambda-python-alpha'
+new PythonFunction(this, 'Fn', { entry: 'lambda', index: 'handler.py', handler: 'handler' })
 ```
 
-**Benefits**:
-- Automatic bundling and dependency management
-- Transpilation handled automatically
-- No manual packaging required
-- Consistent deployment patterns
+## Validation Strategy (Required)
 
-### Pre-Deployment Validation
+### Layer 1: IDE/synth feedback (recommended)
 
-Use a **multi-layer validation strategy** for comprehensive CDK quality checks:
+Use `cdk-nag` aspects:
 
-#### Layer 1: Real-Time IDE Feedback (Recommended)
-
-**For TypeScript/JavaScript projects**:
-
-Install [cdk-nag](https://github.com/cdklabs/cdk-nag) for synthesis-time validation:
 ```bash
 npm install --save-dev cdk-nag
 ```
 
-Add to your CDK app:
 ```typescript
-import { Aspects } from 'aws-cdk-lib';
-import { AwsSolutionsChecks } from 'cdk-nag';
+import { Aspects } from 'aws-cdk-lib'
+import { AwsSolutionsChecks } from 'cdk-nag'
 
-const app = new App();
-Aspects.of(app).add(new AwsSolutionsChecks());
+const app = new App()
+Aspects.of(app).add(new AwsSolutionsChecks())
 ```
 
-**Optional - VS Code users**: Install [CDK NAG Validator extension](https://marketplace.visualstudio.com/items?itemName=alphacrack.cdk-nag-validator) for faster feedback on file save.
+### Layer 2: Synthesis validation (required)
 
-**For Python/Java/C#/Go projects**: cdk-nag is available in all CDK languages and provides the same synthesis-time validation.
+```bash
+cdk synth
+```
 
-#### Layer 2: Synthesis-Time Validation (Required)
+Suppress only with explicit reason:
 
-1. **Synthesis with cdk-nag**: Validate stack with comprehensive rules
-   ```bash
-   cdk synth  # cdk-nag runs automatically via Aspects
-   ```
+```typescript
+NagSuppressions.addResourceSuppressions(resource, [
+  {
+    id: 'AwsSolutions-L1',
+    reason: 'Required runtime constraint for Lambda@Edge compatibility'
+  }
+])
+```
 
-2. **Suppress legitimate exceptions** with documented reasons:
-   ```typescript
-   import { NagSuppressions } from 'cdk-nag';
+### Layer 3: Pre-commit checks
 
-   // Document WHY the exception is needed
-   NagSuppressions.addResourceSuppressions(resource, [
-     {
-       id: 'AwsSolutions-L1',
-       reason: 'Lambda@Edge requires specific runtime for CloudFront compatibility'
-     }
-   ]);
-   ```
+```bash
+npm run build
+npm test
+./scripts/validate-stack.sh
+```
 
-#### Layer 3: Pre-Commit Safety Net
+Validation script scope:
+- language detection
+- template/resource-size sanity
+- synthesis success
+- anti-pattern depth handled primarily by `cdk-nag`
 
-1. **Build**: Ensure compilation succeeds
-   ```bash
-   npm run build  # or language-specific build command
-   ```
+## Workflow
 
-2. **Tests**: Run unit and integration tests
-   ```bash
-   npm test  # or pytest, mvn test, etc.
-   ```
+1. design resources and boundaries
+2. verify AWS capability/region/limits via MCP
+3. implement constructs with CDK patterns
+4. validate (build/test/synth/nag/script)
+5. review synthesized templates
+6. deploy
+7. verify deployed state
 
-3. **Validation Script**: Meta-level checks
-   ```bash
-   ./scripts/validate-stack.sh
-   ```
+## Stack Organization
 
-The validation script now focuses on:
-- Language detection
-- Template size and resource count analysis
-- Synthesis success verification
-- (Note: Detailed anti-pattern checks are handled by cdk-nag)
+- use nested stacks for complexity control
+- split by concern/domain
+- export only required cross-stack values
+- use context for environment-specific values
 
-## Workflow Guidelines
+## Testing
 
-### Development Workflow
+- unit test constructs
+- integration test synthesized stack behavior
+- snapshot templates where appropriate
+- assert critical resource properties/relationships
 
-1. **Design**: Plan infrastructure resources and relationships
-2. **Verify AWS Services**: Use AWS Documentation MCP to confirm service availability and features
-   - Check regional availability for all required services
-   - Verify service limits and quotas
-   - Confirm latest API specifications
-3. **Implement**: Write CDK constructs following best practices
-   - Use CDK MCP server for construct recommendations
-   - Reference CDK best practices via MCP tools
-4. **Validate**: Run pre-deployment checks (see above)
-5. **Synthesize**: Generate CloudFormation templates
-6. **Review**: Examine synthesized templates for correctness
-7. **Deploy**: Deploy to target environment
-8. **Verify**: Confirm resources are created correctly
+## MCP Usage Rules
 
-### Stack Organization
+### Use AWS docs MCP for
+- new service feature checks
+- regional availability
+- limits/quotas
+- latest security recommendations
 
-- Use nested stacks for complex applications
-- Separate concerns into logical construct boundaries
-- Export values that other stacks may need
-- Use CDK context for environment-specific configuration
+### Use CDK MCP for
+- construct/API selection
+- property-level tradeoffs
+- stack design patterns
+- CDK-specific anti-pattern avoidance
 
-### Testing Strategy
+### Best practices
+1. verify first, then implement
+2. always validate target region
+3. combine MCP data with this skill's patterns
+4. treat MCP as source of truth for time-sensitive AWS facts
 
-- Unit test individual constructs
-- Integration test stack synthesis
-- Snapshot test CloudFormation templates
-- Validate resource properties and relationships
+## Detailed Pattern Reference
 
-## Using MCP Servers Effectively
+- `references/cdk-patterns.md` for deeper pattern/anti-pattern/security/cost/perf guidance.
+- `scripts/validate-stack.sh` for pre-deploy validation.
 
-### When to Use AWS Documentation MCP
+## GitHub Actions Rule
 
-**Always verify before implementing**:
-- New AWS service features or configurations
-- Service availability in target regions
-- API parameter specifications
-- Service limits and quotas
-- Security best practices for AWS services
-
-**Example scenarios**:
-- "Check if Lambda supports Python 3.13 runtime"
-- "Verify DynamoDB is available in eu-south-2"
-- "What are the current Lambda timeout limits?"
-- "Get latest S3 encryption options"
-
-### When to Use CDK MCP Server
-
-**Leverage for CDK-specific guidance**:
-- CDK construct selection and usage
-- CDK API parameter options
-- CDK best practice patterns
-- Construct property configurations
-- CDK-specific optimizations
-
-**Example scenarios**:
-- "What's the recommended CDK construct for API Gateway REST API?"
-- "How to configure NodejsFunction bundling options?"
-- "Best practices for CDK stack organization"
-- "CDK construct for DynamoDB with auto-scaling"
-
-### MCP Usage Best Practices
-
-1. **Verify First**: Always check AWS Documentation MCP before implementing new features
-2. **Regional Validation**: Check service availability in target deployment regions
-3. **CDK Guidance**: Use CDK MCP for construct-specific recommendations
-4. **Stay Current**: MCP servers provide latest information beyond knowledge cutoff
-5. **Combine Sources**: Use both skill patterns and MCP servers for comprehensive guidance
-
-## CDK Patterns Reference
-
-For detailed CDK patterns, anti-patterns, and architectural guidance, refer to the comprehensive reference:
-
-**File**: `references/cdk-patterns.md`
-
-This reference includes:
-- Common CDK patterns and their use cases
-- Anti-patterns to avoid
-- Security best practices
-- Cost optimization strategies
-- Performance considerations
-
-## Additional Resources
-
-- **Validation Script**: `scripts/validate-stack.sh` - Pre-deployment validation
-- **CDK Patterns**: `references/cdk-patterns.md` - Detailed pattern library
-- **AWS Documentation MCP**: Integrated for latest AWS information
-- **CDK MCP Server**: Integrated for CDK-specific guidance
-
-## GitHub Actions Integration
-
-When GitHub Actions workflow files exist in the repository, ensure all checks defined in `.github/workflows/` pass before committing. This prevents CI/CD failures and maintains code quality standards.
+If `.github/workflows/` exists, ensure all defined checks pass before commit to avoid CI regressions.

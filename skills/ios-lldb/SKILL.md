@@ -1,14 +1,14 @@
 ---
 name: ios-lldb
-description: Use when ANY runtime debugging is needed — setting breakpoints, inspecting variables, evaluating expressions, analyzing threads, or reproducing crashes interactively with LLDB
+description: Use for runtime LLDB debugging: breakpoints, variable inspection, expression evaluation, thread analysis, and interactive crash reproduction
 license: MIT
 ---
 
 # LLDB Debugging
 
-Interactive debugging with LLDB. The debugger freezes time so you can interrogate your running app — inspect variables, evaluate expressions, navigate threads, and understand exactly why something went wrong.
+Interactive LLDB debugging. Freeze execution to inspect variables, evaluate expressions, navigate threads, and isolate root cause.
 
-**Core insight:** "LLDB is useless" really means "I don't know which command to use for Swift types." This is a knowledge-gap problem, not a tool problem.
+**Core insight:** "LLDB is useless" usually means command-selection gaps for Swift types, not a tool limitation.
 
 ## Red Flags — Check This Skill When
 

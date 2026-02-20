@@ -10,11 +10,11 @@ metadata:
 
 ## Overview
 
-Comprehensive guide to new SwiftUI features in iOS 26, iPadOS 26, macOS Tahoe, watchOS 26, and visionOS 26. From the Liquid Glass design system to rich text editing, these enhancements make SwiftUI more powerful across all Apple platforms.
+Guide to SwiftUI 26 additions across Apple platforms, from Liquid Glass to rich text, scene bridging, and web embedding.
 
-**Core principle** From low level performance improvements all the way up through the buttons in your user interface, there are some major improvements across the system.
+**Core principle:** iOS 26 updates span the full stack; adopt APIs deliberately from rendering/performance layers up to control-level behavior.
 
-## When to Use This Skill
+## When to Use
 
 - Adopting the Liquid Glass design system
 - Implementing rich text editing with AttributedString
@@ -44,7 +44,7 @@ Comprehensive guide to new SwiftUI features in iOS 26, iPadOS 26, macOS Tahoe, w
 
 ## Liquid Glass Design System
 
-**For comprehensive coverage**, see `ios-liquid-glass` (design principles, variants, review pressure) and `ios-liquid-glass-ref` (app-wide adoption guide). This section covers WWDC 256-specific APIs only.
+**For comprehensive coverage**, see `ios-liquid-glass` (design principles, variants, review pressure) and `ios-liquid-glass-ref` (app-wide adoption guide). Section covers WWDC 256-specific APIs only.
 
 ### Automatic Adoption
 
@@ -111,7 +111,7 @@ Use in collapsed `NavigationSplitView` sidebar to specify which column shows sea
 
 ### Bottom-Aligned Search
 
-**Foundational search APIs**: See `ios-swiftui-search-ref`. This section covers iOS 26 refinements only.
+**Foundational search APIs**: See `ios-swiftui-search-ref`. Section covers iOS 26 refinements only.
 
 ```swift
 NavigationSplitView {

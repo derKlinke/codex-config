@@ -11,7 +11,7 @@ metadata:
 
 ## When to Use This Skill
 
-Use this skill when:
+Use when:
 - You have logic in your SwiftUI view files and want to extract it
 - Choosing between MVVM, TCA, vanilla SwiftUI patterns, or Coordinator
 - Refactoring views to separate concerns

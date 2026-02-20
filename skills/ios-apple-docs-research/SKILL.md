@@ -25,7 +25,7 @@ metadata:
 
 ## Related Skills
 
-- Use **superpowers-chrome:browsing** for interactive browser control
+- Use **agent-browser** for interactive browser control
 - Use **writing-skills** when creating new skills from Apple documentation
 - Use **reviewing-reference-skills** to validate Apple documentation skills
 
@@ -51,24 +51,24 @@ Apple Developer video pages (`developer.apple.com/videos/play/wwdc20XX/XXXXX/`) 
    }
    ```
 
-   Tool name: `mcp__plugin_superpowers-chrome_chrome__use_browser`
+   Tool name: Use the available Chrome/browser MCP tool in your runtime.
 
    **Complete invocation**:
    ```
-   Use the mcp__plugin_superpowers-chrome_chrome__use_browser tool with:
+   Use your browser MCP tool with:
    - action: "navigate"
    - payload: "https://developer.apple.com/videos/play/wwdc2025/278/"
    ```
 
 2. **Locate** the auto-captured file:
-   - Chrome saves to: `~/.../superpowers/browser/YYYY-MM-DD/session-TIMESTAMP/`
+   - Chrome saves under cache paths like: `~/.../browser/YYYY-MM-DD/session-TIMESTAMP/`
    - Session directory uses Unix timestamp in milliseconds (e.g., `session-1765217804099`)
    - Filename pattern: `NNN-navigate.md` (e.g., `001-navigate.md`)
 
    **Finding the latest session**:
    ```bash
    # List sessions sorted by modification time (newest first)
-   ls -lt ~/Library/Caches/superpowers/browser/*/session-* | head -5
+   ls -lt ~/Library/Caches/*/browser/*/session-* | head -5
    ```
 
 3. **Read** the captured transcript:
@@ -288,7 +288,7 @@ Result: Clean markdown, instant access
 
 **Solution**:
 1. Check Chrome actually navigated (look for URL confirmation)
-2. Find latest session: `ls -lt ~/Library/Caches/superpowers/browser/*/`
+2. Find latest session: `ls -lt ~/Library/Caches/*/browser/*/`
 3. Session directory format: `YYYY-MM-DD/session-TIMESTAMP/`
 
 ### Transcript Incomplete
@@ -320,7 +320,7 @@ Before using captured content:
 
 ## Resources
 
-**Skills**: superpowers-chrome:browsing, writing-skills, reviewing-reference-skills
+**Skills**: agent-browser, writing-skills, reviewing-reference-skills
 
 ---
 

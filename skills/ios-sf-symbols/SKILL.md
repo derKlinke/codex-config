@@ -1,6 +1,6 @@
 ---
 name: ios-sf-symbols
-description: Use when implementing SF Symbols rendering modes, symbol effects, animations, custom symbols, or troubleshooting symbol appearance - covers the full symbol effects system from iOS 17 through SF Symbols 7 Draw animations in iOS 26
+description: Use for SF Symbols rendering modes, effects, animations, custom symbols, and troubleshooting from iOS 17 through SF Symbols 7 (iOS 26)
 license: MIT
 compatibility: iOS 17+, iOS 18+ (Wiggle/Rotate/Breathe), iOS 26+ (Draw animations)
 metadata:
@@ -9,7 +9,7 @@ metadata:
 
 # SF Symbols — Effects, Rendering, and Custom Symbols
 
-## When to Use This Skill
+## Use This Skill When
 
 Use when:
 - Choosing between rendering modes (Monochrome, Hierarchical, Palette, Multicolor)
@@ -21,23 +21,23 @@ Use when:
 - Handling accessibility with symbol animations (Reduce Motion)
 
 #### Related Skills
-- Use `ios-sf-symbols-ref` for complete API reference with all modifiers, UIKit equivalents, and platform availability matrix
+- Use `ios-sf-symbols-ref` for full API reference, UIKit equivalents, and platform availability
 - Use `ios-swiftui-animation-ref` for general SwiftUI animation (not symbol-specific)
 - Use `ios-hig-ref` for broader icon design guidelines
 
 ## Example Prompts
 
 #### 1. "My SF Symbol shows as a single flat color but I want it to have depth with multiple shades. How do I fix this?"
-> The skill covers rendering mode selection — Hierarchical for depth from a single color, Palette for explicit per-layer colors
+> Covers rendering mode selection — Hierarchical for depth from a single color, Palette for explicit per-layer colors
 
 #### 2. "I want my download button to animate when tapped, then show a spinning indicator while downloading, and animate to a checkmark when done."
-> The skill covers effect selection: Bounce for tap feedback, Breathe/Pulse for in-progress, Replace with content transition for completion
+> Covers effect selection: Bounce for tap feedback, Breathe/Pulse for in-progress, Replace with content transition for completion
 
 #### 3. "I'm trying to use the new Draw animations from SF Symbols 7 but the effect isn't playing."
-> The skill covers Draw On/Off implementation, playback modes, iOS 26 requirements, and common troubleshooting
+> Covers Draw On/Off implementation, playback modes, iOS 26 requirements, and common troubleshooting
 
 #### 4. "How do I create a custom symbol that supports all rendering modes and the new Draw animation?"
-> The skill covers custom symbol authoring workflow, template layers, Draw annotation with guide points
+> Covers custom symbol authoring workflow, template layers, Draw annotation with guide points
 
 ---
 

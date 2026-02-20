@@ -12,9 +12,9 @@ metadata:
 **iOS Version**: iOS 13+ (SwiftUI integration), iOS 11+ (SKRenderer)
 **Xcode**: Xcode 15+
 
-## When to Use This Skill
+## When to Use
 
-Use this skill when:
+Use when:
 - Building a new SpriteKit game or interactive simulation
 - Implementing physics (collisions, contacts, forces, joints)
 - Setting up game architecture (scenes, layers, cameras)
@@ -25,7 +25,7 @@ Use this skill when:
 - Debugging physics contacts that don't fire
 - Fixing coordinate system confusion
 
-Do NOT use this skill for:
+Do not use for:
 - SceneKit 3D rendering (`ios-scenekit`)
 - GameplayKit entity-component systems
 - Metal shader programming (`ios-metal-migration-ref`)

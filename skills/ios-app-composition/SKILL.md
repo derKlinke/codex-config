@@ -9,9 +9,9 @@ metadata:
 
 # App Composition
 
-## When to Use This Skill
+## When to Use
 
-Use this skill when:
+Use when:
 - Structuring your @main entry point and root view
 - Managing authentication state (login → onboarding → main)
 - Switching between app-level states without flicker

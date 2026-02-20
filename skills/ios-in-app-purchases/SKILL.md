@@ -1,6 +1,6 @@
 ---
 name: ios-in-app-purchases
-description: Use when implementing in-app purchases, StoreKit 2, subscriptions, or transaction handling - testing-first workflow with .storekit configuration, StoreManager architecture, transaction verification, subscription management, and restore purchases for consumables, non-consumables, and auto-renewable subscriptions
+description: Use for StoreKit 2 in-app purchases, subscriptions, and transactions with .storekit-first testing, verification, restore flows, and StoreManager patterns
 license: MIT
 metadata:
   version: "1.0"
@@ -8,15 +8,15 @@ metadata:
 
 # StoreKit 2 In-App Purchase Implementation
 
-**Purpose**: Guide robust, testable in-app purchase implementation
+**Purpose**: Build robust, testable in-app purchases
 **StoreKit Version**: StoreKit 2
 **iOS Version**: iOS 15+ (iOS 18.4+ for latest features)
 **Xcode**: Xcode 13+ (Xcode 16+ recommended)
 **Context**: WWDC 2025-241, 2025-249, 2023-10013, 2021-10114
 
-## When to Use This Skill
+## Use This Skill When
 
-✅ **Use this skill when**:
+✅ **Use when**:
 - Implementing any in-app purchase functionality (new or existing)
 - Adding consumable products (coins, hints, boosts)
 - Adding non-consumable products (premium features, level packs)
@@ -28,7 +28,7 @@ metadata:
 - Server-side receipt validation
 - Family Sharing support
 
-❌ **Do NOT use this skill for**:
+❌ **Do not use for**:
 - StoreKit 1 (legacy API) - this skill focuses on StoreKit 2
 - App Store Connect product configuration (separate documentation)
 - Pricing strategy or business model decisions
@@ -76,7 +76,7 @@ Commit without `.storekit` configuration, test only in sandbox.
 
 ---
 
-## Core Philosophy: Testing-First Workflow
+## Principle: Testing-First Workflow
 
 > **Best Practice**: Create and test StoreKit configuration BEFORE writing production purchase code.
 

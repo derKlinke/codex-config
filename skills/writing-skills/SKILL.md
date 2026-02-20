@@ -1,27 +1,42 @@
 ---
 name: writing-skills
-description: Use when creating new skills, editing existing skills, or verifying skills work before deployment
+description: Use when creating/editing/verifying skills and enforce high-density, constraint-preserving language in skill docs.
 ---
 
 # Writing Skills
 
+## Related Skills
+
+- For creating/updating project `AGENTS.md` instructions, use `agents-md` (`~/.codex/skills/agents-md/SKILL.md`).
+
+## Language Density Contract (Mandatory)
+
+- Preserve full behavior/instruction set; compress wording, not scope.
+- Default style: terse bullets, short clauses, noun-phrase acceptable.
+- Remove filler/intro/conclusion text and motivational prose.
+- One bullet = one directive; merge duplicates aggressively.
+- Keep examples minimal and disambiguation-focused.
+- Prefer tables/checklists over long prose where possible.
+- Preserve normative force (`must`, `never`, `before`, `required`).
+- Final pass required: tighten phrasing, collapse repetition, cut non-essential tokens.
+
 ## Overview
 
-**Writing skills IS Test-Driven Development applied to process documentation.**
+**Writing skills = TDD for process documentation.**
 
-**Personal skills live in agent-specific directories (`~/.codex/skills` for Codex, `~/.agents/skills/` for shared discovery)** 
+**Skill locations:** `~/.codex/skills` (Codex), `~/.agents/skills/` (shared discovery).
 
-You write test cases (pressure scenarios with subagents), watch them fail (baseline behavior), write the skill (documentation), watch tests pass (agents comply), and refactor (close loopholes).
+Process: write pressure scenarios, observe baseline failure, write skill, verify compliance, refactor loopholes.
 
-**Core principle:** If you didn't watch an agent fail without the skill, you don't know if the skill teaches the right thing.
+**Core principle:** If you did not observe failure without the skill, you cannot confirm the skill teaches the needed behavior.
 
-**REQUIRED BACKGROUND:** You MUST understand superpowers:test-driven-development before using this skill. That skill defines the fundamental RED-GREEN-REFACTOR cycle. This skill adapts TDD to documentation.
+**REQUIRED BACKGROUND:** You MUST understand `test-driven-development` (RED-GREEN-REFACTOR). This skill applies that cycle to documentation.
 
-**Official guidance:** For Anthropic's official skill authoring best practices, see anthropic-best-practices.md. This document provides additional patterns and guidelines that complement the TDD-focused approach in this skill.
+**Official guidance:** See `anthropic-best-practices.md` for complementary authoring guidance.
 
 ## What is a Skill?
 
-A **skill** is a reference guide for proven techniques, patterns, or tools. Skills help future agent instances find and apply effective approaches.
+A **skill** is a reusable guide for proven techniques, patterns, or tools.
 
 **Skills are:** Reusable techniques, patterns, tools, reference guides
 
@@ -42,17 +57,17 @@ A **skill** is a reference guide for proven techniques, patterns, or tools. Skil
 | **Watch it pass** | Verify agent now complies |
 | **Refactor cycle** | Find new rationalizations → plug → re-verify |
 
-The entire skill creation process follows RED-GREEN-REFACTOR.
+Skill creation follows RED-GREEN-REFACTOR.
 
 ## When to Create a Skill
 
-**Create when:**
+Create when:
 - Technique wasn't intuitively obvious to you
 - You'd reference this again across projects
 - Pattern applies broadly (not project-specific)
 - Others would benefit
 
-**Don't create for:**
+Do not create for:
 - One-off solutions
 - Standard practices well-documented elsewhere
 - Project-specific conventions (put in AGENTS.md)
@@ -101,6 +116,7 @@ skills/
   - Include specific symptoms, situations, and contexts
   - **NEVER summarize the skill's process or workflow** (see CSO section for why)
   - Keep under 500 characters if possible
+- Body language: dense, directive, compression-first; avoid explanatory paragraphs except minimal overview context.
 
 ```markdown
 ---
@@ -210,9 +226,22 @@ Use words the agent would search for:
 - ✅ `creating-skills` not `skill-creation`
 - ✅ `condition-based-waiting` not `async-test-helpers`
 
+**Namespace prefixes (mandatory for new/refactored skills):**
+- Design-related skills MUST use `design-*`
+- Writing/copy/editing/documentation skills MUST use `writing-*`
+- Existing platform namespace remains: `ios-*`
+
+**Examples:**
+- ✅ `design-interaction-motion`
+- ✅ `design-interface-critique`
+- ✅ `writing-copy-editing`
+- ✅ `writing-tone-humanization`
+
 ### 4. Token Efficiency (Critical)
 
 **Problem:** getting-started and frequently-referenced skills load into EVERY conversation. Every token counts.
+
+**Policy:** Density/compression is mandatory for all new/edited skills, not optional guidance.
 
 **Target word counts:**
 - getting-started workflows: <150 words each
@@ -257,12 +286,15 @@ You: Searching...
 - Don't repeat what's in cross-referenced skills
 - Don't explain what's obvious from command
 - Don't include multiple examples of same pattern
+- Don't repeat equivalent constraints across sections
 
 **Verification:**
 ```bash
 wc -w skills/path/SKILL.md
 # getting-started workflows: aim for <150 each
 # Other frequently-loaded: aim for <200 total
+rg -n "Welcome|This document explains|Remember to|You should" skills/path/SKILL.md
+# Expect no filler phrasing matches
 ```
 
 **Name by what you DO or core insight:**
@@ -280,8 +312,8 @@ wc -w skills/path/SKILL.md
 **When writing documentation that references other skills:**
 
 Use skill name only, with explicit requirement markers:
-- ✅ Good: `**REQUIRED SUB-SKILL:** Use superpowers:test-driven-development`
-- ✅ Good: `**REQUIRED BACKGROUND:** You MUST understand superpowers:systematic-debugging`
+- ✅ Good: `**REQUIRED SUB-SKILL:** Use test-driven-development`
+- ✅ Good: `**REQUIRED BACKGROUND:** You MUST understand systematic-debugging`
 - ❌ Bad: `See skills/testing/test-driven-development` (unclear if required)
 - ❌ Bad: `@skills/testing/test-driven-development/SKILL.md` (force-loads, burns context)
 
@@ -390,7 +422,7 @@ Edit skill without testing? Same violation.
 - Don't "adapt" while running tests
 - Delete means delete
 
-**REQUIRED BACKGROUND:** The superpowers:test-driven-development skill explains why this matters. Same principles apply to documentation.
+**REQUIRED BACKGROUND:** The test-driven-development skill explains why this matters. Same principles apply to documentation.
 
 ## Testing All Skill Types
 
@@ -612,6 +644,8 @@ Deploying untested skills = deploying untested code. It's a violation of quality
 - [ ] Address specific baseline failures identified in RED
 - [ ] Code inline OR link to separate file
 - [ ] One excellent example (not multi-language)
+- [ ] Dense/compressed language applied across sections (no filler prose)
+- [ ] No duplicated constraints across sections
 - [ ] Run scenarios WITH skill - verify agents now comply
 
 **REFACTOR Phase - Close Loopholes:**
@@ -627,6 +661,7 @@ Deploying untested skills = deploying untested code. It's a violation of quality
 - [ ] Common mistakes section
 - [ ] No narrative storytelling
 - [ ] Supporting files only for tools or heavy reference
+- [ ] Final density pass completed (tight phrasing, merged duplicates, token reduction)
 
 **Deployment:**
 - [ ] Commit skill to git and push to your fork (if configured)

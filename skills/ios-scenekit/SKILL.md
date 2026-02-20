@@ -8,13 +8,13 @@ metadata:
 
 # SceneKit Development Guide
 
-**Purpose**: Maintain existing SceneKit code safely and plan migration to RealityKit
+**Purpose**: Maintain SceneKit safely and plan migration to RealityKit
 **iOS Version**: iOS 8+ (SceneKit), deprecated iOS 26+
 **Xcode**: Xcode 15+
 
-## When to Use This Skill
+## Use When
 
-Use this skill when:
+Use when:
 - Maintaining existing SceneKit code
 - Building a SceneKit prototype (with awareness of deprecation)
 - Planning migration from SceneKit to RealityKit
@@ -22,7 +22,7 @@ Use this skill when:
 - Integrating SceneKit content with SwiftUI
 - Loading 3D models via Model I/O or SCNSceneSource
 
-Do NOT use this skill for:
+Do not use for:
 - New 3D projects (use `ios-realitykit`)
 - AR experiences (use `ios-realitykit`)
 - visionOS development (use `ios-realitykit`)
@@ -33,15 +33,15 @@ Do NOT use this skill for:
 
 ## Deprecation Context
 
-SceneKit is **soft-deprecated as of iOS 26** (WWDC 2025). This means:
+SceneKit is **soft-deprecated as of iOS 26** (WWDC 2025):
 - Existing apps continue to work
 - No new features or general bug fixes
 - Only critical security patches
 - `SceneView` (SwiftUI) is formally deprecated in iOS 26
 
-**Apple's forward path is RealityKit.** All new 3D projects should use RealityKit. SceneKit knowledge remains valuable for maintaining legacy code and understanding concepts during migration.
+**Forward path: RealityKit.** New 3D projects should use RealityKit. SceneKit remains relevant for legacy maintenance and migration.
 
-**In RealityKit**: ECS architecture replaces scene graph. See `ios-scenekit-ref` for the complete concept mapping table.
+**In RealityKit**: ECS replaces scene graph. See `ios-scenekit-ref` for full concept mapping.
 
 ---
 

@@ -6,13 +6,13 @@ license: MIT
 
 # MetricKit API Reference
 
-Complete API reference for collecting field performance metrics and diagnostics using MetricKit.
+API reference for collecting field performance metrics and diagnostics with MetricKit.
 
 ## Overview
 
-MetricKit provides aggregated, on-device performance and diagnostic data from users who opt into sharing analytics. Data is delivered daily (or on-demand in development).
+MetricKit provides aggregated on-device performance/diagnostic data from users who opt into analytics sharing. Delivery is daily (or on-demand in development).
 
-## When to Use This Reference
+## Use When
 
 Use this reference when:
 - Setting up MetricKit subscriber in your app
@@ -33,7 +33,7 @@ For memory debugging including jetsam, see `ios-memory-debugging`.
 4. **Aggregated, not individual** — You get counts and averages, not per-user traces
 5. **Simulator doesn't work** — MetricKit only collects on physical devices
 
-**iOS Version Support**:
+**iOS version support**:
 | Feature | iOS Version |
 |---------|-------------|
 | Basic metrics (battery, CPU, memory) | iOS 13+ |

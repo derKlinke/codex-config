@@ -37,22 +37,22 @@ Systematic pre-flight checklist that catches 90% of App Store rejection causes b
 Real questions developers ask that this skill answers:
 
 #### 1. "Is my app ready to submit to the App Store?"
-> The skill provides a complete pre-flight checklist covering build, privacy, metadata, accounts, review info, content, and regional requirements
+> Provides a complete pre-flight checklist covering build, privacy, metadata, accounts, review info, content, and regional requirements
 
 #### 2. "What do I need before submitting my first iOS app?"
-> The skill walks through every requirement from scratch — privacy manifest, metadata fields, screenshots, demo credentials, age rating
+> Walks through every requirement from scratch — privacy manifest, metadata fields, screenshots, demo credentials, age rating
 
 #### 3. "I keep getting rejected, what am I missing?"
-> The skill provides anti-patterns with specific rejection causes and the decision tree to identify gaps
+> Provides anti-patterns with specific rejection causes and the decision tree to identify gaps
 
 #### 4. "What's the pre-submission checklist for App Store?"
-> The skill provides a categorized mandatory checklist with every item that triggers rejection if missing
+> Provides a categorized mandatory checklist with every item that triggers rejection if missing
 
 #### 5. "Do I need a privacy manifest?"
 > Yes. Since May 2024, missing privacy manifests cause automatic rejection. The skill explains when and how.
 
 #### 6. "My app update was rejected for metadata issues"
-> The skill covers metadata completeness requirements and the common gaps that trigger Guideline 2.3 rejections
+> Covers metadata completeness requirements and the common gaps that trigger Guideline 2.3 rejections
 
 ---
 
