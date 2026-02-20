@@ -56,3 +56,4 @@ Keep `<repo-root>/DESIGN.md` as the authoritative present-state design doctrine:
 - `ios-swiftui-layout` - Use when layout constraints should become documented system-level rules.
 - `ios-typography-ref` - Use for type hierarchy and Dynamic Type standards in DESIGN.md.
 - `ios-sf-symbols` - Use for iconography policy and symbol behavior consistency.
+- `css-grid-overlay-debug` - Use when grid guide rendering (columns/rows/gutters/subgrid) needs deterministic instrumentation and debugging.

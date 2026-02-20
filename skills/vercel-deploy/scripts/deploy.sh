@@ -6,7 +6,7 @@
 
 set -e
 
-DEPLOY_ENDPOINT="https://claude-skills-deploy.vercel.com/api/deploy"
+DEPLOY_ENDPOINT="${DEPLOY_ENDPOINT:-https://claude-skills-deploy.vercel.com/api/deploy}"
 
 # Detect framework from package.json
 detect_framework() {

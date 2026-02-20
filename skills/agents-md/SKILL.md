@@ -1,6 +1,6 @@
 ---
 name: agents-md
-description: This skill should be used when the user asks to "create AGENTS.md", "update AGENTS.md", "maintain agent docs", "set up CLAUDE.md", or needs to keep agent instructions concise. Guides discovery of local skills and enforces minimal documentation style.
+description: This skill should be used when the user asks to "create AGENTS.md", "update AGENTS.md", "maintain agent docs", "set up AGENTS.md", or needs to keep agent instructions concise. Guides discovery of local skills and enforces minimal documentation style.
 ---
 
 # Maintaining AGENTS.md
@@ -10,14 +10,14 @@ AGENTS.md is the canonical agent-facing documentation. Keep it minimal—agents 
 ## File Setup
 
 1. Create `AGENTS.md` at project root
-2. Create symlink: `ln -s AGENTS.md CLAUDE.md`
+2. No symlink required; use `AGENTS.md` directly.
 
 ## Before Writing
 
 Discover local skills to reference:
 
 ```bash
-find .claude/skills -name "SKILL.md" 2>/dev/null
+find .codex/skills -name "SKILL.md" 2>/dev/null
 ls plugins/*/skills/*/SKILL.md 2>/dev/null
 ```
 
@@ -27,7 +27,7 @@ Read each skill's frontmatter to understand when to reference it.
 
 - **Headers + bullets** - No paragraphs
 - **Code blocks** - For commands and templates
-- **Reference, don't duplicate** - Point to skills: "Use `db-migrate` skill. See `.claude/skills/db-migrate/SKILL.md`"
+- **Reference, don't duplicate** - Point to skills: "Use `db-migrate` skill. See `.codex/skills/db-migrate/SKILL.md`"
 - **No filler** - No intros, conclusions, or pleasantries
 - **Trust capabilities** - Omit obvious context
 
@@ -40,17 +40,6 @@ Which tool and key commands only:
 Use **pnpm**: `pnpm install`, `pnpm dev`, `pnpm test`
 ```
 
-### Commit Attribution
-Always include this section. Agents should use their own identity:
-```markdown
-## Commit Attribution
-AI commits MUST include:
-```
-Co-Authored-By: (the agent model's name and attribution byline)
-```
-Example: `Co-Authored-By: Claude Sonnet 4 <noreply@example.com>`
-```
-
 ### Key Conventions
 Project-specific patterns agents must follow. Keep brief.
 
@@ -58,10 +47,10 @@ Project-specific patterns agents must follow. Keep brief.
 Reference each discovered skill:
 ```markdown
 ## Database
-Use `db-migrate` skill for schema changes. See `.claude/skills/db-migrate/SKILL.md`
+Use `db-migrate` skill for schema changes. See `.codex/skills/db-migrate/SKILL.md`
 
 ## Testing
-Use `write-tests` skill. See `.claude/skills/write-tests/SKILL.md`
+Use `write-tests` skill. See `.codex/skills/write-tests/SKILL.md`
 ```
 
 ## Optional Sections
@@ -89,20 +78,14 @@ Omit these:
 ## Package Manager
 Use **pnpm**: `pnpm install`, `pnpm dev`
 
-## Commit Attribution
-AI commits MUST include:
-```
-Co-Authored-By: (the agent model's name and attribution byline)
-```
-
 ## API Routes
 [Template code block]
 
 ## Database
-Use `db-migrate` skill. See `.claude/skills/db-migrate/SKILL.md`
+Use `db-migrate` skill. See `.codex/skills/db-migrate/SKILL.md`
 
 ## Testing
-Use `write-tests` skill. See `.claude/skills/write-tests/SKILL.md`
+Use `write-tests` skill. See `.codex/skills/write-tests/SKILL.md`
 
 ## CLI
 | Command | Description |

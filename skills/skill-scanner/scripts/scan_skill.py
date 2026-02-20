@@ -92,8 +92,8 @@ DANGEROUS_SCRIPT_PATTERNS: list[tuple[str, str, str]] = [
     (r"(?i)os\.(system|popen|exec[lv]p?e?)\s*\(", "OS command execution", "high"),
     (r"(?i)__import__\s*\(", "Dynamic import", "medium"),
     # File system manipulation
-    (r"(?i)(open|write|Path).*\.(claude|bashrc|zshrc|profile|bash_profile)", "Agent/shell config modification", "critical"),
-    (r"(?i)(open|write|Path).*(settings\.json|CLAUDE\.md|MEMORY\.md|\.mcp\.json)", "Agent settings modification", "critical"),
+    (r"(?i)(open|write|Path).*\.(claude|codex|agents|bashrc|zshrc|profile|bash_profile)", "Agent/shell config modification", "critical"),
+    (r"(?i)(open|write|Path).*(settings\.json|AGENTS\.md|CLAUDE\.md|MEMORY\.md|\.mcp\.json)", "Agent settings modification", "critical"),
     (r"(?i)(open|write|Path).*(\.git/hooks|\.husky)", "Git hooks modification", "critical"),
     # Encoding/obfuscation in scripts
     (r"(?i)base64\.(b64decode|decodebytes)\s*\(", "Base64 decoding (potential obfuscation)", "medium"),
