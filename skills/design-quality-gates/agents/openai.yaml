@@ -1,0 +1,4 @@
+interface:
+  display_name: "Design Quality Gates"
+  short_description: "Professional design quality gates"
+  default_prompt: "Apply objective quality gates for layout, typography, hierarchy, color, and accessibility before finalizing design work."
