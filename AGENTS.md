@@ -18,6 +18,9 @@
 - Testing non-negotiable; prefer too much testing over too little.
 - Keep solutions "engineered enough": avoid fragile hacks and premature abstraction.
 - Bias toward explicit code over clever code.
+- **Simplicity First**: Keep changes as simple as possible; minimize touched code.
+- **No Laziness**: Find root cause; no temporary fixes; senior engineering standard.
+- **Fix, Don't Mask**: Resolve issues; do not hide symptoms.
 
 ## Working Conventions
 - Prioritize root-cause fixes; avoid band-aids.
@@ -80,3 +83,43 @@
 - Skip confirmations like "I'll continue..."; just do it.
 - If a task needs 1 tool call, don't use 3; plan before acting.
 - Do not summarize what you just did unless result is ambiguous or needs additional input.
+
+## Execution Doctrine
+
+### 2. Subagent Strategy
+- Use subagents liberally to keep main context clean.
+- Offload research, exploration, and parallel analysis to subagents.
+- For complex problems, increase parallel compute via subagents.
+- One task per subagent for focused execution.
+
+### 3. Self-Improvement Loop
+- After any correction from user: update `tasks/lessons.md` with the pattern.
+- Write rules that prevent repeating the same mistake.
+- Iterate on lessons until mistake rate drops.
+- Review relevant lessons at session start.
+
+### 4. Verification Before Done
+- Never mark a task complete without proof.
+- Diff behavior between `main` and changes when relevant.
+- Ask: "Would a staff engineer approve this?"
+- Run tests, inspect logs, demonstrate correctness.
+
+### 5. Demand Elegance (Balanced)
+- For non-trivial changes: ask "is there a more elegant way?"
+- If fix feels hacky: re-implement with current full understanding.
+- Skip elegance pass for simple/obvious fixes; avoid over-engineering.
+- Challenge your own work before presenting it.
+
+### 6. Autonomous Bug Fixing
+- For bug reports: fix directly; avoid hand-holding requests.
+- Point to logs/errors/failing tests, then resolve.
+- Minimize user context switching.
+- Fix failing CI tests without explicit step-by-step guidance.
+
+## Task Management
+1. **Plan First**: Write plan to `tasks/todo.md` with checkable items.
+2. **Verify Plan**: Check in before starting implementation.
+3. **Track Progress**: Mark items complete as you go.
+4. **Explain Changes**: High-level summary at each step.
+5. **Document Results**: Add review section to `tasks/todo.md`.
+6. **Capture Lessons**: Update `tasks/lessons.md` after corrections.
