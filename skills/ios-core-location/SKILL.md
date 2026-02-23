@@ -1,6 +1,6 @@
 ---
 name: ios-core-location
-description: Use for Core Location implementation decisions: authorization strategy, monitoring mode, accuracy selection, geofencing, and background location lifecycle.
+description: "Use for Core Location implementation decisions: authorization strategy, monitoring mode, accuracy selection, geofencing, and background location lifecycle."
 license: MIT
 compatibility: iOS 17+, iPadOS 17+, macOS 14+, watchOS 10+
 metadata:

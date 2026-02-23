@@ -1,6 +1,6 @@
 ---
 name: ios-core-location-diag
-description: Use for Core Location troubleshooting: no updates, background failure, denied auth, poor accuracy, geofence misses, persistent location icon.
+description: "Use for Core Location troubleshooting: no updates, background failure, denied auth, poor accuracy, geofence misses, persistent location icon."
 license: MIT
 compatibility: iOS 17+, iPadOS 17+, macOS 14+, watchOS 10+
 metadata:

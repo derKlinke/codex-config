@@ -1,6 +1,6 @@
 ---
 name: ios-build-performance
-description: Use for slow builds: Build Timeline analysis, type-check bottlenecks, compilation caching, and incremental-build optimization
+description: "Use for slow builds: Build Timeline analysis, type-check bottlenecks, compilation caching, and incremental-build optimization"
 license: MIT
 compatibility: iOS 14+, macOS 11+, iPadOS 14+, tvOS 14+, watchOS 7+, ios-visionOS 1.0+. Xcode 14+ (Xcode 26+ for compilation caching and explicit modules)
 metadata:

@@ -1,6 +1,6 @@
 ---
 name: ios-background-processing-diag
-description: Use for symptom-based background task troubleshooting: task never runs, terminates early, delegate not called, dev/prod mismatch, inconsistent scheduling, launch crash, duplicate runs.
+description: "Use for symptom-based background task troubleshooting: task never runs, terminates early, delegate not called, dev/prod mismatch, inconsistent scheduling, launch crash, duplicate runs."
 license: MIT
 metadata:
   version: "1.0.0"

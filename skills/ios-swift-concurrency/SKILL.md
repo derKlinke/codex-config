@@ -1,6 +1,6 @@
 ---
 name: ios-swift-concurrency
-description: Use for Swift 6 concurrency errors and design: actor isolation, Sendable, data races, @MainActor, async/await, and thread-safety fixes
+description: "Use for Swift 6 concurrency errors and design: actor isolation, Sendable, data races, @MainActor, async/await, and thread-safety fixes"
 license: MIT
 metadata:
   version: "1.0.0"

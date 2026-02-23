@@ -1,6 +1,6 @@
 ---
 name: ios-realitykit
-description: Use for RealityKit 3D/AR/spatial apps: ECS architecture, SwiftUI integration, RealityView, anchors, materials, physics, interaction, multiplayer, and performance
+description: "Use for RealityKit 3D/AR/spatial apps: ECS architecture, SwiftUI integration, RealityView, anchors, materials, physics, interaction, multiplayer, and performance"
 license: MIT
 metadata:
   version: "1.0.0"

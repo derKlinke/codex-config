@@ -1,6 +1,6 @@
 ---
 name: ios-lldb-ref
-description: Use for LLDB command reference: variable inspection, breakpoints/watchpoints, thread/frame control, expression evaluation, process control, memory/image inspection, and .lldbinit customization.
+description: "Use for LLDB command reference: variable inspection, breakpoints/watchpoints, thread/frame control, expression evaluation, process control, memory/image inspection, and .lldbinit customization."
 license: MIT
 ---
 

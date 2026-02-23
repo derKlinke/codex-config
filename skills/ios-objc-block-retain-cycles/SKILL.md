@@ -1,6 +1,6 @@
 ---
 name: ios-objc-block-retain-cycles
-description: Use for Objective-C block retain-cycle debugging: weak-strong capture issues, leaked controllers, callback crashes, and required diagnostics
+description: "Use for Objective-C block retain-cycle debugging: weak-strong capture issues, leaked controllers, callback crashes, and required diagnostics"
 license: MIT
 metadata:
   version: "1.0.0"

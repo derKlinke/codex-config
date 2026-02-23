@@ -1,6 +1,6 @@
 ---
 name: ios-coreml-diag
-description: Use for Core ML diagnostics: load failures, slow inference, memory pressure, compression accuracy regressions, and conversion errors.
+description: "Use for Core ML diagnostics: load failures, slow inference, memory pressure, compression accuracy regressions, and conversion errors."
 version: 1.0.0
 ---
 

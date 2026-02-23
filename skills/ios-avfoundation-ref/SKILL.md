@@ -1,6 +1,6 @@
 ---
 name: ios-avfoundation-ref
-description: Use for AVFoundation audio reference: AVAudioSession categories/modes/options, AVAudioEngine pipelines/taps/conversion, DAC output behavior, and iOS 26+ input/spatial audio features.
+description: "Use for AVFoundation audio reference: AVAudioSession categories/modes/options, AVAudioEngine pipelines/taps/conversion, DAC output behavior, and iOS 26+ input/spatial audio features."
 license: MIT
 metadata:
   version: "1.0.0"

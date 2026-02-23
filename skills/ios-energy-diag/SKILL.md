@@ -1,6 +1,6 @@
 ---
 name: ios-energy-diag
-description: Use for symptom-based energy diagnostics: high battery ranking, heat, background drain, cellular-heavy drain, and action-specific spikes.
+description: "Use for symptom-based energy diagnostics: high battery ranking, heat, background drain, cellular-heavy drain, and action-specific spikes."
 license: MIT
 metadata:
   version: "1.0.0"

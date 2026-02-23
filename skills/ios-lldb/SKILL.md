@@ -1,6 +1,6 @@
 ---
 name: ios-lldb
-description: Use for runtime LLDB debugging: breakpoints, variable inspection, expression evaluation, thread analysis, and interactive crash reproduction
+description: "Use for runtime LLDB debugging: breakpoints, variable inspection, expression evaluation, thread analysis, and interactive crash reproduction"
 license: MIT
 ---
 

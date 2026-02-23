@@ -1,6 +1,6 @@
 ---
 name: ios-typography-ref
-description: Use for Apple typography reference: SF families, text styles, Dynamic Type, tracking/leading, AttributedString typography behavior, and international text handling through iOS 26.
+description: "Use for Apple typography reference: SF families, text styles, Dynamic Type, tracking/leading, AttributedString typography behavior, and international text handling through iOS 26."
 license: MIT
 ---
 
