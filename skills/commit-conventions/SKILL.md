@@ -20,13 +20,14 @@ Plan and execute commits that follow Conventional Commits plus any repository ru
 
 ## Conventional Commit Format
 
-- Format: `<type>(<scope>): <subject>`
-- Scope is optional unless AGENTS.md requires it. Use short, stable areas (e.g., `dsp_core`, `plugin`, `ci`, `fastlane`).
+- Default format: `<type>: <subject>`
+- Use scope only for monorepos with multiple targets, and scope to the target: `<type>(<target>): <subject>`.
+- Otherwise do not use scope.
 - Subject is imperative, lowercase, and has no trailing period.
 
 ## Type Selection
 
-- Prefer repo-specific types/scopes from AGENTS.md.
+- Prefer repo-specific types from AGENTS.md.
 - Otherwise use standard types: `feat`, `fix`, `refactor`, `perf`, `docs`, `test`, `build`, `ci`, `chore`, `revert`.
 
 ## File Hygiene
@@ -37,5 +38,6 @@ Plan and execute commits that follow Conventional Commits plus any repository ru
 
 ## Examples
 
-- `fix(ci): use macos match certificates for signing`
+- `fix: use macos match certificates for signing`
 - `build: split plugin signing into notarized release artifacts`
+- `feat(ios-app): add waveform preview in editor` (monorepo multi-target only)
