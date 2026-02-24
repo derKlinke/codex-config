@@ -9,6 +9,7 @@ Constraints:
 - Group files by coherent intent. Do not mix unrelated changes in one commit.
 - Use Conventional Commits (`feat|fix|refactor|build|ci|chore|docs|style|perf|test`).
 - Prefer concise commit subjects (<= 72 chars). Add a body only if needed.
+- Only scope commits if repo rules require it. Otherwise, omit scopes.
 
 Execution:
 1. Show a proposed commit plan (group -> commit message).
