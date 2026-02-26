@@ -1,0 +1,10 @@
+version = 1
+id = "check-for-sentry-issues"
+name = "Check for sentry issues"
+prompt = "look for crashes in [$sentry](/Users/fabianklinke/.codex/skills/sentry/SKILL.md) and implement fixes for each"
+status = "ACTIVE"
+rrule = "RRULE:FREQ=WEEKLY;BYHOUR=9;BYMINUTE=0;BYDAY=SU,MO,TU,WE,TH,FR,SA"
+execution_environment = "worktree"
+cwds = ["/Users/fabianklinke/Developer/b90-industries/b90hq"]
+created_at = 1772118119770
+updated_at = 1772118119770

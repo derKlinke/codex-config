@@ -1,0 +1,10 @@
+version = 1
+id = "update-security-threat-model"
+name = "Update Security Threat Model"
+prompt = "update [$security-threat-model](/Users/fabianklinke/.codex/skills/security-threat-model/SKILL.md).\ncheck for resolved threats, keep an archive. check for new potential threats. build an accurate threat model of the entire application and its moving parts to track all potential attack vectors."
+status = "ACTIVE"
+rrule = "RRULE:FREQ=WEEKLY;BYHOUR=9;BYMINUTE=0;BYDAY=SU,MO,TU,WE,TH,FR,SA"
+execution_environment = "local"
+cwds = ["/Users/fabianklinke/Developer/b90-industries/b90hq"]
+created_at = 1772118054870
+updated_at = 1772118054870

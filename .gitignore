@@ -18,5 +18,7 @@ worktrees/
 .codex-global-state.json
 __pycache__
 automations/**/memory.md
+state_5.sqlite-shm
+state_5.sqlite-wal
 
 config.toml
