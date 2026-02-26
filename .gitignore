@@ -16,6 +16,7 @@ archived_sessions/
 vendor_imports/
 worktrees/
 .codex-global-state.json
+memories/
 __pycache__
 automations/**/memory.md
 state_5.sqlite-shm
