@@ -15,8 +15,9 @@ Plan and execute commits that follow Conventional Commits plus any repository ru
 2. Inspect the working tree: `git status -sb`, `git diff --stat`, and focused `git diff` as needed.
 3. Group changes by logical unit (feature, fix, refactor, docs, build/CI, etc.).
 4. If more than one logical unit exists, create multiple commits. Propose a brief commit plan before committing.
-5. Stage per group (`git add -p` or specific paths), then commit with a Conventional Commit message.
-6. If the user asks for a single commit but changes are multiple logical units, warn and ask for confirmation before combining.
+5. Message heuristic: if draft subject wants `and`, list separators, or >1 scope/target, split before committing.
+6. Stage per group (`git add -p` or specific paths), then commit with a Conventional Commit message.
+7. If the user asks for a single commit but changes are multiple logical units, warn and ask for confirmation before combining.
 
 ## Conventional Commit Format
 
