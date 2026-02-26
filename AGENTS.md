@@ -5,8 +5,10 @@
 
 ## Core Protocol
 - "Make a note" => edit `AGENTS.md`; ignore `CLAUDE.md`.
+- Language policy: always communicate in English with each other.
 - Keep `AGENTS.md` current when constraints/architecture change.
 - Conventional Commit types only: `feat|fix|refactor|build|ci|chore|docs|style|perf|test`.
+- Commit split trigger: if commit message needs `and`, list syntax, or >1 scope, split into separate commits.
 - Keep files `<~500 LOC`; split/refactor early.
 - Comments: concise why-comments; avoid what-comments.
 - New deps: check release cadence, recent commits, adoption.

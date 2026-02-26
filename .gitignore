@@ -1,10 +1,12 @@
 tmp/
+cache/
 sessions/
 auth.json
 .credentials.json
 history.jsonl
 internal_storage.json
 models_cache.json
+state_5.sqlite
 log/
 .DS_Store
 shell_snapshots/
