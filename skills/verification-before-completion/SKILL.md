@@ -37,6 +37,27 @@ BEFORE claiming any status or expressing satisfaction:
 Skip any step = lying, not verifying
 ```
 
+## Exit-Code Integrity (Required)
+
+For commands wrapped by runners (`just`, `tuist`, `xcodebuild`) or piped through `tee/rg/sed`, report the **real command exit** and avoid mixed signals like "`error code 65` + `EXIT:0`".
+
+Use this pattern:
+
+```bash
+LOG=/tmp/verify-$(date +%s).log
+<exact-command> > >(tee "$LOG") 2>&1
+CMD_EXIT=$?
+echo "EXIT:$CMD_EXIT"
+```
+
+Rules:
+- When using an actual pipeline, enable `set -o pipefail` before execution.
+- Never report wrapper text and a contradictory final `EXIT`.
+- When failure is noisy, include first actionable error line(s) plus log path.
+- For `xcodebuild`/simulator failures, separate:
+  - infra/runtime failures (bootstrapping, entitlement, simulator crash)
+  - test assertion failures
+
 ## Common Failures
 
 | Claim | Requires | Not Sufficient |
