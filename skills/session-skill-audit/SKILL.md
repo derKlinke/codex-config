@@ -11,6 +11,7 @@ Deterministic workflow for extracting signal from `~/.codex/sessions` without be
 ## Related Skills
 - `writing-skills` for concise, constraint-preserving SKILL.md edits.
 - `skill-creator` when friction justifies a new skill.
+- `git-branch-maintenance` for repeated Git-only rebase/worktree/force-push tasks.
 
 ## Workflow
 1. Scope files by recency.
@@ -41,6 +42,7 @@ find ~/.codex/sessions -type f -mtime -1 -name '*.jsonl' -print0 |
 4. Classify findings.
 - `Broken skill`: Triggered but ineffective/inaccurate.
 - `Missing skill`: repeated task class with no fitting skill.
+- `Routing gap`: repeated `no relevant skill found` on Git-only branch maintenance -> use/create `git-branch-maintenance`.
 - `No action`: one-off or non-skill failure (build/network/env).
 
 5. Edit policy.
