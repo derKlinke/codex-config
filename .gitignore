@@ -23,3 +23,4 @@ state_5.sqlite-shm
 state_5.sqlite-wal
 
 config.toml
+session_index.jsonl
