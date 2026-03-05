@@ -1,6 +1,6 @@
 ---
-name: ui-ux-pro-max
-description: Use when designing/reviewing UI or UX for web/mobile products, selecting style/color/typography/layout/animation/chart patterns, or generating stack-specific implementation guidance (React, Next.js, Vue, Svelte, SwiftUI, React Native, Flutter, Tailwind, shadcn/ui).
+name: design-ui-ux-pro
+description: Use when designing or reviewing UI/UX across web, mobile, and desktop products with stack-aware guidance for implementation and critique.
 ---
 
 # UI/UX Pro Max - Design Intelligence
@@ -95,13 +95,13 @@ python3 --version || python --version
 ### Required first command
 
 ```bash
-python3 skills/ui-ux-pro-max/scripts/search.py "<product> <industry> <keywords>" --design-system [-p "Project Name"]
+python3 skills/design-ui-ux-pro/scripts/search.py "<product> <industry> <keywords>" --design-system [-p "Project Name"]
 ```
 
 ### Persist design system (recommended)
 
 ```bash
-python3 skills/ui-ux-pro-max/scripts/search.py "<query>" --design-system --persist -p "Project Name" [--page "dashboard"]
+python3 skills/design-ui-ux-pro/scripts/search.py "<query>" --design-system --persist -p "Project Name" [--page "dashboard"]
 ```
 
 Creates:
@@ -116,20 +116,20 @@ Retrieval rule:
 ### Domain search
 
 ```bash
-python3 skills/ui-ux-pro-max/scripts/search.py "<keyword>" --domain <domain> [-n <max_results>]
+python3 skills/design-ui-ux-pro/scripts/search.py "<keyword>" --domain <domain> [-n <max_results>]
 ```
 
 ### Stack search (`html-tailwind` default)
 
 ```bash
-python3 skills/ui-ux-pro-max/scripts/search.py "<keyword>" --stack html-tailwind
+python3 skills/design-ui-ux-pro/scripts/search.py "<keyword>" --stack html-tailwind
 ```
 
 ### Output format
 
 ```bash
-python3 skills/ui-ux-pro-max/scripts/search.py "fintech crypto" --design-system
-python3 skills/ui-ux-pro-max/scripts/search.py "fintech crypto" --design-system -f markdown
+python3 skills/design-ui-ux-pro/scripts/search.py "fintech crypto" --design-system
+python3 skills/design-ui-ux-pro/scripts/search.py "fintech crypto" --design-system -f markdown
 ```
 
 ## Domains

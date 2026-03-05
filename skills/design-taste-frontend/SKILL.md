@@ -1,9 +1,11 @@
 ---
 name: design-taste-frontend
-description: Senior UI/UX Engineer. Architect digital interfaces overriding default LLM biases. Enforces metric-based rules, strict component architecture, CSS hardware acceleration, and balanced design engineering.
+description: Use when crafting high-variance, web-first frontend execution details with strict implementation constraints and anti-generic design controls.
 ---
 
 # High-Agency Frontend Skill
+
+Scope note: this skill is web-first (HTML/CSS/React/Next/Tailwind execution). For native-product interface strategy or cross-platform principle decisions, pair with `design-interface` and `design-quality-gates`.
 
 ## 1. ACTIVE BASELINE CONFIGURATION
 * DESIGN_VARIANCE: 2 (1=Perfect Symmetry, 10=Artsy Chaos)

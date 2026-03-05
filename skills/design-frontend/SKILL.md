@@ -1,35 +1,34 @@
 ---
-name: frontend-design
-description: Create distinctive, production-grade frontend interfaces with high design quality. Use this skill when the user asks to build web components, pages, or applications. Generates creative, polished code that avoids generic AI aesthetics.
-license: Complete terms in LICENSE.txt
+name: design-frontend
+description: Use when implementing high-fidelity, code-driven interface design with strong visual craft, especially for web surfaces and cross-platform design translation.
+license: Apache 2.0. Based on Anthropic's frontend-design skill. See NOTICE.md for attribution.
 ---
+
+## Cross-Platform Applicability
+- Treat this skill as interface-principle guidance across web, iOS, Android, and desktop surfaces.
+- Translate implementation snippets to platform-native primitives; do not copy web syntax literally into native stacks.
+
+
+## Related Skills
+- [design-quality-gates](../design-quality-gates/SKILL.md): mandatory visual/accessibility quality checks
+- [design-system-doc](../design-system-doc/SKILL.md): repo-level design doctrine alignment
+- [design-interaction-motion-craft](../design-interaction-motion-craft/SKILL.md): motion behavior validation
+- [web-design-guidelines](../web-design-guidelines/SKILL.md): standards review pass
+
 
 This skill guides creation of distinctive, production-grade frontend interfaces that avoid generic "AI slop" aesthetics. Implement real working code with exceptional attention to aesthetic details and creative choices.
 
-The user provides frontend requirements: a component, page, application, or interface to build. They may include context about the purpose, audience, or technical constraints.
+## Design Direction
 
-## Project Design Memory (Required)
-
-Before proposing or implementing UI styles:
-
-1. Check `<repo-root>/DESIGN.md`.
-2. If present, treat it as the design system source of truth (tokens, typography, component rules, vibe).
-3. If missing and task includes UI/design work, create it via the `design-system-doc` skill template and align implementation to it.
-4. After significant design changes, update `DESIGN.md` in the same task.
-
-## Design Thinking
-
-Before coding, understand the context and commit to a BOLD aesthetic direction:
-
+Commit to a BOLD aesthetic direction:
 - **Purpose**: What problem does this interface solve? Who uses it?
 - **Tone**: Pick an extreme: brutally minimal, maximalist chaos, retro-futuristic, organic/natural, luxury/refined, playful/toy-like, editorial/magazine, brutalist/raw, art deco/geometric, soft/pastel, industrial/utilitarian, etc. There are so many flavors to choose from. Use these for inspiration but design one that is true to the aesthetic direction.
 - **Constraints**: Technical requirements (framework, performance, accessibility).
 - **Differentiation**: What makes this UNFORGETTABLE? What's the one thing someone will remember?
 
-**CRITICAL**: Choose a clear conceptual direction and execute it with precision. Bold maximalism and refined minimalism both work - the key is intentionality, not intensity.
+**CRITICAL**: Choose a clear conceptual direction and execute it with precision. Bold maximalism and refined minimalism both work—the key is intentionality, not intensity.
 
-Then implement working code (HTML/CSS/JS, React, Vue, etc.) that is:
-
+Then implement working code that is:
 - Production-grade and functional
 - Visually striking and memorable
 - Cohesive with a clear aesthetic point-of-view
@@ -37,50 +36,104 @@ Then implement working code (HTML/CSS/JS, React, Vue, etc.) that is:
 
 ## Frontend Aesthetics Guidelines
 
-Focus on:
+### Typography
+→ *Consult [typography reference](reference/typography.md) for scales, pairing, and loading strategies.*
 
-- **Typography**: Default to system fonts or Helvetica Neue unless the repository design system specifies otherwise. Introduce custom type only with product-specific rationale and intentional display/body pairing.
-- **Color & Theme**: Commit to a cohesive aesthetic. Use CSS variables for consistency. Dominant colors with sharp accents outperform timid, evenly-distributed palettes.
-- **Motion**: Use animations for effects and micro-interactions. Prioritize CSS-only solutions for HTML. Use Motion library for React when available. Focus on high-impact moments: one well-orchestrated page load with staggered reveals (animation-delay) creates more delight than scattered micro-interactions. Use scroll-triggering and hover states that surprise. Before finalizing, apply `design-interaction-motion-craft` to validate intent, interruptibility, and timing discipline.
-- **Spatial Composition**: Unexpected layouts. Asymmetry. Overlap. Diagonal flow. Grid-breaking elements. Generous negative space OR controlled density.
-- **Backgrounds & Visual Details**: Create atmosphere and depth rather than defaulting to solid colors. Add contextual effects and textures that match the overall aesthetic. Apply creative forms like gradient meshes, noise textures, geometric patterns, layered transparencies, dramatic shadows, decorative borders, custom cursors, and grain overlays.
+Choose fonts that are beautiful, unique, and interesting. Pair a distinctive display font with a refined body font.
 
-## Typography Protocol (Bringhurst Baseline)
+**DO**: Use a modular type scale with fluid sizing (clamp)
+**DO**: Vary font weights and sizes to create clear visual hierarchy
+**DON'T**: Use overused fonts—Inter, Roboto, Arial, Open Sans, system defaults
+**DON'T**: Use monospace typography as lazy shorthand for "technical/developer" vibes
+**DON'T**: Put large icons with rounded corners above every heading—they rarely add value and make sites look templated
 
-Apply these checks to any reading-heavy region (hero copy, article, docs, dense feature explanations):
+### Color & Theme
+→ *Consult [color reference](reference/color-and-contrast.md) for OKLCH, palettes, and dark mode.*
 
-- Semantics first: heading/eyebrow/body/caption roles map to content structure, not decoration.
-- Measure: sustained prose targets `~45-75` characters/line.
-- Leading: sustained body copy typically `~1.2-1.45`; tune by typeface x-height and weight.
-- Texture: keep paragraph color even; avoid abrupt tracking/weight swings without semantic reason.
-- Glyph integrity: use true quotes/apostrophes/dashes/ellipsis; enable ligatures/small caps only when typeface supports them.
-- Ban typographic fakes: no faux bold/italic/small caps; no horizontal/vertical scaling of glyphs.
-- Line-break quality: avoid widows/orphans and severe rivers/ladders (especially in justified copy).
+Commit to a cohesive palette. Dominant colors with sharp accents outperform timid, evenly-distributed palettes.
 
-## Mobile Nav Overlay Baseline (Web)
+**DO**: Use modern CSS color functions (oklch, color-mix, light-dark) for perceptually uniform, maintainable palettes
+**DO**: Tint your neutrals toward your brand hue—even a subtle hint creates subconscious cohesion
+**DON'T**: Use gray text on colored backgrounds—it looks washed out; use a shade of the background color instead
+**DON'T**: Use pure black (#000) or pure white (#fff)—always tint; pure black/white never appears in nature
+**DON'T**: Use the AI color palette: cyan-on-dark, purple-to-blue gradients, neon accents on dark backgrounds
+**DON'T**: Use gradient text for "impact"—especially on metrics or headings; it's decorative rather than meaningful
+**DON'T**: Default to dark mode with glowing accents—it looks "cool" without requiring actual design decisions
 
-Use this baseline whenever a mobile full-screen menu/sheet/overlay is implemented or polished.
+### Layout & Space
+→ *Consult [spatial reference](reference/spatial-design.md) for grids, rhythm, and container queries.*
 
-- **Target sizes**: hard floor `44x44`; prefer `>=56px` for primary nav rows; trigger/close controls `>=48px`.
-- **Type hierarchy**: section labels use compact uppercase meta scale; link rows use body-size or larger. Do not use identical scales for both.
-- **Rhythm**: section spacing must be explicit; avoid stacked ad-hoc margins; use subtle separators when lists are dense.
-- **Link styling**: avoid default underlines in overlay nav rows; active state should include a clear structural cue (for example background + leading accent), not color/weight only.
-- **Modal behavior**: trap focus, close via Escape + backdrop + navigation tap, restore trigger focus, and set non-dialog regions inert.
-- **No layout shift rule**: opening/closing overlay must not move the underlying page position; avoid `position: fixed` body lock patterns that cause jump on close.
-- **Safe areas**: include `env(safe-area-inset-top)` and `env(safe-area-inset-bottom)` in overlay paddings.
-- **Motion envelope**: backdrop ~`120-160ms`; content ~`200-240ms`; short stagger only; disable non-essential motion for reduced-motion users.
-- **QA pass**: verify smallest mobile viewport + one large phone viewport; explicitly test repeated open/close for zero jump and stable header baseline.
+Create visual rhythm through varied spacing—not the same padding everywhere. Embrace asymmetry and unexpected compositions. Break the grid intentionally for emphasis.
 
-NEVER use generic AI-generated aesthetics like overused font families (Inter, Roboto, Arial), cliched color schemes (particularly purple gradients on white backgrounds), predictable layouts and component patterns, and cookie-cutter design that lacks context-specific character.
+**DO**: Create visual rhythm through varied spacing—tight groupings, generous separations
+**DO**: Use fluid spacing with clamp() that breathes on larger screens
+**DO**: Use asymmetry and unexpected compositions; break the grid intentionally for emphasis
+**DON'T**: Wrap everything in cards—not everything needs a container
+**DON'T**: Nest cards inside cards—visual noise, flatten the hierarchy
+**DON'T**: Use identical card grids—same-sized cards with icon + heading + text, repeated endlessly
+**DON'T**: Use the hero metric layout template—big number, small label, supporting stats, gradient accent
+**DON'T**: Center everything—left-aligned text with asymmetric layouts feels more designed
+**DON'T**: Use the same spacing everywhere—without rhythm, layouts feel monotonous
 
-Interpret creatively and make unexpected choices that feel genuinely designed for the context. Across different projects, avoid converging on repetitive aesthetics; within the same project, keep palette and typography consistent with the established design system.
+### Visual Details
+**DO**: Use intentional, purposeful decorative elements that reinforce brand
+**DON'T**: Use glassmorphism everywhere—blur effects, glass cards, glow borders used decoratively rather than purposefully
+**DON'T**: Use rounded elements with thick colored border on one side—a lazy accent that almost never looks intentional
+**DON'T**: Use sparklines as decoration—tiny charts that look sophisticated but convey nothing meaningful
+**DON'T**: Use rounded rectangles with generic drop shadows—safe, forgettable, could be any AI output
+**DON'T**: Use modals unless there's truly no better alternative—modals are lazy
 
-**IMPORTANT**: Match implementation complexity to the aesthetic vision. Maximalist designs need elaborate code with extensive animations and effects. Minimalist or refined designs need restraint, precision, and careful attention to spacing, typography, and subtle details. Elegance comes from executing the vision well.
+### Motion
+→ *Consult [motion reference](reference/motion-design.md) for timing, easing, and reduced motion.*
 
-Remember: Codex is capable of extraordinary creative work. Don't hold back, show what can truly be created when thinking outside the box and committing fully to a distinctive vision.
+Focus on high-impact moments: one well-orchestrated page load with staggered reveals creates more delight than scattered micro-interactions.
 
-## Related Skills
+**DO**: Use motion to convey state changes—entrances, exits, feedback
+**DO**: Use exponential easing (ease-out-quart/quint/expo) for natural deceleration
+**DO**: For height animations, use grid-template-rows transitions instead of animating height directly
+**DON'T**: Animate layout properties (width, height, padding, margin)—use transform and opacity only
+**DON'T**: Use bounce or elastic easing—they feel dated and tacky; real objects decelerate smoothly
 
-- `design-system-doc` - enforce/update durable doctrine (`DESIGN.md`) after nav behavior/token changes.
-- `design-quality-gates` - objective sign-off checks (including target size, spacing rhythm, and accessibility).
-- `design-interaction-motion-craft` - motion timing, causality, and reduced-motion review for overlays/transitions.
+### Interaction
+→ *Consult [interaction reference](reference/interaction-design.md) for forms, focus, and loading patterns.*
+
+Make interactions feel fast. Use optimistic UI—update immediately, sync later.
+
+**DO**: Use progressive disclosure—start simple, reveal sophistication through interaction (basic options first, advanced behind expandable sections; hover states that reveal secondary actions)
+**DO**: Design empty states that teach the interface, not just say "nothing here"
+**DO**: Make every interactive surface feel intentional and responsive
+**DON'T**: Repeat the same information—redundant headers, intros that restate the heading
+**DON'T**: Make every button primary—use ghost buttons, text links, secondary styles; hierarchy matters
+
+### Responsive
+→ *Consult [responsive reference](reference/responsive-design.md) for mobile-first, fluid design, and container queries.*
+
+**DO**: Use container queries (@container) for component-level responsiveness
+**DO**: Adapt the interface for different contexts—don't just shrink it
+**DON'T**: Hide critical functionality on mobile—adapt the interface, don't amputate it
+
+### UX Writing
+→ *Consult [ux-writing reference](reference/ux-writing.md) for labels, errors, and empty states.*
+
+**DO**: Make every word earn its place
+**DON'T**: Repeat information users can already see
+
+---
+
+## The AI Slop Test
+
+**Critical quality check**: If you showed this interface to someone and said "AI made this," would they believe you immediately? If yes, that's the problem.
+
+A distinctive interface should make someone ask "how was this made?" not "which AI made this?"
+
+Review the DON'T guidelines above—they are the fingerprints of AI-generated work from 2024-2025.
+
+---
+
+## Implementation Principles
+
+Match implementation complexity to the aesthetic vision. Maximalist designs need elaborate code with extensive animations and effects. Minimalist or refined designs need restraint, precision, and careful attention to spacing, typography, and subtle details.
+
+Interpret creatively and make unexpected choices that feel genuinely designed for the context. No design should be the same. Vary between light and dark themes, different fonts, different aesthetics. NEVER converge on common choices across generations.
+
+Remember: {{model}} is capable of extraordinary creative work. Don't hold back—show what can truly be created when thinking outside the box and committing fully to a distinctive vision.

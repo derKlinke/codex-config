@@ -1,6 +1,6 @@
 ---
 name: design-quality-gates
-description: Use when any task includes UI or visual design decisions (layout, grids, typography, color, visual hierarchy, motion, accessibility), before implementation, critique, or sign-off.
+description: Use when any task includes UI or visual design decisions and objective pass-fail gates are needed before implementation, critique, or sign-off.
 ---
 
 # Design Quality Gates
@@ -11,8 +11,8 @@ Convert design decisions from taste-led to constraint-led. Apply measurable gate
 
 ## Mandatory Use
 
-- Use for every design-related task: web, iOS, macOS, marketing pages, app UI, component libraries.
-- Pair with domain skills (`design-system-doc`, `interface-design`, `frontend-design`, `ios-hig`) instead of replacing them.
+- Use for every design-related task: web, iOS, Android, macOS/Windows desktop, marketing pages, app UI, and component libraries.
+- Pair with domain skills (`design-system-doc`, `design-interface`, `design-frontend`, `ios-hig`) instead of replacing them.
 - If a gate fails, do not finalize. Propose concrete remediation.
 
 ## Workflow

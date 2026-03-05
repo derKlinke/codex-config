@@ -1,6 +1,6 @@
 ---
 name: design-interaction-motion-craft
-description: Use when designing or reviewing transitions, gestures, state-change animations, micro-interactions, scroll-linked motion, or interaction feedback across web/iOS/macOS.
+description: Use when designing or reviewing transitions, gestures, and state-change motion across web, mobile, and desktop interfaces.
 ---
 
 # Interaction Motion Craft
@@ -74,8 +74,8 @@ Apply interaction and animation craft as a behavior system, not decoration. Moti
 
 - `design-system-doc` - align motion language with repo-level design doctrine.
 - `design-quality-gates` - objective sign-off gates for complete design quality.
-- `interface-design` - product-specific UI structure and tone selection.
-- `frontend-design` - high-fidelity frontend implementation once motion rules are set.
+- `design-interface` - product-specific UI structure and tone selection.
+- `design-frontend` - high-fidelity frontend implementation once motion rules are set.
 - `ios-swiftui-animation-ref` - Apple-platform API and implementation detail lookup.
 
 ## Source Basis

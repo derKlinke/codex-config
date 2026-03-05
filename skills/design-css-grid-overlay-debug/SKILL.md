@@ -1,6 +1,6 @@
 ---
-name: css-grid-overlay-debug
-description: Build and debug deterministic CSS Grid visualization overlays (columns, rows, gutter hatching) with subgrid support. Use when grid guides are duplicated, missing, misaligned, or inconsistent across nested layouts and route transitions.
+name: design-css-grid-overlay-debug
+description: Use when implementing or debugging CSS Grid overlay instrumentation for web layouts (columns, rows, gutters, subgrid alignment).
 ---
 
 # CSS Grid Overlay Debug
@@ -21,6 +21,7 @@ Goal: one renderer, one scene graph, deterministic output, no duplicate guides.
 
 - Task is only visual styling (colors/typography) with no grid instrumentation.
 - User needs permanent production UI overlays (this skill is debug tooling).
+- Surface is native-only layout debugging (iOS/Android/desktop). Route to `design-interface` plus platform-specific layout skills.
 
 ## Canonical Architecture
 

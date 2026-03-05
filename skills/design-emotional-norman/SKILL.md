@@ -1,6 +1,6 @@
 ---
-name: emotional-design-norman
-description: Apply Don Norman's Emotional Design framework (visceral, behavioral, reflective) for UX/UI critique, product concepting, and experience polish. Use when asked to make products feel delightful, engaging, meaningful, or to balance aesthetics with usability; or when emotional design / visceral / behavioral / reflective is mentioned.
+name: design-emotional-norman
+description: Use when applying Norman’s visceral-behavioral-reflective model to shape or evaluate emotional quality in product interfaces.
 ---
 
 # Emotional Design (Norman)

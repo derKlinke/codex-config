@@ -1,6 +1,6 @@
 ---
-name: interface-design
-description: This skill is for interface design — dashboards, admin panels, apps, tools, and interactive products. NOT for marketing design (landing pages, marketing sites, campaigns).
+name: design-interface
+description: Use when designing product interfaces (dashboards, admin panels, apps, tools, operational UIs) across web, mobile, and desktop contexts.
 ---
 
 # Interface Design
@@ -11,7 +11,7 @@ Build interface design with craft and consistency.
 
 **Use for:** Dashboards, admin panels, SaaS apps, tools, settings pages, data interfaces.
 
-**Not for:** Landing pages, marketing sites, campaigns. Redirect those to `/frontend-design`.
+**Not for:** Landing pages, marketing sites, campaigns. Redirect those to `/design-frontend`.
 
 ---
 
@@ -247,7 +247,7 @@ Direction: [approach that connects to the above]"
 ```
 
 ## If Project Has system.md
-Read `.interface-design/system.md` and apply. Decisions are made.
+Read `.design-interface/system.md` and apply. Decisions are made.
 
 ## If No system.md
 1. Explore domain — Produce all four required outputs
@@ -272,7 +272,7 @@ When you finish building something, **always offer to save**:
 "Want me to save these patterns for future sessions?"
 ```
 
-If yes, write to `.interface-design/system.md`:
+If yes, write to `.design-interface/system.md`:
 - Direction and feel
 - Depth strategy (borders/shadows/layered)
 - Spacing base unit
@@ -290,6 +290,6 @@ For more detail on specific topics:
 
 # Commands
 
-- `/interface-design:status` — Current system state
-- `/interface-design:audit` — Check code against system
-- `/interface-design:extract` — Extract patterns from code
+- `/design-interface:status` — Current system state
+- `/design-interface:audit` — Check code against system
+- `/design-interface:extract` — Extract patterns from code

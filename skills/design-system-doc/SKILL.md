@@ -1,6 +1,6 @@
 ---
 name: design-system-doc
-description: Maintain and enforce a repo-root DESIGN.md as a living, platform-agnostic design doctrine. Use for UI/design implementation or review tasks across web and Apple platforms (iOS/macOS) to keep language, aesthetic rules, and interaction principles consistent with current state.
+description: Use when creating or maintaining repo-level DESIGN.md doctrine to keep design principles consistent across web and native platforms.
 metadata:
   short-description: Principle-led DESIGN.md governance
 ---
@@ -23,7 +23,7 @@ Keep `<repo-root>/DESIGN.md` as the authoritative present-state design doctrine:
 6. Update `DESIGN.md` in the same task:
    - changed principles/language/aesthetic constraints
    - changed semantic token intent or interaction posture
-   - per-platform expression updates (`web`, `ios`, optional `macos`)
+  - per-platform expression updates (`web`, `ios`, `android`, optional desktop variants such as `macos`/`windows`)
    - remove stale implementation-specific detail that does not define durable system rules
 7. In delivery notes, reference what was enforced and what was updated in `DESIGN.md`.
 
@@ -41,7 +41,7 @@ Keep `<repo-root>/DESIGN.md` as the authoritative present-state design doctrine:
   - spacing policy for letter/word/line/paragraph rhythm
   - glyph policy (real quotes/dashes/ellipsis; no faux styles or stretched text)
   - long-form line-break policy (widow/orphan/rivers/ladders handling)
-- Record accessibility implications per platform (for example WCAG contrast/focus for web, Dynamic Type/VoiceOver/reduced motion for iOS).
+- Record accessibility implications per platform (for example WCAG contrast/focus for web, Dynamic Type/VoiceOver/reduced motion for iOS, and native accessibility frameworks for Android/desktop).
 - Keep semantics stable: one visual cue should map to one meaning.
 - Keep `DESIGN.md` concise and scannable; short sections and rule lists over long narrative.
 - For mobile navigation overlays, codify explicit rules for target sizes, section/link type hierarchy, safe-area behavior, modal focus behavior, and zero-layout-shift open/close behavior.
@@ -60,7 +60,7 @@ Keep `<repo-root>/DESIGN.md` as the authoritative present-state design doctrine:
 ## Local Cross-References
 
 - `design-typography-system-doc` - create/maintain canonical `TYPO.md` with strict ratio-based typography rules.
-- `frontend-design` - implementation companion for applying doctrine constraints in production UI code.
+- `design-frontend` - implementation companion for applying doctrine constraints in production UI code.
 - `design-quality-gates` - Mandatory objective gate checks for layout, type, hierarchy, color, and accessibility before design sign-off.
 - `design-interaction-motion-craft` - Motion/interaction doctrine for transitions, gestures, causality, and timing consistency.
 - `ios-hig` - Use for fast HIG-aligned decisions while editing UI and design tokens.
@@ -69,4 +69,4 @@ Keep `<repo-root>/DESIGN.md` as the authoritative present-state design doctrine:
 - `ios-swiftui-layout` - Use when layout constraints should become documented system-level rules.
 - `ios-typography-ref` - Use for type hierarchy and Dynamic Type standards in DESIGN.md.
 - `ios-sf-symbols` - Use for iconography policy and symbol behavior consistency.
-- `css-grid-overlay-debug` - Use when grid guide rendering (columns/rows/gutters/subgrid) needs deterministic instrumentation and debugging.
+- `design-css-grid-overlay-debug` - Use when grid guide rendering (columns/rows/gutters/subgrid) needs deterministic instrumentation and debugging.

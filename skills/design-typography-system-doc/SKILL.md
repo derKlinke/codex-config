@@ -1,6 +1,6 @@
 ---
 name: design-typography-system-doc
-description: Use when defining, refactoring, or auditing a strict project typography system with mathematical ratios and canonical role rules, and when creating/updating repo-root TYPO.md.
+description: Use when defining or auditing a strict typography doctrine in TYPO.md with semantic roles, ratios, rhythm, and token mappings across platforms.
 ---
 
 # Typography System Doc
