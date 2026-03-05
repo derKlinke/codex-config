@@ -30,6 +30,8 @@ Plan and execute commits that follow Conventional Commits plus any repository ru
 
 - Prefer repo-specific types from AGENTS.md.
 - Otherwise use standard types: `feat`, `fix`, `refactor`, `perf`, `docs`, `test`, `build`, `ci`, `chore`, `revert`.
+- `style` is intentionally excluded here: use it only for code style or formatting-only changes, not for UI, design-system, visual, UX, or theming work.
+- UI or visual behavior changes usually map to `fix`, `feat`, or `refactor` based on intent.
 
 ## File Hygiene
 
