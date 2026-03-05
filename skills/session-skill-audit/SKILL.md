@@ -39,18 +39,23 @@ find ~/.codex/sessions -type f -mtime -1 -name '*.jsonl' -print0 |
   - `skip .*skill`, `couldn't apply .*skill`
   - repeated manual workaround language
 
-4. Classify findings.
+4. Exclude audit self-noise before classification.
+- If markers appear only in prior `skill-plumbing`/session-audit rollouts, treat as historical output, not fresh friction.
+- Require at least one non-audit session file for any actionable marker cluster.
+- Keep a short note of excluded files in the run summary for traceability.
+
+5. Classify findings.
 - `Broken skill`: Triggered but ineffective/inaccurate.
 - `Missing skill`: repeated task class with no fitting skill.
 - `Routing gap`: repeated `no relevant skill found` on Git-only branch maintenance -> use/create `git-branch-maintenance`.
 - `No action`: one-off or non-skill failure (build/network/env).
 
-5. Edit policy.
+6. Edit policy.
 - Personal skills only: `~/.codex/skills/**`.
 - Prefer minimal SKILL.md patch over creating new skill.
 - Create new skill only if friction appears in multiple sessions or recurs in automation runs.
 
-6. Verification before reporting.
+7. Verification before reporting.
 - Re-run extraction + pattern scan after edits.
 - Confirm no syntax/frontmatter break in updated SKILL.md files.
 

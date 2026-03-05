@@ -28,6 +28,10 @@
 - If uncertain: read more code, then ask short option set.
 - On constraint conflict: state tradeoff, choose safer path.
 - Treat unrelated local edits as parallel work unless blocking.
+- Ignore unrelated changes made by other agents; do not pause work for them unless they block the active task.
+- Build-lock policy: never run concurrent builds/tests for the same app/workspace to bypass locks.
+- On Xcode/Tuist build lock contention: wait, then rerun the same command; do not shard DerivedData via custom temp paths/env vars.
+- Always fix encountered compiler and test failures before handoff; no "known failing" state in completion reports.
 - Avoid destructive ops unless explicitly requested.
 - Branch changes require user consent.
 - Before push: `git pull --rebase`.
@@ -50,10 +54,11 @@
 - If touched area has no docs, create them.
 
 ## Runtime + Build + CI
-- Core tools: `gh`, `bun`, `tuist` (prefer `just`), `prek`, `trash`.
+- Core tools: `gh`, `bun`, `tuist` (prefer `just`), `prek`, `trash`, `actionlint`.
 - Prefer repo `justfile` for build/test/generate/format.
 - Bootstrap hooks/formatter: `npx @derklinke/miedinger --force`.
 - CI loop: inspect via `gh run list` / `gh run view`; fix/push until green.
+- GitHub Actions workflow verification: run `actionlint` on touched workflow files before handoff/commit.
 
 ## Skill Routing
 - Review runtime skill list first.
