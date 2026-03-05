@@ -312,5 +312,5 @@ leaks -atExit -excludeNoise YourApp
 ## Local Cross-References
 
 - `ios-sentry-swift-setup` - Use to instrument crashes, hangs, and breadcrumbs while validating memory fixes in production.
-- `sentry` - Use to inspect live issue frequency and regression impact after memory-related fixes ship.
+- `sentry` - Use to inspect live issue frequency and regression impact through Sentry MCP after memory-related fixes ship.
 - `ios-debugger-agent` - Use for simulator-driven reproduction and log capture while iterating on leak fixes.

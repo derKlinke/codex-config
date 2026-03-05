@@ -1,126 +1,46 @@
 ---
 name: "sentry"
-description: "Use when the user asks to inspect Sentry issues or events, summarize recent production errors, or pull basic Sentry health data via the Sentry API; perform read-only queries with the bundled script and require `SENTRY_AUTH_TOKEN`."
+description: "Use when the user asks to inspect Sentry issues or events, summarize recent production errors, or pull basic Sentry health data through the Sentry MCP tools."
 ---
 
 
-# Sentry (Read-only Observability)
+# Sentry MCP Observability
 
 ## Quick start
 
-- If not already authenticated, ask the user to provide a valid `SENTRY_AUTH_TOKEN` (read-only scopes such as `project:read`, `event:read`) or to log in and create one before running commands.
-- Set `SENTRY_AUTH_TOKEN` as an env var.
-- Optional defaults: `SENTRY_ORG`, `SENTRY_PROJECT`, `SENTRY_BASE_URL`.
-- Defaults: org/project `{your-org}`/`{your-project}`, time range `24h`, environment `prod`, limit 20 (max 50).
-- Always call the Sentry API (no heuristics, no caching).
+- Use Sentry MCP tools only. Do not call local Python helpers, direct REST scripts, or `SENTRY_AUTH_TOKEN` workflows for issue/event inspection.
+- Prefer issue URL input when the user provides it; MCP can extract org, project, and issue identifiers directly.
+- Defaults: time range `24h`, environment `prod`, limit 20 unless the user specifies otherwise.
+- Use MCP-native issue IDs, event IDs, trace IDs, and org/project slugs when present; do not invent fallbacks.
 
-If the token is missing, give the user these steps:
-1. Create a Sentry auth token: https://sentry.io/settings/account/api/auth-tokens/
-2. Create a token with read-only scopes such as `project:read`, `event:read`, and `org:read`.
-3. Set `SENTRY_AUTH_TOKEN` as an environment variable in their system.
-4. Offer to guide them through setting the environment variable for their OS/shell if needed.
-- Never ask the user to paste the full token in chat. Ask them to set it locally and confirm when ready.
+## Core tasks
 
-## Core tasks (use bundled script)
+### 1) Specific issue or URL
 
-Use `scripts/sentry_api.py` for deterministic API calls. It handles pagination and retries once on transient errors.
+- Use `mcp__sentry__get_issue_details` for a known issue ID, event ID, or full Sentry issue URL.
+- Use `mcp__sentry__search_issue_events` to filter events within that issue by time, environment, release, user, or trace.
+- Use `mcp__sentry__get_issue_tag_values` for aggregate distributions such as affected URLs, browsers, environments, or releases.
 
-## Skill path (set once)
+### 2) Search across issues
 
-```bash
-export CODEX_HOME="${CODEX_HOME:-$HOME/.codex}"
-export SENTRY_API="$CODEX_HOME/skills/sentry/scripts/sentry_api.py"
-```
+- Use `mcp__sentry__search_issues` when the user wants a list of grouped issues or user feedback.
+- Use `mcp__sentry__search_events` for counts, aggregates, or raw event/log/span search.
+- Use `mcp__sentry__find_organizations`, `mcp__sentry__find_projects`, and `mcp__sentry__find_teams` only to discover identifiers that are missing.
 
-User-scoped skills install under `$CODEX_HOME/skills` (default: `~/.codex/skills`).
+### 3) Deeper analysis
 
-### 1) List issues (ordered by most recent)
+- Use `mcp__sentry__analyze_issue_with_seer` only when the user explicitly asks for Seer analysis or the root cause is not recoverable from issue details alone.
+- Use `mcp__sentry__get_trace_details` for trace overview by trace ID.
+- Use `mcp__sentry__find_releases` when the user asks about recent releases or release deployment timing.
 
-```bash
-python3 "$SENTRY_API" \
-  list-issues \
-  --org {your-org} \
-  --project {your-project} \
-  --environment prod \
-  --time-range 24h \
-  --limit 20 \
-  --query "is:unresolved"
-```
+## Output rules
 
-### 2) Resolve an issue short ID to issue ID
-
-```bash
-python3 "$SENTRY_API" \
-  list-issues \
-  --org {your-org} \
-  --project {your-project} \
-  --query "ABC-123" \
-  --limit 1
-```
-
-Use the returned `id` for issue detail or events.
-
-### 3) Issue detail
-
-```bash
-python3 "$SENTRY_API" \
-  issue-detail \
-  1234567890
-```
-
-### 4) Issue events
-
-```bash
-python3 "$SENTRY_API" \
-  issue-events \
-  1234567890 \
-  --limit 20
-```
-
-### 5) Event detail (no stack traces by default)
-
-```bash
-python3 "$SENTRY_API" \
-  event-detail \
-  --org {your-org} \
-  --project {your-project} \
-  abcdef1234567890
-```
-
-## API requirements
-
-Always use these endpoints (GET only):
-
-- List issues: `/api/0/projects/{org_slug}/{project_slug}/issues/`
-- Issue detail: `/api/0/issues/{issue_id}/`
-- Events for issue: `/api/0/issues/{issue_id}/events/`
-- Event detail: `/api/0/projects/{org_slug}/{project_slug}/events/{event_id}/`
-
-## Inputs and defaults
-
-- `org_slug`, `project_slug`: default to `{your-org}`/`{your-project}` (avoid non-prod orgs).
-- `time_range`: default `24h` (pass as `statsPeriod`).
-- `environment`: default `prod`.
-- `limit`: default 20, max 50 (paginate until limit reached).
-- `search_query`: optional `query` parameter.
-- `issue_short_id`: resolve via list-issues query first.
-
-## Output formatting rules
-
-- Issue list: show title, short_id, status, first_seen, last_seen, count, environments, top_tags; order by most recent.
-- Event detail: include culprit, timestamp, environment, release, url.
-- If no results, state explicitly.
-- Redact PII in output (emails, IPs). Do not print raw stack traces.
-- Never echo auth tokens.
-
-## Golden test inputs
-
-- Org: `{your-org}`
-- Project: `{your-project}`
-- Issue short ID: `{ABC-123}`
-
-Example prompt: “List the top 10 open issues for prod in the last 24h.”
-Expected: ordered list with titles, short IDs, counts, last seen.
+- State which MCP tool path was used when the distinction matters, especially `search_issues` versus `search_events`.
+- For issue summaries: include title, issue ID, status, impact counters, last seen, and the strongest culprit evidence available.
+- For event summaries: include timestamp, environment, release, culprit, and relevant tags.
+- Redact PII in responses. Avoid dumping raw stack traces unless the user explicitly asks.
+- If identifiers are ambiguous, say what is missing and use the narrowest discovery tool needed.
+- If the user supplies a Sentry URL, preserve the full URL and pass it through unchanged.
 
 ## Local Cross-References
 

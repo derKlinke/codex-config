@@ -55,6 +55,7 @@
 
 ## Runtime + Build + CI
 - Core tools: `gh`, `bun`, `tuist` (prefer `just`), `prek`, `trash`, `actionlint`.
+- Sentry investigation path: MCP tools only; do not use legacy local scripts or `SENTRY_AUTH_TOKEN`-driven helpers for issue/event inspection.
 - Prefer repo `justfile` for build/test/generate/format.
 - Bootstrap hooks/formatter: `npx @derklinke/miedinger --force`.
 - CI loop: inspect via `gh run list` / `gh run view`; fix/push until green.
