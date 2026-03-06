@@ -1,6 +1,6 @@
 ---
 name: ios-swiftui-gestures
-description: Use when implementing SwiftUI gestures (tap, drag, long press, magnification, rotation), composing gestures, managing gesture state, or debugging gesture conflicts - comprehensive patterns for gesture recognition, composition, accessibility, and cross-platform support
+description: Use when implementing SwiftUI gestures (tap, drag, long press, magnification, rotation), composing pure SwiftUI gestures, or debugging gesture conflicts before UIKit scroll-container arbitration is required.
 license: MIT
 compatibility: iOS 13+, macOS 10.15+, iPadOS 13+, ios-visionOS 1.0+. Xcode 16+
 metadata:
@@ -17,10 +17,11 @@ Comprehensive guide to SwiftUI gesture recognition with composition patterns, st
 - Implementing tap, drag, long press, magnification, or rotation gestures
 - Composing multiple gestures (simultaneously, sequenced, exclusively)
 - Managing gesture state with GestureState
-- Creating custom gesture recognizers
+- Creating custom SwiftUI gestures
 - Debugging gesture conflicts or unresponsive gestures
 - Making gestures accessible with VoiceOver
 - Cross-platform gesture handling (iOS, macOS, ios-visionOS)
+- For `ScrollView` / `List` / `UITableView` / `UICollectionView` arbitration, pair with `ios-gesture-arbitration-diag`
 
 ## Example Prompts
 
@@ -649,16 +650,24 @@ ScrollView {
 }
 ```
 
-**Fix**: Use `.highPriorityGesture()` or `.simultaneousGesture()` appropriately:
+**Problem**: `.simultaneousGesture()` can permit coexistence, but it does not decide which recognizer owns the touch sequence.
+
+**Escalation path**:
+
+- first, gate on axis intent in pure SwiftUI
+- if the child lives inside `List`, `UITableView`, `UICollectionView`, or another UIKit scroll host, use `ios-gesture-arbitration-diag`
+- if the parent scroll must win, define recognizer failure ordering explicitly instead of adding more SwiftUI modifiers
+
+**Pure SwiftUI-only example**:
 
 ```swift
 ScrollView {
   ForEach(items) { item in
     ItemView(item)
-      .simultaneousGesture( // Allows both scroll and drag
+      .simultaneousGesture(
         DragGesture()
           .onChanged { value in
-            // Only trigger if horizontal swipe
+            // Still inert until horizontal intent is clear
             if abs(value.translation.width) > abs(value.translation.height) {
               handleSwipe(value)
             }
@@ -884,7 +893,7 @@ NavigationLink(destination: DetailView()) {
 
 ### Gesture Breaking ScrollView
 
-**Use horizontal-only gesture detection**:
+**Only for pure SwiftUI composition**:
 ```swift
 ScrollView {
   ForEach(items) { item in
@@ -903,6 +912,8 @@ ScrollView {
   }
 }
 ```
+
+If the view is hosted inside UIKit scroll infrastructure, this is not sufficient by itself. Use `ios-gesture-arbitration-diag`.
 
 ---
 
@@ -939,6 +950,12 @@ func testDragGesture() throws {
 - [ ] Gesture doesn't block scrolling or navigation
 - [ ] Gesture provides visual feedback during interaction
 - [ ] Gesture respects accessibility settings (Reduce Motion)
+
+## Related Skills
+
+- `ios-gesture-arbitration-diag` - scroll-container ownership, UIKit delegate ordering, mixed SwiftUI/UIKit stacks
+- `ios-swiftui-debugging-diag` - when recognizers fire but view state/rendering is still wrong
+- `ios-ui-testing` - UI-level regression coverage for drag-vs-scroll behavior
 
 ---
 
