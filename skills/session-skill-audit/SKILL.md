@@ -12,6 +12,7 @@ Deterministic workflow for extracting signal from `~/.codex/sessions` without be
 - `writing-skills` for concise, constraint-preserving SKILL.md edits.
 - `skill-creator` when friction justifies a new skill.
 - `git-branch-maintenance` for repeated Git-only rebase/worktree/force-push tasks.
+- `tuist-local-verification` for recurring local Tuist auth/upload/lock verification blockers.
 
 ## Workflow
 1. Scope files by recency.
@@ -48,6 +49,7 @@ find ~/.codex/sessions -type f -mtime -1 -name '*.jsonl' -print0 |
 - `Broken skill`: Triggered but ineffective/inaccurate.
 - `Missing skill`: repeated task class with no fitting skill.
 - `Routing gap`: repeated `no relevant skill found` on Git-only branch maintenance -> use/create `git-branch-maintenance`.
+- `Recurring tooling friction`: repeated Tuist local verification blockers (`test insights auth`, upload failure, ambiguous `xcodebuild 65`, `build.db` lock) -> use/create `tuist-local-verification`.
 - `No action`: one-off or non-skill failure (build/network/env).
 
 6. Edit policy.

@@ -5,6 +5,9 @@ description: Use when about to claim work is complete, fixed, or passing, before
 
 # Verification Before Completion
 
+## Related Skills
+- `tuist-local-verification` when local Tuist/Xcode verification fails due tooling/auth/lock contention noise.
+
 ## Overview
 
 Claiming work is complete without verification is dishonesty, not efficiency.
