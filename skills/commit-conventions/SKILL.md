@@ -19,6 +19,12 @@ Plan and execute commits that follow Conventional Commits plus any repository ru
 6. Stage per group (`git add -p` or specific paths), then commit with a Conventional Commit message.
 7. If the user asks for a single commit but changes are multiple logical units, warn and ask for confirmation before combining.
 
+## Hook Rewrite Recovery
+
+- If `git commit` fails because pre-commit hooks rewrote files (formatter/linter), do not change the commit plan.
+- Re-stage only hook-modified files, confirm staged set (`git diff --cached --name-only`), and re-run the same commit message.
+- If hooks keep rewriting on every attempt, run the project formatter command once, stage result, then commit.
+
 ## Conventional Commit Format
 
 - Default format: `<type>: <subject>`
