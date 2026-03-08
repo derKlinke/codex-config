@@ -14,6 +14,7 @@
 - New deps: check release cadence, recent commits, adoption.
 - Research early; quote exact errors; prefer recent sources.
 - No legacy fallbacks/old patterns unless explicitly requested.
+- Less code is better: prefer deletion, consolidation, and simpler control flow over additive "safety" code.
 - Prefer clean/readable code over weak historical patterns.
 - Never remove functionality without explicit consent.
 - Enforce DRY; flag repetition.
@@ -21,6 +22,7 @@
 - Keep implementations robust; avoid hacks/premature abstraction.
 - Prefer explicit code over clever code.
 - Simplicity first: minimal safe diff.
+- Do not add fallback chains, duplicate guard rails, or error checks for highly controlled/impossible states without concrete evidence they are needed.
 - Root-cause fixes only; no symptom masking.
 
 ## Working Conventions
@@ -88,6 +90,7 @@
 ## Execution Doctrine
 - Use focused subagents aggressively for independent research/execution.
 - After user correction: update `./AGENTS.md` with prevention rule.
+- Prevention rule: when refactoring/simplifying, default target is fewer lines and fewer branches; if code grows, justify why the added complexity is strictly necessary.
 - Do not claim completion without proof (tests/logs/diff/evidence).
 - For non-trivial work: run an elegance pass; re-implement if solution is hacky.
 - For bug reports: fix directly from evidence; minimize user context switching.
