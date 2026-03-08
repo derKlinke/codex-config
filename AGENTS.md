@@ -23,6 +23,7 @@
 - Prefer explicit code over clever code.
 - Simplicity first: minimal safe diff.
 - Do not add fallback chains, duplicate guard rails, or error checks for highly controlled/impossible states without concrete evidence they are needed.
+- After implementation, simplify aggressively: use `code-simplifier` when needed; refactor until code lives in the right layer/module and follows KISS, DRY, and clean-code principles.
 - Root-cause fixes only; no symptom masking.
 
 ## Working Conventions
@@ -66,6 +67,7 @@
 ## Skill Routing
 - Review runtime skill list first.
 - If task matches a listed skill, use it.
+- After non-trivial code changes, deliberately invoke `code-simplifier` before final verification/handoff unless the diff is already trivially minimal.
 - Design tasks: always include `design-quality-gates` + relevant design/domain skill.
 - Interaction/motion/gesture tasks: always include `interaction-motion-craft`.
 - If no skill matches: state `no relevant skill found`, use best general workflow.
@@ -92,6 +94,7 @@
 - After user correction: update `./AGENTS.md` with prevention rule.
 - Prevention rule: when refactoring/simplifying, default target is fewer lines and fewer branches; if code grows, justify why the added complexity is strictly necessary.
 - Do not claim completion without proof (tests/logs/diff/evidence).
-- For non-trivial work: run an elegance pass; re-implement if solution is hacky.
+- For non-trivial work: run `code-simplifier` / elegance pass; re-implement if solution is hacky.
+- Completion gate: verification includes code-shape review, not just test/build success; simplify and relocate code before handoff if structure is wrong.
 - For bug reports: fix directly from evidence; minimize user context switching.
 - For CI failures: inspect logs, fix root cause, re-run until green.

@@ -15,6 +15,7 @@ Dispatch code-reviewer subagent to catch issues before they cascade.
 - After each task in subagent-driven development
 - After completing major feature
 - Before merge to main
+- After running `code-simplifier` / simplification-refactor pass on non-trivial touched code
 
 **Optional but valuable:**
 - When stuck (fresh perspective)
@@ -45,6 +46,7 @@ Use Task tool with code-reviewer type, fill template at `code-reviewer.md`
 - Fix Important issues before proceeding
 - Note Minor issues for later
 - Push back if reviewer is wrong (with reasoning)
+- If feedback shows duplication, misplaced logic, or unnecessary complexity, re-run `code-simplifier` / simplify-refactor before claiming done
 
 ## Example
 
@@ -96,6 +98,7 @@ You: [Fix progress indicators]
 - Ignore Critical issues
 - Proceed with unfixed Important issues
 - Argue with valid technical feedback
+- Treat green tests as sufficient when touched code still violates KISS, DRY, or clean structure
 
 **If reviewer wrong:**
 - Push back with technical reasoning

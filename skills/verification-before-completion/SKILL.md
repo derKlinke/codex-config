@@ -7,6 +7,7 @@ description: Use when about to claim work is complete, fixed, or passing, before
 
 ## Related Skills
 - `tuist-local-verification` when local Tuist/Xcode verification fails due tooling/auth/lock contention noise.
+- `code-simplifier` before completion for non-trivial code changes; default to invoking it unless the diff is already obviously minimal.
 
 ## Overview
 
@@ -34,8 +35,10 @@ BEFORE claiming any status or expressing satisfaction:
 3. READ: Full output, check exit code, count failures
 4. VERIFY: Does output confirm the claim?
    - If NO: State actual status with evidence
-   - If YES: State claim WITH evidence
-5. ONLY THEN: Make the claim
+   - If YES: Run a code-shape pass on touched code
+5. SIMPLIFY: Remove avoidable complexity; invoke `code-simplifier` for non-trivial code changes unless the diff is already trivially minimal
+6. STRUCTURE: Refactor if code sits in the wrong file/layer/module or violates KISS, DRY, clean-code expectations
+7. ONLY THEN: Make the claim
 
 Skip any step = lying, not verifying
 ```
@@ -123,6 +126,12 @@ Rules:
 ❌ "Tests pass, phase complete"
 ```
 
+**Code shape:**
+```
+✅ Build/test passes → run `code-simplifier` on non-trivial touched code → relocate/refactor misplaced logic → then claim completion
+❌ "Tests are green" while leaving duplication, wrong ownership, or obvious structural drift
+```
+
 **Agent delegation:**
 ```
 ✅ Agent reports success → Check VCS diff → Verify changes → Report actual state
@@ -153,11 +162,12 @@ From 24 failure memories:
 - Paraphrases and synonyms
 - Implications of success
 - ANY communication suggesting completion/correctness
+- Cases where tests pass but touched code is still overly complex, duplicated, or misplaced
 
 ## The Bottom Line
 
 **No shortcuts for verification.**
 
-Run the command. Read the output. THEN claim the result.
+Run the command. Read the output. Simplify/refactor if needed. THEN claim the result.
 
 This is non-negotiable.

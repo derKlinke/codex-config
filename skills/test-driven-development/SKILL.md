@@ -336,6 +336,8 @@ Before marking work complete:
 - [ ] Output pristine (no errors, warnings)
 - [ ] Tests use real code (mocks only if unavoidable)
 - [ ] Edge cases and errors covered
+- [ ] `code-simplifier` invoked for non-trivial touched code after green; no unnecessary branches/abstractions remain
+- [ ] Logic sits in the right file/layer/module; refactored if structural placement was wrong
 
 Can't check all boxes? You skipped TDD. Start over.
 
