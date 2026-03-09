@@ -34,6 +34,8 @@
 
 ## Working Conventions
 - Prioritize root-cause remediation.
+- When touching code, treat obvious standards violations in the explored/touched area as in-scope work: verbosity, weak readability, DRY breaks, wrong-layer logic, overly cautious fallbacks, or unnecessary error handling.
+- On noticing such issues during exploration or implementation, fix and simplify them in the same task by default; do not defer obvious maintainability cleanup in touched code.
 - If uncertain: read more code, then ask short option set.
 - On constraint conflict: state tradeoff, choose safer path.
 - Treat unrelated local edits as parallel work unless blocking.
@@ -106,6 +108,7 @@
 ## Execution Doctrine
 - Use focused subagents aggressively for independent research/execution.
 - After user correction: update `./AGENTS.md` with prevention rule.
+- Prevention rule: when exploration reveals touched-scope code that violates standards, expand the task to include immediate cleanup rather than preserving the bad pattern.
 - Prevention rule: when refactoring/simplifying, default target is fewer lines and fewer branches; if code grows, justify why the added complexity is strictly necessary.
 - Prevention rule: when consolidating overlapping skills, delete redundant skill entrypoints; do not ship alias/compatibility wrappers unless explicitly requested.
 - Prevention rule: when a URL contains an anchor fragment, treat it as potentially accidental and confirm scope by reading the full source unless the user explicitly requests section-only extraction.
