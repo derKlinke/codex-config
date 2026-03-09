@@ -20,7 +20,7 @@ Use when:
 - Testing navigation flows without manual tapping
 
 **Do NOT use for**:
-- Production deep linking (use `ios-swiftui-nav` skill instead)
+- Production deep linking (use `ios-swiftui-pro` skill instead)
 - Universal links or App Clips
 - Complex routing architectures
 
@@ -617,7 +617,7 @@ xcrun simctl io booted screenshot login-error.png
 
 ## Related Skills
 
-- `ios-swiftui-nav` — Production deep linking and NavigationStack patterns
+- `ios-swiftui-pro` — Production deep linking and NavigationStack patterns
 - `ios-xcode-debugging` — Environment-first debugging workflows
 
 ---

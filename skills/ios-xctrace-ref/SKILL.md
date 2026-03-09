@@ -360,6 +360,6 @@ xcrun xctrace symbolicate --input trace.trace --dsym /path/to/App.dSYM
 
 ## Resources
 
-**Skills**: ios-performance-profiling, ios-memory-debugging, ios-swiftui-performance
+**Skills**: ios-performance-profiling, ios-memory-debugging, ios-swiftui-pro
 
 **Docs**: /xcode/instruments, /os/logging/recording-performance-data

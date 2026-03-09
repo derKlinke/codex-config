@@ -1220,7 +1220,7 @@ HStack {
 
 **Docs**: /design/human-interface-guidelines, /design/human-interface-guidelines/color, /design/human-interface-guidelines/dark-mode, /design/human-interface-guidelines/materials, /design/human-interface-guidelines/typography, /design/human-interface-guidelines/layout, /design/human-interface-guidelines/accessibility, /design/human-interface-guidelines/icons
 
-**Skills**: ios-hig, ios-liquid-glass, ios-liquid-glass-ref, ios-swiftui-layout-ref, ios-accessibility-diag
+**Skills**: ios-hig, ios-liquid-glass, ios-liquid-glass-ref, ios-swiftui-pro, ios-accessibility-diag
 
 ---
 

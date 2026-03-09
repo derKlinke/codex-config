@@ -17,7 +17,7 @@ user-invokable: true
 - [design-clarify](../design-clarify/SKILL.md): onboarding copy and instruction clarity
 - [writing-copy](../writing-copy/SKILL.md): messaging and CTA drafting
 - [marketing-form-cro](../marketing-form-cro/SKILL.md): reduce onboarding funnel drop-off
-- [design-frontend](../design-frontend/SKILL.md): implement onboarding UI surfaces
+- [design](../design/SKILL.md): implement onboarding UI surfaces
 
 
 Create or improve onboarding experiences that help users understand, adopt, and succeed with the product quickly.

@@ -14,6 +14,12 @@
 - New deps: check release cadence, recent commits, adoption.
 - Research early; quote exact errors; prefer recent sources.
 - No legacy fallbacks/old patterns unless explicitly requested.
+- Hard-cut product policy for local state evolution:
+  - optimize for one canonical current-state implementation, not historical local states.
+  - do not add compatibility bridges, migration shims, fallback paths, compact adapters, or dual behavior for old local states unless explicitly requested.
+  - prefer one canonical codepath, fail-fast diagnostics, and explicit recovery steps over automatic migration, compatibility glue, silent fallbacks, or "temporary" second paths.
+  - if temporary compatibility code is truly required, same diff must state: why needed, why canonical path is insufficient, exact deletion criteria, and ADR/task tracking removal.
+  - default stance: delete old-state compatibility code instead of carrying it forward.
 - Less code is better: prefer deletion, consolidation, and simpler control flow over additive "safety" code.
 - Prefer clean/readable code over weak historical patterns.
 - Never remove functionality without explicit consent.
@@ -67,9 +73,17 @@
 ## Skill Routing
 - Review runtime skill list first.
 - If task matches a listed skill, use it.
+- Skill naming conventions (grouping-first):
+  - `review-*` for non-security code review/audit/quality-gate flows (examples: bug-finding, review intake/response, pre-handoff verification).
+  - `plan-*` for planning/execution methodology flows (examples: plan authoring, execution from plan, engineering pre-implementation review, TDD workflow).
+  - `git-*` for git-centric workflows (examples: branch maintenance, commit/push/PR handoff).
+  - `infra-*` for infrastructure/platform delivery workflows (examples: Vercel/Cloudflare/AWS setup and deploy).
+- SwiftUI routing: use `ios-swiftui-pro` as canonical entry point; treat retired overlapping `ios-swiftui-*` skills as removed.
 - After non-trivial code changes, deliberately invoke `code-simplifier` before final verification/handoff unless the diff is already trivially minimal.
-- Design tasks: always include `design-quality-gates` + relevant design/domain skill.
-- Interaction/motion/gesture tasks: always include `interaction-motion-craft`.
+- Any UI/design task: invoke `design` first, then `design-audit`, then the most relevant specialized design skill(s).
+- Design tasks: always include `design-audit` + relevant design/domain skill.
+- For design feedback, critique, or sign-off review requests, default to `design-audit`.
+- Interaction/motion/gesture tasks: always include `design-interaction-motion-craft`.
 - If no skill matches: state `no relevant skill found`, use best general workflow.
 
 ## Skill Memory System
@@ -93,6 +107,10 @@
 - Use focused subagents aggressively for independent research/execution.
 - After user correction: update `./AGENTS.md` with prevention rule.
 - Prevention rule: when refactoring/simplifying, default target is fewer lines and fewer branches; if code grows, justify why the added complexity is strictly necessary.
+- Prevention rule: when consolidating overlapping skills, delete redundant skill entrypoints; do not ship alias/compatibility wrappers unless explicitly requested.
+- Prevention rule: when a URL contains an anchor fragment, treat it as potentially accidental and confirm scope by reading the full source unless the user explicitly requests section-only extraction.
+- Prevention rule: when proposing naming-group conventions, preserve domain boundaries (e.g., security stays `security-*`, never absorbed into generic `review-*`).
+- Prevention rule: when creating infrastructure skills, default to `infra-*` naming scope; avoid unscoped skill names for infra domains.
 - Do not claim completion without proof (tests/logs/diff/evidence).
 - For non-trivial work: run `code-simplifier` / elegance pass; re-implement if solution is hacky.
 - Completion gate: verification includes code-shape review, not just test/build success; simplify and relocate code before handoff if structure is wrong.

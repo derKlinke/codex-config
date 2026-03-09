@@ -59,14 +59,13 @@ Keep `<repo-root>/DESIGN.md` as the authoritative present-state design doctrine:
 
 ## Local Cross-References
 
-- `design-typography-system-doc` - create/maintain canonical `TYPO.md` with strict ratio-based typography rules.
-- `design-frontend` - implementation companion for applying doctrine constraints in production UI code.
-- `design-quality-gates` - Mandatory objective gate checks for layout, type, hierarchy, color, and accessibility before design sign-off.
+- `design` - implementation companion for applying doctrine constraints in production UI code.
+- `design-audit` - Mandatory objective gate checks for layout, type, hierarchy, color, and accessibility before design sign-off.
 - `design-interaction-motion-craft` - Motion/interaction doctrine for transitions, gestures, causality, and timing consistency.
 - `ios-hig` - Use for fast HIG-aligned decisions while editing UI and design tokens.
 - `ios-hig-ref` - Use for detailed guideline lookups backing durable DESIGN.md updates.
 - `ios-liquid-glass` - Use when introducing or refining iOS 26 material behaviors in the design system.
-- `ios-swiftui-layout` - Use when layout constraints should become documented system-level rules.
+- `ios-swiftui-pro` - Use when layout constraints should become documented system-level rules.
 - `ios-typography-ref` - Use for type hierarchy and Dynamic Type standards in DESIGN.md.
 - `ios-sf-symbols` - Use for iconography policy and symbol behavior consistency.
 - `design-css-grid-overlay-debug` - Use when grid guide rendering (columns/rows/gutters/subgrid) needs deterministic instrumentation and debugging.

@@ -9,7 +9,7 @@ description: Use when local Tuist build/test verification fails due cloud auth, 
 Deterministic workflow for separating product-test failures from Tuist/Xcode tooling failures in local runs.
 
 ## Related Skills
-- `verification-before-completion` for evidence-first reporting.
+- `review-verification-before-completion` for evidence-first reporting.
 - `ios-build-debugging` for broader iOS build-system diagnostics.
 
 ## When to Use

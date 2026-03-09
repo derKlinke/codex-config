@@ -66,7 +66,7 @@ Reference each discovered skill:
 Use `ios-database-migration` skill for schema changes. See `.codex/skills/ios-database-migration/SKILL.md`
 
 ## Testing
-Use `test-driven-development` skill. See `.codex/skills/test-driven-development/SKILL.md`
+Use `plan-tdd` skill. See `.codex/skills/plan-tdd/SKILL.md`
 ```
 
 ## Optional Sections
@@ -104,7 +104,7 @@ Use **pnpm**: `pnpm install`, `pnpm dev`
 Use `ios-database-migration` skill. See `.codex/skills/ios-database-migration/SKILL.md`
 
 ## Testing
-Use `test-driven-development` skill. See `.codex/skills/test-driven-development/SKILL.md`
+Use `plan-tdd` skill. See `.codex/skills/plan-tdd/SKILL.md`
 
 ## CLI
 | Command | Description |

@@ -314,7 +314,7 @@ For `@Observable` models:
 (lldb) expr Self._printChanges()
 ```
 
-For the full observation diagnostic tree → `/skill ios-swiftui-debugging`
+For the full observation diagnostic tree → `/skill ios-swiftui-pro`
 
 ### Inspecting Actors
 

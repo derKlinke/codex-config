@@ -51,7 +51,7 @@ Use these when asked to inspect or interact with the running app.
 ## Local Cross-References
 
 - `ios-xcode-debugging` - Use for environment-first diagnosis when build/test/simulator behavior is unstable.
-- `ios-swiftui-debugging` - Use when runtime UI symptoms indicate state/update/layout issues rather than environment faults.
+- `ios-swiftui-pro` - Use when runtime UI symptoms indicate state/update/layout issues rather than environment faults.
 - `ios-ui-testing` - Use to convert manual reproduction into deterministic UI test expectations.
 - `ios-xctest-automation` - Use to tighten selectors/waiting/isolation after interactive debugging confirms behavior.
 - `ios-deep-link-debugging` - Use for fast simulator navigation to hard-to-reach screens during debug loops.

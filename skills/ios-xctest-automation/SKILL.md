@@ -447,4 +447,4 @@ loginButton.tap()
 ## Local Cross-References
 
 - `ios-debugger-agent` - Use to validate UI state and element behavior when stabilizing failing automation.
-- `engineering-review-framework` - Use when redesigning test structure, isolation, and CI strategy.
+- `review-engineering-framework` - Use when redesigning test structure, isolation, and CI strategy.

@@ -30,7 +30,7 @@ Process: write pressure scenarios, observe baseline failure, write skill, verify
 
 **Core principle:** If you did not observe failure without the skill, you cannot confirm the skill teaches the needed behavior.
 
-**REQUIRED BACKGROUND:** You MUST understand `test-driven-development` (RED-GREEN-REFACTOR). This skill applies that cycle to documentation.
+**REQUIRED BACKGROUND:** You MUST understand `plan-tdd` (RED-GREEN-REFACTOR). This skill applies that cycle to documentation.
 
 **Official guidance:** See `anthropic-best-practices.md` for complementary authoring guidance.
 
@@ -327,10 +327,10 @@ rg -n "Welcome|This document explains|Remember to|You should" skills/path/SKILL.
 **When writing documentation that references other skills:**
 
 Use skill name only, with explicit requirement markers:
-- ✅ Good: `**REQUIRED SUB-SKILL:** Use test-driven-development`
+- ✅ Good: `**REQUIRED SUB-SKILL:** Use plan-tdd`
 - ✅ Good: `**REQUIRED BACKGROUND:** You MUST understand systematic-debugging`
-- ❌ Bad: `See skills/testing/test-driven-development` (unclear if required)
-- ❌ Bad: `@skills/testing/test-driven-development/SKILL.md` (force-loads, burns context)
+- ❌ Bad: `See skills/testing/plan-tdd` (unclear if required)
+- ❌ Bad: `@skills/testing/plan-tdd/SKILL.md` (force-loads, burns context)
 
 **Why no @ links:** `@` syntax force-loads files immediately, consuming 200k+ context before you need them.
 
@@ -437,7 +437,7 @@ Edit skill without testing? Same violation.
 - Don't "adapt" while running tests
 - Delete means delete
 
-**REQUIRED BACKGROUND:** The test-driven-development skill explains why this matters. Same principles apply to documentation.
+**REQUIRED BACKGROUND:** The plan-tdd skill explains why this matters. Same principles apply to documentation.
 
 ## Testing All Skill Types
 
@@ -445,7 +445,7 @@ Different skill types need different test approaches:
 
 ### Discipline-Enforcing Skills (rules/requirements)
 
-**Examples:** TDD, verification-before-completion, designing-before-coding
+**Examples:** TDD, review-verification-before-completion, designing-before-coding
 
 **Test with:**
 - Academic questions: Do they understand the rules?

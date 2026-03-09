@@ -21,7 +21,12 @@ Goal: one renderer, one scene graph, deterministic output, no duplicate guides.
 
 - Task is only visual styling (colors/typography) with no grid instrumentation.
 - User needs permanent production UI overlays (this skill is debug tooling).
-- Surface is native-only layout debugging (iOS/Android/desktop). Route to `design-interface` plus platform-specific layout skills.
+- Surface is native-only layout debugging (iOS/Android/desktop). Route to `design` plus platform-specific layout skills.
+
+## Related Skills
+
+- [design](../design/SKILL.md): primary UI entrypoint and routing layer
+- [design-audit](../design-audit/SKILL.md): post-debug layout and accessibility validation
 
 ## Canonical Architecture
 

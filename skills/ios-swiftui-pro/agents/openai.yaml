@@ -1,0 +1,10 @@
+interface:
+  display_name: "iOS SwiftUI Pro"
+  short_description: "Canonical SwiftUI implementation and review skill."
+  icon_small: "./assets/ios-swiftui-pro-icon.svg"
+  icon_large: "./assets/ios-swiftui-pro-icon.png"
+  brand_color: "#006AFD"
+  default_prompt: "Use $ios-swiftui-pro to review my project."
+
+policy:
+  allow_implicit_invocation: true

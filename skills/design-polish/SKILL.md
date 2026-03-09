@@ -14,13 +14,13 @@ user-invokable: true
 
 
 ## Related Skills
-- [design-quality-gates](../design-quality-gates/SKILL.md): final release gate
-- [design-critique](../design-critique/SKILL.md): UX quality review feedback
+- [design-audit](../design-audit/SKILL.md): final release gate
+- [design-audit](../design-audit/SKILL.md): UX quality review feedback
 - [design-delight](../design-delight/SKILL.md): selective personality enhancements
 - [design-normalize](../design-normalize/SKILL.md): token/system consistency
 
 
-**First**: Use the design-frontend skill for design principles and anti-patterns.
+**First**: Use the design skill for design principles and anti-patterns.
 
 Perform a meticulous final pass to catch all the small details that separate good work from great work. The difference between shipped and polished.
 
@@ -211,4 +211,3 @@ Before marking as done:
 - **Check all states**: Don't just test happy path
 
 Remember: You have impeccable attention to detail and exquisite taste. Polish until it feels effortless, looks intentional, and works flawlessly. Sweat the details - they matter.
-

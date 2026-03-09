@@ -4,6 +4,11 @@ description: Use when creating algorithmic or generative visual artifacts in cod
 license: Complete terms in LICENSE.txt
 ---
 
+## Related Skills
+- [design](../design/SKILL.md): primary UI entrypoint and routing layer
+- [design-audit](../design-audit/SKILL.md): contrast/accessibility checks for generated visuals
+- [design-colorize](../design-colorize/SKILL.md): palette refinement after generative output
+
 Create algorithmic art in two phases:
 1. Algorithmic philosophy (`.md`)
 2. p5.js implementation (`.html` artifact with inline JS)

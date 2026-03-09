@@ -17,7 +17,7 @@ user-invokable: true
 - [design-system-doc](../design-system-doc/SKILL.md): codify extracted tokens/components
 - [design-normalize](../design-normalize/SKILL.md): standardize extracted patterns
 - [vercel-composition-patterns](../vercel-composition-patterns/SKILL.md): component composition architecture
-- [design-frontend](../design-frontend/SKILL.md): implementation handoff target
+- [design](../design/SKILL.md): implementation handoff target
 
 
 Identify reusable patterns, components, and design tokens, then extract and consolidate them into the design system for systematic reuse.

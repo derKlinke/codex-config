@@ -1,12 +1,9 @@
 ---
 name: design-adapt
-description: Use when adapting an interface for different devices, input modes, or contexts across web, mobile, desktop, native, print, or email surfaces.
+description: Use when adapting interfaces across contexts (device/input/surface) and hardening against edge cases including errors, localization, overflow, and degraded runtime conditions.
 args:
   - name: target
-    description: The feature or component to adapt (optional)
-    required: false
-  - name: context
-    description: What to adapt for (mobile, tablet, desktop, print, email, etc.)
+    description: The feature or area to adapt (optional)
     required: false
 user-invokable: true
 ---
@@ -17,195 +14,375 @@ user-invokable: true
 
 
 ## Related Skills
-- [design-frontend](../design-frontend/SKILL.md): base implementation quality bar
-- [design-harden](../design-harden/SKILL.md): resilience constraints for new contexts
-- [design-optimize](../design-optimize/SKILL.md): performance tuning after adaptation
-- [web-next-best-practices](../web-next-best-practices/SKILL.md): modern web implementation patterns
+- [design](../design/SKILL.md): primary UI entrypoint and routing layer
+- [web-next-best-practices](../web-next-best-practices/SKILL.md): framework-safe adaptation patterns
+- [design-optimize](../design-optimize/SKILL.md): performance after adaptation
+- [review-verification-before-completion](../review-verification-before-completion/SKILL.md): proof-before-handoff discipline
 
 
-Adapt existing designs to work effectively across different contexts - different screen sizes, devices, platforms, or use cases.
+Adapt interfaces across contexts while hardening against edge cases, errors, internationalization issues, context shifts, and real-world usage scenarios that break idealized designs.
 
-## Assess Adaptation Challenge
+## Context Adaptation Workflow (Merged from design-adapt)
 
-Understand what needs adaptation and why:
+1. Identify source assumptions
+- Original context: desktop/mobile/tablet, pointer/touch, network/runtime assumptions.
+- Find patterns that fail outside source context (hover-only affordances, fixed widths, dense controls).
 
-1. **Identify the source context**:
-   - What was it designed for originally? (Desktop web? Mobile app?)
-   - What assumptions were made? (Large screen? Mouse input? Fast connection?)
-   - What works well in current context?
+2. Define target context constraints
+- Device class, input model, viewport constraints, orientation, connectivity, and expected session style.
+- Include non-screen contexts when relevant (print/email/export).
 
-2. **Understand target context**:
-   - **Device**: Mobile, tablet, desktop, TV, watch, print?
-   - **Input method**: Touch, mouse, keyboard, voice, gamepad?
-   - **Screen constraints**: Size, resolution, orientation?
-   - **Connection**: Fast wifi, slow 3G, offline?
-   - **Usage context**: On-the-go vs desk, quick glance vs focused reading?
-   - **User expectations**: What do users expect on this platform?
+3. Adapt interaction + layout model
+- Replace hover dependence on touch surfaces.
+- Reflow for target context (single-column or master-detail as needed).
+- Preserve core functionality; never remove critical actions for smaller surfaces.
 
-3. **Identify adaptation challenges**:
-   - What won't fit? (Content, navigation, features)
-   - What won't work? (Hover states on touch, tiny touch targets)
-   - What's inappropriate? (Desktop patterns on mobile, mobile patterns on desktop)
+4. Validate cross-context behavior
+- Test real-device or realistic emulation across breakpoints, orientation, and input methods.
+- Confirm no accidental horizontal scroll, clipped controls, or unreachable primary actions.
 
-**CRITICAL**: Adaptation is not just scaling - it's rethinking the experience for the new context.
+## Assess Hardening Needs
 
-## Plan Adaptation Strategy
+Identify weaknesses and edge cases:
 
-Create context-appropriate strategy:
+1. **Test with extreme inputs**:
+   - Very long text (names, descriptions, titles)
+   - Very short text (empty, single character)
+   - Special characters (emoji, RTL text, accents)
+   - Large numbers (millions, billions)
+   - Many items (1000+ list items, 50+ options)
+   - No data (empty states)
 
-### Mobile Adaptation (Desktop → Mobile)
+2. **Test error scenarios**:
+   - Network failures (offline, slow, timeout)
+   - API errors (400, 401, 403, 404, 500)
+   - Validation errors
+   - Permission errors
+   - Rate limiting
+   - Concurrent operations
 
-**Layout Strategy**:
-- Single column instead of multi-column
-- Vertical stacking instead of side-by-side
-- Full-width components instead of fixed widths
-- Bottom navigation instead of top/side navigation
+3. **Test internationalization**:
+   - Long translations (German is often 30% longer than English)
+   - RTL languages (Arabic, Hebrew)
+   - Character sets (Chinese, Japanese, Korean, emoji)
+   - Date/time formats
+   - Number formats (1,000 vs 1.000)
+   - Currency symbols
 
-**Interaction Strategy**:
-- Touch targets 44x44px minimum (not hover-dependent)
-- Swipe gestures where appropriate (lists, carousels)
-- Bottom sheets instead of dropdowns
-- Thumbs-first design (controls within thumb reach)
-- Larger tap areas with more spacing
+**CRITICAL**: Designs that only work with perfect data aren't production-ready. Harden against reality.
 
-**Content Strategy**:
-- Progressive disclosure (don't show everything at once)
-- Prioritize primary content (secondary content in tabs/accordions)
-- Shorter text (more concise)
-- Larger text (16px minimum)
+## Hardening Dimensions
 
-**Navigation Strategy**:
-- Hamburger menu or bottom navigation
-- Reduce navigation complexity
-- Sticky headers for context
-- Back button in navigation flow
+Systematically improve resilience:
 
-### Tablet Adaptation (Hybrid Approach)
+### Text Overflow & Wrapping
 
-**Layout Strategy**:
-- Two-column layouts (not single or three-column)
-- Side panels for secondary content
-- Master-detail views (list + detail)
-- Adaptive based on orientation (portrait vs landscape)
+**Long text handling**:
+```css
+/* Single line with ellipsis */
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
-**Interaction Strategy**:
-- Support both touch and pointer
-- Touch targets 44x44px but allow denser layouts than phone
-- Side navigation drawers
-- Multi-column forms where appropriate
+/* Multi-line with clamp */
+.line-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 
-### Desktop Adaptation (Mobile → Desktop)
+/* Allow wrapping */
+.wrap {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+```
 
-**Layout Strategy**:
-- Multi-column layouts (use horizontal space)
-- Side navigation always visible
-- Multiple information panels simultaneously
-- Fixed widths with max-width constraints (don't stretch to 4K)
+**Flex/Grid overflow**:
+```css
+/* Prevent flex items from overflowing */
+.flex-item {
+  min-width: 0; /* Allow shrinking below content size */
+  overflow: hidden;
+}
 
-**Interaction Strategy**:
-- Hover states for additional information
-- Keyboard shortcuts
-- Right-click context menus
-- Drag and drop where helpful
-- Multi-select with Shift/Cmd
+/* Prevent grid items from overflowing */
+.grid-item {
+  min-width: 0;
+  min-height: 0;
+}
+```
 
-**Content Strategy**:
-- Show more information upfront (less progressive disclosure)
-- Data tables with many columns
-- Richer visualizations
-- More detailed descriptions
+**Responsive text sizing**:
+- Use `clamp()` for fluid typography
+- Set minimum readable sizes (14px on mobile)
+- Test text scaling (zoom to 200%)
+- Ensure containers expand with text
 
-### Print Adaptation (Screen → Print)
+### Internationalization (i18n)
 
-**Layout Strategy**:
-- Page breaks at logical points
-- Remove navigation, footer, interactive elements
-- Black and white (or limited color)
-- Proper margins for binding
+**Text expansion**:
+- Add 30-40% space budget for translations
+- Use flexbox/grid that adapts to content
+- Test with longest language (usually German)
+- Avoid fixed widths on text containers
 
-**Content Strategy**:
-- Expand shortened content (show full URLs, hidden sections)
-- Add page numbers, headers, footers
-- Include metadata (print date, page title)
-- Convert charts to print-friendly versions
+```jsx
+// ❌ Bad: Assumes short English text
+<button className="w-24">Submit</button>
 
-### Email Adaptation (Web → Email)
+// ✅ Good: Adapts to content
+<button className="px-4 py-2">Submit</button>
+```
 
-**Layout Strategy**:
-- Narrow width (600px max)
-- Single column only
-- Inline CSS (no external stylesheets)
-- Table-based layouts (for email client compatibility)
+**RTL (Right-to-Left) support**:
+```css
+/* Use logical properties */
+margin-inline-start: 1rem; /* Not margin-left */
+padding-inline: 1rem; /* Not padding-left/right */
+border-inline-end: 1px solid; /* Not border-right */
 
-**Interaction Strategy**:
-- Large, obvious CTAs (buttons not text links)
-- No hover states (not reliable)
-- Deep links to web app for complex interactions
+/* Or use dir attribute */
+[dir="rtl"] .arrow { transform: scaleX(-1); }
+```
 
-## Implement Adaptations
+**Character set support**:
+- Use UTF-8 encoding everywhere
+- Test with Chinese/Japanese/Korean (CJK) characters
+- Test with emoji (they can be 2-4 bytes)
+- Handle different scripts (Latin, Cyrillic, Arabic, etc.)
 
-Apply changes systematically:
+**Date/Time formatting**:
+```javascript
+// ✅ Use Intl API for proper formatting
+new Intl.DateTimeFormat('en-US').format(date); // 1/15/2024
+new Intl.DateTimeFormat('de-DE').format(date); // 15.1.2024
 
-### Responsive Breakpoints
+new Intl.NumberFormat('en-US', { 
+  style: 'currency', 
+  currency: 'USD' 
+}).format(1234.56); // $1,234.56
+```
 
-Choose appropriate breakpoints:
-- Mobile: 320px-767px
-- Tablet: 768px-1023px
-- Desktop: 1024px+
-- Or content-driven breakpoints (where design breaks)
+**Pluralization**:
+```javascript
+// ❌ Bad: Assumes English pluralization
+`${count} item${count !== 1 ? 's' : ''}`
 
-### Layout Adaptation Techniques
+// ✅ Good: Use proper i18n library
+t('items', { count }) // Handles complex plural rules
+```
 
-- **CSS Grid/Flexbox**: Reflow layouts automatically
-- **Container Queries**: Adapt based on container, not viewport
-- **`clamp()`**: Fluid sizing between min and max
-- **Media queries**: Different styles for different contexts
-- **Display properties**: Show/hide elements per context
+### Error Handling
 
-### Touch Adaptation
+**Network errors**:
+- Show clear error messages
+- Provide retry button
+- Explain what happened
+- Offer offline mode (if applicable)
+- Handle timeout scenarios
 
-- Increase touch target sizes (44x44px minimum)
-- Add more spacing between interactive elements
-- Remove hover-dependent interactions
-- Add touch feedback (ripples, highlights)
-- Consider thumb zones (easier to reach bottom than top)
+```jsx
+// Error states with recovery
+{error && (
+  <ErrorMessage>
+    <p>Failed to load data. {error.message}</p>
+    <button onClick={retry}>Try again</button>
+  </ErrorMessage>
+)}
+```
 
-### Content Adaptation
+**Form validation errors**:
+- Inline errors near fields
+- Clear, specific messages
+- Suggest corrections
+- Don't block submission unnecessarily
+- Preserve user input on error
 
-- Use `display: none` sparingly (still downloads)
-- Progressive enhancement (core content first, enhancements on larger screens)
-- Lazy loading for off-screen content
-- Responsive images (`srcset`, `picture` element)
+**API errors**:
+- Handle each status code appropriately
+  - 400: Show validation errors
+  - 401: Redirect to login
+  - 403: Show permission error
+  - 404: Show not found state
+  - 429: Show rate limit message
+  - 500: Show generic error, offer support
 
-### Navigation Adaptation
+**Graceful degradation**:
+- Core functionality works without JavaScript
+- Images have alt text
+- Progressive enhancement
+- Fallbacks for unsupported features
 
-- Transform complex nav to hamburger/drawer on mobile
-- Bottom nav bar for mobile apps
-- Persistent side navigation on desktop
-- Breadcrumbs on smaller screens for context
+### Edge Cases & Boundary Conditions
 
-**IMPORTANT**: Test on real devices, not just browser DevTools. Device emulation is helpful but not perfect.
+**Empty states**:
+- No items in list
+- No search results
+- No notifications
+- No data to display
+- Provide clear next action
+
+**Loading states**:
+- Initial load
+- Pagination load
+- Refresh
+- Show what's loading ("Loading your projects...")
+- Time estimates for long operations
+
+**Large datasets**:
+- Pagination or virtual scrolling
+- Search/filter capabilities
+- Performance optimization
+- Don't load all 10,000 items at once
+
+**Concurrent operations**:
+- Prevent double-submission (disable button while loading)
+- Handle race conditions
+- Optimistic updates with rollback
+- Conflict resolution
+
+**Permission states**:
+- No permission to view
+- No permission to edit
+- Read-only mode
+- Clear explanation of why
+
+**Browser compatibility**:
+- Polyfills for modern features
+- Fallbacks for unsupported CSS
+- Feature detection (not browser detection)
+- Test in target browsers
+
+### Input Validation & Sanitization
+
+**Client-side validation**:
+- Required fields
+- Format validation (email, phone, URL)
+- Length limits
+- Pattern matching
+- Custom validation rules
+
+**Server-side validation** (always):
+- Never trust client-side only
+- Validate and sanitize all inputs
+- Protect against injection attacks
+- Rate limiting
+
+**Constraint handling**:
+```html
+<!-- Set clear constraints -->
+<input 
+  type="text"
+  maxlength="100"
+  pattern="[A-Za-z0-9]+"
+  required
+  aria-describedby="username-hint"
+/>
+<small id="username-hint">
+  Letters and numbers only, up to 100 characters
+</small>
+```
+
+### Accessibility Resilience
+
+**Keyboard navigation**:
+- All functionality accessible via keyboard
+- Logical tab order
+- Focus management in modals
+- Skip links for long content
+
+**Screen reader support**:
+- Proper ARIA labels
+- Announce dynamic changes (live regions)
+- Descriptive alt text
+- Semantic HTML
+
+**Motion sensitivity**:
+```css
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+```
+
+**High contrast mode**:
+- Test in Windows high contrast mode
+- Don't rely only on color
+- Provide alternative visual cues
+
+### Performance Resilience
+
+**Slow connections**:
+- Progressive image loading
+- Skeleton screens
+- Optimistic UI updates
+- Offline support (service workers)
+
+**Memory leaks**:
+- Clean up event listeners
+- Cancel subscriptions
+- Clear timers/intervals
+- Abort pending requests on unmount
+
+**Throttling & Debouncing**:
+```javascript
+// Debounce search input
+const debouncedSearch = debounce(handleSearch, 300);
+
+// Throttle scroll handler
+const throttledScroll = throttle(handleScroll, 100);
+```
+
+## Testing Strategies
+
+**Manual testing**:
+- Test with extreme data (very long, very short, empty)
+- Test in different languages
+- Test offline
+- Test slow connection (throttle to 3G)
+- Test with screen reader
+- Test keyboard-only navigation
+- Test on old browsers
+
+**Automated testing**:
+- Unit tests for edge cases
+- Integration tests for error scenarios
+- E2E tests for critical paths
+- Visual regression tests
+- Accessibility tests (axe, WAVE)
+
+**IMPORTANT**: Hardening is about expecting the unexpected. Real users will do things you never imagined.
 
 **NEVER**:
-- Hide core functionality on mobile (if it matters, make it work)
-- Assume desktop = powerful device (consider accessibility, older machines)
-- Use different information architecture across contexts (confusing)
-- Break user expectations for platform (mobile users expect mobile patterns)
-- Forget landscape orientation on mobile/tablet
-- Use generic breakpoints blindly (use content-driven breakpoints)
-- Ignore touch on desktop (many desktop devices have touch)
+- Assume perfect input (validate everything)
+- Ignore internationalization (design for global)
+- Leave error messages generic ("Error occurred")
+- Forget offline scenarios
+- Trust client-side validation alone
+- Use fixed widths for text
+- Assume English-length text
+- Block entire interface when one component errors
 
-## Verify Adaptations
+## Verify Hardening
 
-Test thoroughly across contexts:
+Test thoroughly with edge cases:
 
-- **Real devices**: Test on actual phones, tablets, desktops
-- **Different orientations**: Portrait and landscape
-- **Different browsers**: Safari, Chrome, Firefox, Edge
-- **Different OS**: iOS, Android, Windows, macOS
-- **Different input methods**: Touch, mouse, keyboard
-- **Edge cases**: Very small screens (320px), very large screens (4K)
-- **Slow connections**: Test on throttled network
+- **Long text**: Try names with 100+ characters
+- **Emoji**: Use emoji in all text fields
+- **RTL**: Test with Arabic or Hebrew
+- **CJK**: Test with Chinese/Japanese/Korean
+- **Network issues**: Disable internet, throttle connection
+- **Large datasets**: Test with 1000+ items
+- **Concurrent actions**: Click submit 10 times rapidly
+- **Errors**: Force API errors, test all error states
+- **Empty**: Remove all data, test empty states
 
-Remember: You're a cross-platform design expert. Make experiences that feel native to each context while maintaining brand and functionality consistency. Adapt intentionally, test thoroughly.
-
+Remember: You're hardening for production reality, not demo perfection. Expect users to input weird data, lose connection mid-flow, and use your product in unexpected ways. Build resilience into every component.

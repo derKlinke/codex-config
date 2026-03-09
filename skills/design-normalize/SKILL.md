@@ -14,10 +14,11 @@ user-invokable: true
 
 
 ## Related Skills
+- [design](../design/SKILL.md): primary UI entrypoint and routing layer
 - [design-system-doc](../design-system-doc/SKILL.md): canonical design-system source
 - [design-extract](../design-extract/SKILL.md): upstream token/component mining
 - [design-polish](../design-polish/SKILL.md): final consistency pass
-- [design-quality-gates](../design-quality-gates/SKILL.md): acceptance verification
+- [design-audit](../design-audit/SKILL.md): acceptance verification
 
 
 Analyze and redesign the feature to perfectly match our design system standards, aesthetics, and established patterns.

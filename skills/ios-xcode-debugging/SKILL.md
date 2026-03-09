@@ -251,5 +251,5 @@ atos -o YourApp.app.dSYM/Contents/Resources/DWARF/YourApp \
 ## Local Cross-References
 
 - `ios-debugger-agent` - Use for tool-driven simulator interaction and runtime UI/log inspection with XcodeBuildMCP.
-- `engineering-review-framework` - Use when the fix requires architecture/test/performance tradeoff decisions.
-- `find-bugs` - Use for security and regression-oriented review of build/debug related code changes.
+- `review-engineering-framework` - Use when the fix requires architecture/test/performance tradeoff decisions.
+- `review-find-bugs` - Use for security and regression-oriented review of build/debug related code changes.

@@ -29,7 +29,7 @@ Do not use for:
 - SceneKit 3D rendering (`ios-scenekit`)
 - GameplayKit entity-component systems
 - Metal shader programming (`ios-metal-migration-ref`)
-- General SwiftUI layout (`ios-swiftui-layout`)
+- General SwiftUI layout (`ios-swiftui-pro`)
 
 ---
 

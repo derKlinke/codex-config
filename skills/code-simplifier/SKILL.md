@@ -52,6 +52,15 @@ Avoid over-simplification that could:
 - Prioritize "fewer lines" over readability (e.g., nested ternaries, dense one-liners)
 - Make the code harder to debug or extend
 
+### 4.1 Avoid Fallback Hell
+
+When simplifying, enforce hard-cut current-state code shape:
+
+- Keep one canonical current-state codepath.
+- Remove compatibility bridges, migration shims, fallback paths, dual behavior, and glue logic for historical local states unless explicitly requested.
+- Prefer fail-fast diagnostics + explicit recovery instructions over silent fallback behavior.
+- If temporary compatibility code is intentionally retained, require inline justification of: why it exists, why canonical path is insufficient, exact deletion criteria, and tracking reference for removal.
+
 ### 5. Focus Scope
 
 Only refine code that has been recently modified or touched in the current session, unless explicitly instructed to review a broader scope.
@@ -64,6 +73,7 @@ Only refine code that has been recently modified or touched in the current sessi
 4. **Ensure** all functionality remains unchanged
 5. **Verify** the refined code is simpler and more maintainable
 6. **Document** only significant changes that affect understanding
+7. **Eliminate** avoidable compatibility/fallback branches that keep obsolete local states alive
 
 ## Examples
 

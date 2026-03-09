@@ -93,9 +93,9 @@ Gesture conflict?
 
 ## Cross-links
 
-- Pair with `ios-swiftui-gestures` for pure SwiftUI composition mechanics.
-- Pair with `ios-swiftui-debugging-diag` when recognizers fire but rendering/state still looks wrong.
-- Pair with `ios-swiftui-layout` when hit regions, coordinate spaces, or container shape are suspect.
-- Pair with `ios-swiftui-nav` when navigation taps and long presses coexist.
+- Pair with `ios-swiftui-pro` for pure SwiftUI composition mechanics.
+- Pair with `ios-swiftui-pro` when recognizers fire but rendering/state still looks wrong.
+- Pair with `ios-swiftui-pro` when hit regions, coordinate spaces, or container shape are suspect.
+- Pair with `ios-swiftui-pro` when navigation taps and long presses coexist.
 - Pair with `ios-xctest-automation` or `ios-ui-testing` for regression coverage.
 - Pair with `ios-accessibility-diag` to provide non-gesture alternatives.

@@ -22,7 +22,7 @@ Use when:
 
 #### Related Skills
 - Use `ios-sf-symbols-ref` for full API reference, UIKit equivalents, and platform availability
-- Use `ios-swiftui-animation-ref` for general SwiftUI animation (not symbol-specific)
+- Use `ios-swiftui-pro` for general SwiftUI animation (not symbol-specific)
 - Use `ios-hig-ref` for broader icon design guidelines
 
 ## Example Prompts
@@ -585,7 +585,7 @@ Image(systemName: isFavorite ? "star.fill" : "star")
 
 **Docs**: /symbols, /symbols/symboleffect, /symbols/symbolrenderingmode, /swiftui/image/symboleffect(_:options:value:), /swiftui/image/symbolrenderingmode(_:)
 
-**Skills**: ios-sf-symbols-ref, ios-hig-ref, ios-swiftui-animation-ref
+**Skills**: ios-sf-symbols-ref, ios-hig-ref, ios-swiftui-pro
 
 ---
 

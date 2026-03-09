@@ -20,7 +20,7 @@ Use when:
 
 #### Related Skills
 - Use `ios-sf-symbols` for decision trees, anti-patterns, troubleshooting, and when to use which effect
-- Use `ios-swiftui-animation-ref` for general SwiftUI animation (non-symbol)
+- Use `ios-swiftui-pro` for general SwiftUI animation (non-symbol)
 
 ---
 
@@ -968,7 +968,7 @@ struct TaskCheckbox: View {
 
 **Docs**: /symbols, /symbols/symboleffect, /symbols/bouncesymboleffect, /symbols/pulsesymboleffect, /symbols/variablecolorsymboleffect, /symbols/scalesymboleffect, /symbols/wigglesymboleffect, /symbols/rotatesymboleffect, /symbols/breathesymboleffect, /symbols/appearsymboleffect, /symbols/disappearsymboleffect, /symbols/replacesymboleffect, /symbols/drawonsymboleffect, /symbols/drawoffsymboleffect, /swiftui/image/symbolrenderingmode(_:), /uikit/uiimage/symbolconfiguration
 
-**Skills**: ios-sf-symbols, ios-hig-ref, ios-swiftui-animation-ref
+**Skills**: ios-sf-symbols, ios-hig-ref, ios-swiftui-pro
 
 ---
 

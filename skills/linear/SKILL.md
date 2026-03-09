@@ -19,6 +19,11 @@ This skill provides a structured workflow for managing issues, projects & team w
 
 **Follow these steps in order. Do not skip steps.**
 
+## Mandatory Behavior
+
+- For any Linear-related request, invoke this `linear` skill first.
+- As soon as active implementation work starts on a Linear issue, immediately set that issue status to `In Progress`.
+
 ### Step 0: Set up Linear MCP (if not already configured)
 
 If any MCP call fails because Linear MCP is not connected, pause and set it up:
@@ -39,6 +44,8 @@ After successful login, the user will have to restart codex. You should finish y
 
 ### Step 1
 Clarify the user's goal and scope (e.g., issue triage, sprint planning, documentation audit, workload balance). Confirm team/project, priority, labels, cycle, and due dates as needed.
+
+If the work is tied to a specific Linear issue and execution is starting now, set the issue state to `In Progress` before proceeding with implementation subtasks.
 
 ### Step 2
 Select the appropriate workflow (see Practical Workflows below) and identify the Linear MCP tools you will need. Confirm required identifiers (issue ID, project ID, team key) before calling tools.

@@ -1,6 +1,6 @@
 ---
 name: web-design-guidelines
-description: Use when auditing web UI code against Web Interface Guidelines; for platform-agnostic design gates use design-quality-gates first.
+description: Use when auditing web UI code against Web Interface Guidelines; for platform-agnostic design gates use design-audit first.
 metadata:
   author: vercel
   version: "1.0.0"

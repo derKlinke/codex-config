@@ -34,9 +34,9 @@ Attempt to gather these from the current thread or codebase.
 
 Do NOT proceed until you have answers. Simplifying the wrong things destroys usability.
 
-### Use design-frontend skill
+### Use design skill
 
-Use the design-frontend skill for design principles and anti-patterns. Do NOT proceed until it has executed and you know all DO's and DON'Ts.
+Use the design skill for design principles and anti-patterns. Do NOT proceed until it has executed and you know all DO's and DON'Ts.
 
 ---
 

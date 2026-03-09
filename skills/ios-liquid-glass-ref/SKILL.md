@@ -23,7 +23,7 @@ Use when:
 
 #### Related Skills
 - Use `ios-liquid-glass` for implementing the Liquid Glass material itself and design review pressure scenarios
-- Use `ios-swiftui-performance` for profiling Liquid Glass rendering performance
+- Use `ios-swiftui-pro` for profiling Liquid Glass rendering performance
 - Use `ios-accessibility-diag` for accessibility testing
 
 ---
@@ -236,7 +236,7 @@ When glass extends edge-to-edge via `.ignoresSafeArea()`, use `.safeAreaPadding(
 // ✅ .safeAreaPadding(.horizontal, 20) — 20pt beyond safe areas
 ```
 
-Applies to: full-screen sheets with materials, edge-to-edge toolbars, floating panels, custom glass navigation bars. Requires iOS 17+. See `ios-swiftui-layout-ref` for full `.safeAreaPadding()` vs `.padding()` guidance.
+Applies to: full-screen sheets with materials, edge-to-edge toolbars, floating panels, custom glass navigation bars. Requires iOS 17+. See `ios-swiftui-pro` for full `.safeAreaPadding()` vs `.padding()` guidance.
 
 Verify: content visible beneath sidebar/inspector, not cropped, peek-through looks intentional, properly inset from notch/Dynamic Island/home indicator.
 
@@ -347,7 +347,7 @@ List(emails) { email in
 
 ### Toolbar Grouping, Spacers, and Morphing
 
-See `ios-swiftui-26-ref` for complete toolbar API coverage: `ToolbarSpacer`, `ToolbarItemGroup` visual grouping, `.sharedBackgroundVisibility(.hidden)`, toolbar morphing, `DefaultToolbarItem`, user-customizable toolbars, monochrome icon rendering, backward-compatible toolbar labels, and floating glass buttons.
+See `ios-swiftui-pro` for complete toolbar API coverage: `ToolbarSpacer`, `ToolbarItemGroup` visual grouping, `.sharedBackgroundVisibility(.hidden)`, toolbar morphing, `DefaultToolbarItem`, user-customizable toolbars, monochrome icon rendering, backward-compatible toolbar labels, and floating glass buttons.
 
 **Liquid Glass-specific toolbar guidance:**
 - Pick one style (icons OR text) per toolbar background group — mixing creates inconsistent visual weight under glass
@@ -527,7 +527,7 @@ Wrap multiple `.glassEffect()` views in `GlassEffectContainer { }` to optimize r
 
 ### Performance Testing
 
-Profile scrolling, animations, memory, and CPU with Instruments (Time Profiler, SwiftUI, Allocations, Core Animation). See `ios-swiftui-performance` for SwiftUI Instrument workflows and `ios-performance-profiling` for Instruments decision trees.
+Profile scrolling, animations, memory, and CPU with Instruments (Time Profiler, SwiftUI, Allocations, Core Animation). See `ios-swiftui-pro` for SwiftUI Instrument workflows and `ios-performance-profiling` for Instruments decision trees.
 
 ### Backward Compatibility
 
@@ -617,7 +617,7 @@ Use this checklist when auditing app for Liquid Glass adoption. 30 highest-impac
 ### Menus and Toolbars
 - [ ] Standard selectors used for automatic menu icons
 - [ ] Swipe actions match contextual menu actions
-- [ ] Toolbar items grouped logically (see `ios-swiftui-26-ref`)
+- [ ] Toolbar items grouped logically (see `ios-swiftui-pro`)
 
 ### Windows and Modals
 - [ ] Arbitrary window sizes supported (iPadOS); flexible layouts used
@@ -639,7 +639,7 @@ Use this checklist when auditing app for Liquid Glass adoption. 30 highest-impac
 
 **Sample Code**: /SwiftUI/Landmarks-Building-an-app-with-Liquid-Glass
 
-**Skills**: ios-liquid-glass, ios-swiftui-performance, ios-swiftui-debugging, ios-accessibility-diag
+**Skills**: ios-liquid-glass, ios-swiftui-pro, ios-accessibility-diag
 
 ---
 

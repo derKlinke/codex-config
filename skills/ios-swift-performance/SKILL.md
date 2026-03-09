@@ -18,7 +18,7 @@ metadata:
 
 **Related Skills**:
 - `ios-performance-profiling` — Use Instruments to measure (do this first!)
-- `ios-swiftui-performance` — SwiftUI-specific optimizations
+- `ios-swiftui-pro` — SwiftUI-specific optimizations
 - `ios-build-performance` — Compilation speed
 - `ios-swift-concurrency` — Correctness-focused concurrency patterns
 
@@ -1231,6 +1231,6 @@ func render<S: Shape>(shapes: [S]) { }
 
 **Docs**: /swift/inlinearray, /swift/span, /swift/outputspan
 
-**Skills**: ios-performance-profiling, ios-swift-concurrency, ios-swiftui-performance
+**Skills**: ios-performance-profiling, ios-swift-concurrency, ios-swiftui-pro
 
 ---

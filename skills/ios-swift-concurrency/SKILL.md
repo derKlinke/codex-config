@@ -30,7 +30,7 @@ metadata:
 
 ❌ **Do not use for**:
 - General Swift syntax (use Swift documentation)
-- SwiftUI-specific patterns (use `ios-swiftui-debugging` or `ios-swiftui-performance`)
+- SwiftUI-specific patterns (use `ios-swiftui-pro`)
 - API-specific patterns (use API documentation)
 
 ## Principle: Start Single-Threaded

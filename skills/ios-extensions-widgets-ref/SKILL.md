@@ -1108,7 +1108,7 @@ let entries = (0..<100).map { offset in
 
 **Docs**: /widgetkit, /activitykit, /appintents
 
-**Skills**: ios-app-intents-ref, ios-swift-concurrency, ios-swiftui-performance, ios-swiftui-layout, ios-extensions-widgets
+**Skills**: ios-app-intents-ref, ios-swift-concurrency, ios-swiftui-pro, ios-extensions-widgets
 
 ---
 

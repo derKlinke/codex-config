@@ -1156,7 +1156,7 @@ func testPhotosLoadUnderStress() {
 
 **Docs**: /xctest, /xcuiautomation/recording-ui-automation-for-testing, /xctest/xctwaiter, /accessibility/delivering_an_exceptional_accessibility_experience, /accessibility/performing_accessibility_testing_for_your_app
 
-**Note**: This skill focuses on reliability patterns and Recording UI Automation. For TDD workflow, see test-driven-development.
+**Note**: This skill focuses on reliability patterns and Recording UI Automation. For TDD workflow, see plan-tdd.
 
 ---
 
@@ -1165,4 +1165,4 @@ func testPhotosLoadUnderStress() {
 ## Local Cross-References
 
 - `ios-debugger-agent` - Use to reproduce failing flows interactively before/after hardening UI tests.
-- `engineering-review-framework` - Use when test reliability work requires explicit tradeoffs across architecture and performance.
+- `review-engineering-framework` - Use when test reliability work requires explicit tradeoffs across architecture and performance.

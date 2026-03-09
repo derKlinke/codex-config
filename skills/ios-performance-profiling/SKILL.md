@@ -16,7 +16,7 @@ iOS performance issues map to specific diagnosis tools. This skill helps you **p
 **Core principle**: Measure before optimizing. Guessing about performance wastes more time than profiling.
 
 **Requires**: Xcode 15+, iOS 14+
-**Related skills**: `ios-swiftui-performance` (SwiftUI-specific profiling with Instruments 26), `ios-memory-debugging` (memory leak diagnosis)
+**Related skills**: `ios-swiftui-pro` (SwiftUI-specific profiling with Instruments 26), `ios-memory-debugging` (memory leak diagnosis)
 
 ## When to Use Performance Profiling
 
@@ -32,7 +32,7 @@ iOS performance issues map to specific diagnosis tools. This skill helps you **p
 - Investigating specific memory leaks with retain cycles
 - Using Instruments Allocations in detail mode
 
-#### Use `ios-swiftui-performance` instead when
+#### Use `ios-swiftui-pro` instead when
 - Analyzing SwiftUI view body updates
 - Using SwiftUI Instrument specifically
 
@@ -1031,7 +1031,7 @@ See `ios-metrickit-ref` for comprehensive MetricKit integration. Key metrics to 
 
 **Docs**: /library/archive/documentation/cocoa/conceptual/coredataperformance, /library/archive/technotes/tn2224, /os/ossignposter, /xctest/xctestcase/measure
 
-**Skills**: ios-memory-debugging, ios-swiftui-performance, ios-swift-concurrency, ios-metrickit-ref
+**Skills**: ios-memory-debugging, ios-swiftui-pro, ios-swift-concurrency, ios-metrickit-ref
 
 ---
 

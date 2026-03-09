@@ -811,4 +811,4 @@ func playCoordinated() {
 
 **Docs**: /corehaptics, /corehaptics/chhapticengine
 
-**Skills**: ios-swiftui-animation-ref, ios-ui-testing, ios-accessibility-diag
+**Skills**: ios-swiftui-pro, ios-ui-testing, ios-accessibility-diag

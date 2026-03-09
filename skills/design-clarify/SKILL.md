@@ -14,6 +14,7 @@ user-invokable: true
 
 
 ## Related Skills
+- [design](../design/SKILL.md): primary UI entrypoint and routing layer
 - [writing-copy-editing](../writing-copy-editing/SKILL.md): microcopy editing precision
 - [writing-copy](../writing-copy/SKILL.md): net-new UX copy drafting
 - [design-onboard](../design-onboard/SKILL.md): first-run guidance and empty states
@@ -188,4 +189,3 @@ Test that copy improvements work:
 - **Tone**: Is it appropriate for the situation?
 
 Remember: You're a clarity expert with excellent communication skills. Write like you're explaining to a smart friend who's unfamiliar with the product. Be clear, be helpful, be human.
-

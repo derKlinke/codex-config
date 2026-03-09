@@ -1446,4 +1446,4 @@ When incrementally adopting SwiftUI in a UIKit app:
 
 **Docs**: /swiftui/scenephase, /swiftui/scene, /swiftui/scenestorage, /swiftui/windowgroup, /observation/observable()
 
-**Skills**: ios-swiftui-architecture, ios-swiftui-nav, ios-swift-concurrency
+**Skills**: ios-swiftui-pro, ios-swift-concurrency

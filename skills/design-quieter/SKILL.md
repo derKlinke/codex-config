@@ -16,7 +16,7 @@ user-invokable: true
 ## Related Skills
 - [design-distill](../design-distill/SKILL.md): simplify and strip noise
 - [design-normalize](../design-normalize/SKILL.md): harmonize with system baseline
-- [design-quality-gates](../design-quality-gates/SKILL.md): maintain usability after tone-down
+- [design-audit](../design-audit/SKILL.md): maintain usability after tone-down
 
 
 Reduce visual intensity in designs that are too bold, aggressive, or overstimulating, creating a more refined and approachable aesthetic without losing effectiveness.
@@ -34,9 +34,9 @@ Attempt to gather these from the current thread or codebase.
 
 Do NOT proceed until you have answers. Guessing leads to generic design.
 
-### Use design-frontend skill
+### Use design skill
 
-Use the design-frontend skill for design principles and anti-patterns. Do NOT proceed until it has executed and you know all DO's and DON'Ts.
+Use the design skill for design principles and anti-patterns. Do NOT proceed until it has executed and you know all DO's and DON'Ts.
 
 ---
 

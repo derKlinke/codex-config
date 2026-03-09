@@ -14,9 +14,10 @@ user-invokable: true
 
 
 ## Related Skills
+- [design](../design/SKILL.md): primary UI entrypoint and routing layer
 - [web-next-best-practices](../web-next-best-practices/SKILL.md): platform-level optimization patterns
 - [vercel-react-best-practices](../vercel-react-best-practices/SKILL.md): React/Next performance guidance
-- [design-harden](../design-harden/SKILL.md): resilience-focused edge-case treatment
+- [design-adapt](../design-adapt/SKILL.md): resilience-focused edge-case treatment
 - [design-audit](../design-audit/SKILL.md): measure and confirm improvements
 
 
@@ -278,4 +279,3 @@ Test that optimizations worked:
 - **User perception**: Does it *feel* faster?
 
 Remember: Performance is a feature. Fast experiences feel more responsive, more polished, more professional. Optimize systematically, measure ruthlessly, and prioritize user-perceived performance.
-

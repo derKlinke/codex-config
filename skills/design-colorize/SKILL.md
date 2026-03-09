@@ -14,9 +14,9 @@ user-invokable: true
 
 
 ## Related Skills
-- [design-frontend](../design-frontend/SKILL.md): visual implementation baseline
+- [design](../design/SKILL.md): visual implementation baseline
 - [design-normalize](../design-normalize/SKILL.md): system-consistent token application
-- [design-quality-gates](../design-quality-gates/SKILL.md): contrast/accessibility verification
+- [design-audit](../design-audit/SKILL.md): contrast/accessibility verification
 
 
 Strategically introduce color to designs that are too monochromatic, gray, or lacking in visual warmth and personality.
@@ -34,9 +34,9 @@ Attempt to gather these from the current thread or codebase.
 
 Do NOT proceed until you have answers. Guessing leads to generic AI slop colors.
 
-### Use design-frontend skill
+### Use design skill
 
-Use the design-frontend skill for design principles and anti-patterns. Do NOT proceed until it has executed and you know all DO's and DON'Ts.
+Use the design skill for design principles and anti-patterns. Do NOT proceed until it has executed and you know all DO's and DON'Ts.
 
 ---
 

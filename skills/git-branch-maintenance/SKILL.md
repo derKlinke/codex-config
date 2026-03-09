@@ -10,7 +10,7 @@ Deterministic workflow for branch maintenance tasks: prepare a dedicated worktre
 
 ## Related Skills
 - `commit-conventions` for commit message/split rules when commits are required.
-- `verification-before-completion` for evidence-first completion reporting.
+- `review-verification-before-completion` for evidence-first completion reporting.
 
 ## When to Use
 - Requests like: "rebase this branch", "sync branch with main", "resolve rebase conflicts", "force-push updated branch", "do this in a worktree".
