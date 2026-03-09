@@ -1,10 +1,10 @@
 version = 1
 id = "check-for-sentry-issues"
 name = "Check for sentry issues"
-prompt = "look for crashes with [$sentry](/Users/fabianklinke/.codex/skills/sentry/SKILL.md) using the Sentry MCP tools and implement fixes for each"
+prompt = "look for crashes with [$sentry](/Users/fabianklinke/.codex/skills/sentry/SKILL.md) using the Sentry MCP tools and implement fixes for each. after applying the fix mark the sentry issue as resolved in the next semver."
 status = "ACTIVE"
 rrule = "RRULE:FREQ=WEEKLY;BYHOUR=9;BYMINUTE=0;BYDAY=SU,MO,TU,WE,TH,FR,SA"
 execution_environment = "local"
 cwds = ["/Users/fabianklinke/Developer/b90-industries/b90hq"]
 created_at = 1772118119770
-updated_at = 1772452148307
+updated_at = 1773055988875
