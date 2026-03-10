@@ -25,6 +25,12 @@ Plan and execute commits that follow Conventional Commits plus any repository ru
 - Re-stage only hook-modified files, confirm staged set (`git diff --cached --name-only`), and re-run the same commit message.
 - If hooks keep rewriting on every attempt, run the project formatter command once, stage result, then commit.
 
+## Git Lock Recovery
+
+- If commit/stash fails with `.git/index.lock`, first confirm no active git process is still running.
+- If no git process is active, remove only `.git/index.lock`, keep staged set unchanged, and retry the same command.
+- Never use reset/checkout cleanup as lock recovery; lock errors are process-state issues, not content-state issues.
+
 ## Conventional Commit Format
 
 - Default format: `<type>: <subject>`
