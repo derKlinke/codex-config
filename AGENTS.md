@@ -75,6 +75,11 @@
 ## Skill Routing
 - Review runtime skill list first.
 - If task matches a listed skill, use it.
+- Use `ast-grep` for syntax-aware code navigation/search whenever the question is structural, not textual.
+- Prefer `rg`/`rg --files` for plain-text, filenames, raw strings, logs, TODOs, and broad first-pass discovery.
+- Prefer `ast-grep` for declarations, call sites, imports, modifiers/annotations, protocol/interface conformance, inheritance, async/await patterns, error-handling shape, UI/component structure, or "find code like this" queries.
+- Use `ast-grep run -p` for ad hoc navigation; use `ast-grep scan` with YAML for multi-condition/reusable audits; use `--debug-query` when rule shape is unclear.
+- Check `ast-grep` before manual grep loops when exploring unfamiliar codebases; goal: fewer false positives, faster narrowing.
 - Skill naming conventions (grouping-first):
   - `review-*` for non-security code review/audit/quality-gate flows (examples: bug-finding, review intake/response, pre-handoff verification).
   - `plan-*` for planning/execution methodology flows (examples: plan authoring, execution from plan, engineering pre-implementation review, TDD workflow).
