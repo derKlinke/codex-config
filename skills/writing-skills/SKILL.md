@@ -8,6 +8,14 @@ description: Use when creating/editing/verifying skills and enforce high-density
 ## Related Skills
 
 - For creating/updating project `AGENTS.md` instructions, use `agents-md` (`~/.codex/skills/writing-agents-md/SKILL.md`).
+- For mining Codex transcripts to improve skills, use `session-skill-audit` (`~/.codex/skills/session-skill-audit/SKILL.md`).
+
+## Skill-Maintenance Scan Guardrails
+
+- For session mining, parse JSONL with `jq`; avoid plain `rg "skill"` scans across full prompt payloads.
+- Restrict evidence extraction to assistant/user message bodies (`event_msg.agent_message`, `response_item.message`) to avoid system-instruction noise.
+- For broken-skill-link audits, derive candidate deleted skill IDs first, then scan markdown link/backtick patterns against that set.
+- Treat broad keyword hits as weak evidence; require at least one concrete transcript quote before editing a skill.
 
 ## Language Density Contract (Mandatory)
 
