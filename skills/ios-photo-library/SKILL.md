@@ -33,6 +33,10 @@ Use when:
 "User granted limited access but can't see photos"
 "How do I load an image from PhotosPickerItem?"
 
+## References
+
+- API details: [references/api-reference.md](references/api-reference.md)
+
 ## Red Flags
 
 Red flags:
@@ -783,4 +787,5 @@ Before shipping photo library features:
 
 **Docs**: /photosui/phpickerviewcontroller, /photosui/photospicker, /photos/phphotolibrary
 
-**Skills**: ios-photo-library-ref, ios-camera-capture
+**References**: [references/api-reference.md](references/api-reference.md)
+**Skills**: ios-camera-capture

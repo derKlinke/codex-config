@@ -96,10 +96,8 @@ Apply interaction and animation craft as a behavior system, not decoration. Moti
 
 ## Related Skills
 
-- `design-system-doc` - align motion language with repo-level design doctrine.
 - `design-audit` - objective sign-off gates for complete design quality.
 - `design` - high-fidelity frontend implementation once motion rules are set.
-- `ios-swiftui-pro` - Apple-platform API and implementation detail lookup.
 
 ## Source Basis
 

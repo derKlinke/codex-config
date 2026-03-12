@@ -52,4 +52,4 @@
 
 - `design`: add a dedicated grid-discipline protocol and anti-pattern checks.
 - `design-audit`: verify baseline/column rhythm, span consistency, and hierarchy mapping.
-- `design-adapt`: ensure responsive adaptations preserve grid logic instead of ad-hoc stacking.
+- Treat responsive adaptations as grid-preserving transformations rather than ad-hoc stacking.

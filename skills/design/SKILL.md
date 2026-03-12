@@ -11,14 +11,11 @@ license: Apache 2.0. Based on Anthropic's frontend-design skill. See NOTICE.md f
 ## Mandatory Invocation
 - Invoke this skill first for every UI/visual task.
 - Pair with [design-audit](../design-audit/SKILL.md) in the same turn.
-- For non-trivial UI scope, add specialized design skill(s) from `Specialized Skill Routing`.
+- Add [design-interaction-motion-craft](../design-interaction-motion-craft/SKILL.md) only when motion, gesture, or transition behavior matters.
 
 ## Related Skills
 - [design-audit](../design-audit/SKILL.md): mandatory visual/accessibility quality checks
-- [design-system-doc](../design-system-doc/SKILL.md): repo-level design doctrine alignment
 - [design-interaction-motion-craft](../design-interaction-motion-craft/SKILL.md): motion behavior validation
-- [design-article-integration](../design-article-integration/SKILL.md): ingest external design writing into reusable skill rules
-- [web-design-guidelines](../web-design-guidelines/SKILL.md): standards review pass
 - [copywriting](../writing-copy/SKILL.md): marketing copy generation and rewrite support
 - [humanizer](../writing-humanizer/SKILL.md): remove AI-writing artifacts in UI copy
 
@@ -152,22 +149,10 @@ Pre-delivery checks:
 - motion timing stays in controlled ranges and avoids novelty fatigue
 - light/dark readability and border legibility are verified
 
-## Specialized Skill Routing
-- Motion, transitions, gestures, choreography: [design-interaction-motion-craft](../design-interaction-motion-craft/SKILL.md), [design-animate](../design-animate/SKILL.md)
-- Responsive/context adaptation (device/input/surface): [design-adapt](../design-adapt/SKILL.md)
-- Edge cases, localization, failure modes, overflow resilience: [design-adapt](../design-adapt/SKILL.md)
-- Design system drift cleanup and token realignment: [design-normalize](../design-normalize/SKILL.md)
-- Extract reusable tokens/components into system primitives: [design-extract](../design-extract/SKILL.md)
-- Onboarding, first-run, and empty-state pathing: [design-onboard](../design-onboard/SKILL.md)
-- UX copy and microcopy clarity: [design-clarify](../design-clarify/SKILL.md), [copywriting](../writing-copy/SKILL.md), [humanizer](../writing-humanizer/SKILL.md)
-- Color hierarchy and palette coherence: [design-colorize](../design-colorize/SKILL.md)
-- Visual intensity tuning: [design-bolder](../design-bolder/SKILL.md), [design-quieter](../design-quieter/SKILL.md)
-- Simplification or personality tuning passes: [design-distill](../design-distill/SKILL.md), [design-delight](../design-delight/SKILL.md)
-- Release-candidate finishing pass: [design-polish](../design-polish/SKILL.md)
-- Review and critique passes: [design-audit](../design-audit/SKILL.md)
-- Perceived/runtime UI performance: [design-optimize](../design-optimize/SKILL.md)
-- CSS grid overlay instrumentation/debug: [design-css-grid-overlay-debug](../design-css-grid-overlay-debug/SKILL.md)
-- Durable doctrine updates: [design-system-doc](../design-system-doc/SKILL.md)
+## Routing
+- Review, critique, and sign-off: [design-audit](../design-audit/SKILL.md)
+- Motion, transitions, gestures, and choreography: [design-interaction-motion-craft](../design-interaction-motion-craft/SKILL.md)
+- UI copy and microcopy support: [copywriting](../writing-copy/SKILL.md), [humanizer](../writing-humanizer/SKILL.md)
 
 This skill guides creation of distinctive, production-grade frontend interfaces that avoid generic "AI slop" aesthetics. Implement real working code with exceptional attention to aesthetic details and creative choices.
 

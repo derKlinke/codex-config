@@ -247,10 +247,8 @@ Use words the agent would search for:
 
 **Examples (current taxonomy):**
 - ✅ `design-interaction-motion-craft`
-- ✅ `writing-copy-editing`
 - ✅ `marketing-seo-audit`
 - ✅ `web-next-best-practices`
-- ✅ `ios-networking-diag`
 
 ### 4. Token Efficiency (Critical)
 

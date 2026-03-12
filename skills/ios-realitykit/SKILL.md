@@ -27,8 +27,12 @@ Use when:
 Do not use for:
 - SceneKit maintenance (use `ios-scenekit`)
 - 2D games (use `ios-spritekit`)
-- Metal shader programming (use `ios-metal-migration-ref`)
+- Metal shader programming
 - Pure GPU compute (use Metal directly)
+
+## References
+
+- API details: [references/api-reference.md](references/api-reference.md)
 
 ---
 
@@ -926,4 +930,5 @@ struct GoodSystem: System {
 
 **Docs**: /realitykit, /realitykit/entity, /realitykit/realityview, /realitykit/modelentity, /realitykit/anchorentity, /realitykit/component
 
-**Skills**: ios-realitykit-ref, ios-realitykit-diag, ios-scenekit, ios-scenekit-ref
+**References**: [references/api-reference.md](references/api-reference.md), [../ios-scenekit/references/migration-api-reference.md](../ios-scenekit/references/migration-api-reference.md)
+**Skills**: ios-scenekit

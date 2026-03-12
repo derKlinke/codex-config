@@ -42,7 +42,7 @@ Read each skill frontmatter to decide references.
 
 - **Headers + terse bullets** - No paragraphs
 - **Code blocks** - Commands/templates only
-- **Reference, don't duplicate** - Point to skills: "Use `ios-database-migration` skill. See `.codex/skills/ios-database-migration/SKILL.md`"
+- **Reference, don't duplicate** - Point to existing local skills or local reference files instead of restating detailed process docs
 - **No filler** - No intros, conclusions, pleasantries, or motivational phrasing
 - **Trust capabilities** - Omit obvious context/explanations
 - **Default to maximum density** - Keep all directives; minimize tokens
@@ -63,7 +63,7 @@ Project-specific patterns agents must follow. Keep brief.
 Reference each discovered skill:
 ```markdown
 ## Database
-Use `ios-database-migration` skill for schema changes. See `.codex/skills/ios-database-migration/SKILL.md`
+Use the relevant existing database or platform skill for schema changes
 
 ## Testing
 Use `plan-tdd` skill. See `.codex/skills/plan-tdd/SKILL.md`
@@ -101,7 +101,7 @@ Use **pnpm**: `pnpm install`, `pnpm dev`
 [Template code block]
 
 ## Database
-Use `ios-database-migration` skill. See `.codex/skills/ios-database-migration/SKILL.md`
+Use the relevant existing database or platform skill
 
 ## Testing
 Use `plan-tdd` skill. See `.codex/skills/plan-tdd/SKILL.md`

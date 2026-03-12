@@ -77,9 +77,10 @@
 - `infra-*`: infrastructure/platform delivery workflows.
 - SwiftUI routing: `ios-swiftui-pro` is canonical; retired overlapping `ios-swiftui-*` entrypoints stay removed.
 - After non-trivial code changes, invoke `code-simplifier` before final verification/handoff unless diff is already trivially minimal.
-- Any UI/design task: invoke `design` first, then `design-audit`, then the relevant specialized design skill(s).
+- Design routing: default to `design`, `design-audit`, and add `design-interaction-motion-craft` only when motion/gesture/transition behavior is in scope.
 - Design feedback/sign-off review: default to `design-audit`.
 - Interaction/motion/gesture tasks: include `design-interaction-motion-craft`.
+- iOS API references belong under the parent skill's `references/` directory, not as standalone `*-ref` entrypoints.
 - Non-trivial tasks: load at least two relevant skills.
 - Treat `~/.codex/skills` as working memory for repeatable patterns.
 - If skills are frequently paired, add bidirectional cross-references in both `SKILL.md` files.

@@ -21,9 +21,8 @@ Use when:
 - Handling accessibility with symbol animations (Reduce Motion)
 
 #### Related Skills
-- Use `ios-sf-symbols-ref` for full API reference, UIKit equivalents, and platform availability
-- Use `ios-swiftui-pro` for general SwiftUI animation (not symbol-specific)
-- Use `ios-hig-ref` for broader icon design guidelines
+- API details: [references/api-reference.md](references/api-reference.md)
+- Use platform-native SwiftUI animation guidance in the active repo when the task is broader than symbol behavior.
 
 ## Example Prompts
 
@@ -585,7 +584,8 @@ Image(systemName: isFavorite ? "star.fill" : "star")
 
 **Docs**: /symbols, /symbols/symboleffect, /symbols/symbolrenderingmode, /swiftui/image/symboleffect(_:options:value:), /swiftui/image/symbolrenderingmode(_:)
 
-**Skills**: ios-sf-symbols-ref, ios-hig-ref, ios-swiftui-pro
+**References**: [references/api-reference.md](references/api-reference.md)
+**Reference scope**: symbol-specific behavior only
 
 ---
 

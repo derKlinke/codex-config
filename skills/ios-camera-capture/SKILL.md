@@ -35,6 +35,10 @@ Use when:
 "How do I switch between front and back cameras?"
 "How do I record video with audio?"
 
+## Reference
+
+- API reference: [references/api-reference.md](./references/api-reference.md)
+
 ## Red Flags
 
 Red flags:

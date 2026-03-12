@@ -1,4 +1,0 @@
-interface:
-  display_name: "PlantUML Graphs"
-  short_description: "Create PlantUML diagrams and render PNGs via CLI"
-  default_prompt: "Use $plantuml-graphs to draft PlantUML and render the resulting diagram as a PNG."

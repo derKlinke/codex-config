@@ -28,8 +28,12 @@ Use when:
 Do not use for:
 - SceneKit 3D rendering (`ios-scenekit`)
 - GameplayKit entity-component systems
-- Metal shader programming (`ios-metal-migration-ref`)
-- General SwiftUI layout (`ios-swiftui-pro`)
+- Metal shader programming
+- General SwiftUI layout guidance should come from the active repo/runtime context rather than a separate retired skill.
+
+## References
+
+- API details: [references/api-reference.md](references/api-reference.md)
 
 ---
 
@@ -510,7 +514,7 @@ func setupControllers() {
 
 ### Performance Priorities
 
-For detailed performance diagnosis, see `ios-spritekit-diag` Symptom 3. Key priorities:
+For detailed performance diagnosis, focus on these priorities:
 
 1. **Node count** — Remove offscreen nodes, use object pooling
 2. **Draw calls** — Use texture atlases, replace SKShapeNode with pre-rendered textures
@@ -959,4 +963,4 @@ node.run(SKAction.repeatForever(SKAction.sequence([
 
 **Docs**: /spritekit, /spritekit/skscene, /spritekit/skphysicsbody, /spritekit/maximizing-node-drawing-performance
 
-**Skills**: ios-spritekit-ref, ios-spritekit-diag
+**References**: [references/api-reference.md](references/api-reference.md)

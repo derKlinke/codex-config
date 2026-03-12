@@ -27,7 +27,7 @@ Do not use for:
 - AR experiences (use `ios-realitykit`)
 - visionOS development (use `ios-realitykit`)
 - SpriteKit 2D games (`ios-spritekit`)
-- Metal shader programming (`ios-metal-migration-ref`)
+- Metal shader programming
 
 ---
 
@@ -41,7 +41,11 @@ SceneKit is **soft-deprecated as of iOS 26** (WWDC 2025):
 
 **Forward path: RealityKit.** New 3D projects should use RealityKit. SceneKit remains relevant for legacy maintenance and migration.
 
-**In RealityKit**: ECS replaces scene graph. See `ios-scenekit-ref` for full concept mapping.
+**In RealityKit**: ECS replaces scene graph. See [references/migration-api-reference.md](references/migration-api-reference.md) for the API mapping.
+
+## References
+
+- SceneKit and migration map: [references/migration-api-reference.md](references/migration-api-reference.md)
 
 ---
 
@@ -181,7 +185,7 @@ let node = SCNNode(geometry: sphere)
 node.geometry?.firstMaterial = material
 ```
 
-**In RealityKit**: Use `PhysicallyBasedMaterial` with similar properties but different API surface. See `ios-scenekit-ref` Part 1 for the mapping.
+**In RealityKit**: Use `PhysicallyBasedMaterial` with similar properties but different API surface. See [references/migration-api-reference.md](references/migration-api-reference.md).
 
 ### Shader Modifiers
 
@@ -547,4 +551,5 @@ Should you migrate to RealityKit?
 
 **Docs**: /scenekit, /scenekit/scnscene, /scenekit/scnnode, /scenekit/scnmaterial, /scenekit/scnphysicsbody
 
-**Skills**: ios-scenekit-ref, ios-realitykit, ios-realitykit-ref
+**References**: [references/migration-api-reference.md](references/migration-api-reference.md), [../ios-realitykit/references/api-reference.md](../ios-realitykit/references/api-reference.md)
+**Skills**: ios-realitykit

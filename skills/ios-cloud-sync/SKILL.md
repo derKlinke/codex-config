@@ -18,6 +18,10 @@ Two fundamentally different sync approaches:
 - **CloudKit** — Structured data (records with fields and relationships)
 - **iCloud Drive** — File-based data (documents, images, any file format)
 
+## References
+
+- CloudKit API reference: [references/cloudkit-api-reference.md](./references/cloudkit-api-reference.md)
+
 ## Quick Decision Tree
 
 ```
@@ -207,7 +211,7 @@ class MySyncManager: CKSyncEngineDelegate {
 }
 ```
 
-See `ios-cloudkit-ref` for complete CKSyncEngine setup.
+See [references/cloudkit-api-reference.md](./references/cloudkit-api-reference.md) for complete CKSyncEngine setup.
 
 ### Pattern 3: iCloud Drive Documents
 
@@ -236,7 +240,7 @@ doc.content = "Hello".data(using: .utf8)
 doc.save(to: url!, for: .forCreating)
 ```
 
-See `ios-icloud-drive-ref` for NSFileCoordinator and conflict handling.
+Use NSFileCoordinator and explicit conflict handling for file-based iCloud sync.
 
 ## Anti-Patterns
 
@@ -396,7 +400,4 @@ CKSyncEngine handles incremental sync automatically — it fetches only changes 
 
 ## Related Skills
 
-- `ios-cloudkit-ref` — Complete CloudKit API reference
-- `ios-icloud-drive-ref` — File-based sync with NSFileCoordinator
-- `ios-cloud-sync-diag` — Debugging sync failures
-- `ios-storage` — Choosing where to store data locally
+- [references/cloudkit-api-reference.md](./references/cloudkit-api-reference.md) — Complete CloudKit API reference

@@ -14,9 +14,7 @@ Implementation discipline for location features: correct authorization, battery-
 
 ## Related Skills
 
-- `ios-core-location-ref` - API reference
-- `ios-core-location-diag` - symptom diagnostics
-- `ios-energy` - energy subsystem patterns
+- [references/api-reference.md](./references/api-reference.md) - API reference
 
 ## Anti-Patterns (and cost)
 
@@ -250,4 +248,4 @@ Checklist:
 
 - WWDC: 2023-10180, 2023-10147, 2024-10212
 - Docs: `/corelocation`, `/corelocation/clmonitor`, `/corelocation/cllocationupdate`, `/corelocation/clservicesession`
-- Skills: `ios-core-location-ref`, `ios-core-location-diag`, `ios-energy`
+- Reference: [references/api-reference.md](./references/api-reference.md)

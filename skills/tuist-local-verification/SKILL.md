@@ -10,7 +10,6 @@ Deterministic workflow for separating product-test failures from Tuist/Xcode too
 
 ## Related Skills
 - `review-verification-before-completion` for evidence-first reporting.
-- `ios-build-debugging` for broader iOS build-system diagnostics.
 
 ## When to Use
 - `tuist test`/`just test-ios` fails before tests execute.

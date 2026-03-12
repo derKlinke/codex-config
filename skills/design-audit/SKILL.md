@@ -14,8 +14,8 @@ user-invokable: true
 
 
 ## Related Skills
-- [web-design-guidelines](../web-design-guidelines/SKILL.md): standards-oriented UI review
-- [design-adapt](../design-adapt/SKILL.md): edge-case remediation
+- [design](../design/SKILL.md): primary design doctrine and implementation guardrails
+- [design-interaction-motion-craft](../design-interaction-motion-craft/SKILL.md): motion/gesture-specific review when behavior is in scope
 - [design/reference/articles/gestalt-visual-hierarchy.md](../design/reference/articles/gestalt-visual-hierarchy.md): hierarchy/grouping heuristics for audits
 
 
