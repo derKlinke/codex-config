@@ -2,12 +2,8 @@
 name: infra-aws-cdk-development
 description: Use when building/refactoring AWS infrastructure with CDK (TypeScript/Python), validating stacks, or handling `cdk synth/deploy` workflows with current AWS documentation checks.
 context: fork
-skills:
-  - aws-mcp-setup
 allowed-tools:
-  - mcp__cdk__*
-  - mcp__aws-mcp__*
-  - mcp__awsdocs__*
+  - mcp__aws__*
   - Bash(cdk *)
   - Bash(npm *)
   - Bash(npx *)
@@ -22,29 +18,24 @@ hooks:
 
 # AWS CDK Development
 
-CDK workflow guidance with mandatory up-to-date AWS verification via MCP tools.
+CDK workflow guidance with mandatory up-to-date AWS verification via the official AWS MCP server.
 
 ## AWS Docs Verification (Required)
 
 Before answering AWS/CDK capability questions:
-1. Use AWS MCP docs/search/read tools when available.
+1. Use the official AWS MCP server first.
 2. Verify regional availability for required services.
 3. Verify current limits/features/API behavior.
 
-If AWS MCP unavailable:
-- guide setup via `aws-mcp-setup`
-- choose path by environment:
-  - has `uvx` + AWS credentials -> full AWS MCP server
-  - no credentials/Python -> docs-only MCP
-- if uncertain, ask user which path to configure
+If AWS MCP is unavailable:
+- restore the global `aws` MCP entry in `~/.codex/config.toml`
+- use `uvx mcp-proxy-for-aws@latest https://aws-mcp.us-east-1.api.aws/mcp`
+- confirm AWS credentials are available in the active profile/session
 
 ## Integrated Servers
 
-### AWS Documentation MCP
-Use for current AWS service features, limits, regions, and security guidance.
-
-### CDK MCP
-Use for construct selection, property guidance, CDK best-practice patterns, and CDK-specific optimization.
+### Official AWS MCP
+Use for current AWS service features, limits, regions, API behavior, and documentation-backed guidance relevant to CDK work.
 
 ## When to Use
 
@@ -170,17 +161,11 @@ Validation script scope:
 
 ## MCP Usage Rules
 
-### Use AWS docs MCP for
+### Use AWS MCP for
 - new service feature checks
 - regional availability
 - limits/quotas
 - latest security recommendations
-
-### Use CDK MCP for
-- construct/API selection
-- property-level tradeoffs
-- stack design patterns
-- CDK-specific anti-pattern avoidance
 
 ### Best practices
 1. verify first, then implement
