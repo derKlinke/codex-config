@@ -10,6 +10,7 @@ Constraints:
 - Group files by coherent intent; never mix unrelated changes in one commit.
 - If all changes are one logical unit, create exactly one commit.
 - If changes span multiple logical units, create multiple commits.
+- Writing "and" in the commit message or being vague about the changes to group multiple logical units is a strong signal to split the commit.
 - Use Conventional Commits (`feat|fix|refactor|build|ci|chore|docs|style|perf|test`).
 - Prefer concise commit subjects (<= 72 chars). Add a body only if needed.
 - Scope only for monorepos with multiple targets; then scope to target. Otherwise, no scope.
