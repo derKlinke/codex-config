@@ -35,6 +35,9 @@
 - On constraint conflict: state tradeoff; choose safer path.
 - Treat unrelated local edits as parallel work unless blocking.
 - Ignore unrelated changes from other agents unless blocking.
+- Shared-worktree protocol: claim explicit file/module ownership before mutation; keep write sets disjoint; if scope shifts into another agent's active files, stop mutating and re-scope locally instead of editing through the overlap.
+- Shared-worktree protocol: never delete, move, rename, or wholesale rewrite files outside current owned scope; for touched files with concurrent edits, prefer additive patches that preserve surrounding code.
+- Shared-worktree protocol: if a referenced file disappears unexpectedly and removal intent is not explicit, restore the last known working tree or HEAD version immediately, then continue; ask only if multiple plausible replacements exist.
 - Avoid destructive ops unless explicitly requested.
 - Branch changes require user consent.
 
@@ -107,6 +110,7 @@
 - Prevention rule: if a URL contains an anchor fragment, treat it as potentially accidental; confirm scope by reading the full source unless section-only extraction was requested.
 - Prevention rule: naming-group proposals must preserve domain boundaries; e.g. security remains `security-*`, never absorbed into generic `review-*`.
 - Prevention rule: new infrastructure skills default to `infra-*`; avoid unscoped infra names.
+- Prevention rule: UI copy must prefer simple, user-facing language over internal/system terms; replace technical words like `anchor` with direct phrasing like `wake-up` or `bedtime` when accuracy is preserved.
 - Do not claim completion without proof: tests, logs, diff, or equivalent evidence.
 - For non-trivial work: run `code-simplifier` / elegance pass; re-implement if solution is hacky.
 - Completion gate: verification includes code-shape review, not only build/test success; simplify/relocate code if structure is wrong.
