@@ -5,6 +5,8 @@ prompt = "Scan all of the `~/.codex/sessions` files from the past day and if the
 status = "ACTIVE"
 rrule = "RRULE:FREQ=WEEKLY;BYHOUR=9;BYMINUTE=0;BYDAY=SU,MO,TU,WE,TH,FR,SA"
 execution_environment = "local"
+model = "gpt-5.4"
+reasoning_effort = "medium"
 cwds = ["/Users/fabianklinke/.codex"]
 created_at = 1770552243479
-updated_at = 1772452150920
+updated_at = 1773397244352

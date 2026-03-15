@@ -5,6 +5,8 @@ prompt = "look for crashes with [$sentry](/Users/fabianklinke/.codex/skills/sent
 status = "ACTIVE"
 rrule = "RRULE:FREQ=WEEKLY;BYHOUR=9;BYMINUTE=0;BYDAY=SU,MO,TU,WE,TH,FR,SA"
 execution_environment = "local"
+model = "gpt-5.4"
+reasoning_effort = "high"
 cwds = ["/Users/fabianklinke/Developer/b90-industries/b90hq"]
 created_at = 1772118119770
-updated_at = 1773055988875
+updated_at = 1773397260384
