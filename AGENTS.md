@@ -20,17 +20,16 @@
 - Prefer clean/readable code over inherited weak patterns.
 - Never remove functionality without explicit consent.
 - Enforce DRY; eliminate repetition in touched scope.
-- Testing mandatory; bias toward more tests.
+- Testing mandatory for bug fixes and important behavior; prefer meaningful coverage over blanket TDD.
 - Robust implementations only; no hacks or premature abstraction.
 - Prefer explicit code over clever code.
 - Simplicity first: minimal safe diff.
 - Do not add fallback chains, duplicate guard rails, or impossible-state checks without evidence.
-- Simplify after implementation; use `code-simplifier` when needed.
 - Root-cause remediation only; no symptom masking.
 
 ## Working Conventions
 - On touched code, treat obvious standards violations as in-scope: verbosity, weak readability, DRY breaks, wrong-layer logic, needless fallbacks, unnecessary error handling.
-- Fix and simplify those issues in the same task by default; do not preserve bad local patterns.
+- Fix adjacent obvious issues when cheap and low-risk; avoid scope creep.
 - If uncertain: read more code, then ask a short option set.
 - On constraint conflict: state tradeoff; choose safer path.
 - Treat unrelated local edits as parallel work unless blocking.
@@ -52,8 +51,7 @@
 - Docs scope: architecture, behavior, interfaces/contracts, operations, troubleshooting.
 - Reuse existing docs layout; avoid placeholder or duplicate docs.
 - If behavior/interface/architecture/ops/constraints change, update docs in the same task.
-- Completion gate: docs updated, or explicit no-doc-impact statement.
-- If touched area lacks docs, create them.
+- Update docs when the change adds durable knowledge worth preserving.
 
 ## Runtime + CI
 - Core tools: `gh`, `bun`, `tuist` (prefer `just`), `prek`, `trash`, `actionlint`.
@@ -63,7 +61,7 @@
 - Bootstrap hooks/formatter: `npx @derklinke/miedinger --force`.
 - Never run concurrent builds/tests for the same app/workspace to bypass locks.
 - On Xcode/Tuist build lock contention: wait, rerun same command; do not shard DerivedData via custom temp paths/env vars.
-- Always fix encountered compiler/test failures before handoff; no "known failing" completion state.
+- If you ran build/tests and saw failures, fix them before handoff; if verification was deferred, state that clearly and give the exact follow-up command.
 - CI loop: inspect with `gh run list` / `gh run view`; fix/push until green.
 - Run `actionlint` on touched GitHub Actions workflows before handoff/commit.
 - Before push: `git pull --rebase`.
@@ -79,12 +77,12 @@
 - `git-*`: git-centric workflows.
 - `infra-*`: infrastructure/platform delivery workflows.
 - SwiftUI routing: `ios-swiftui-pro` is canonical; retired overlapping `ios-swiftui-*` entrypoints stay removed.
-- After non-trivial code changes, invoke `code-simplifier` before final verification/handoff unless diff is already trivially minimal.
+- Consider `code-simplifier` for non-trivial changes when the diff is not already minimal.
 - Design routing: default to `design`, `design-audit`, and add `design-interaction-motion-craft` only when motion/gesture/transition behavior is in scope.
 - Design feedback/sign-off review: default to `design-audit`.
 - Interaction/motion/gesture tasks: include `design-interaction-motion-craft`.
 - iOS API references belong under the parent skill's `references/` directory, not as standalone `*-ref` entrypoints.
-- Non-trivial tasks: load at least two relevant skills.
+- Use the most relevant skill(s); load multiple only when clearly beneficial.
 - Treat `~/.codex/skills` as working memory for repeatable patterns.
 - If skills are frequently paired, add bidirectional cross-references in both `SKILL.md` files.
 - Convert reusable debugging/research patterns into new or updated skills immediately.
@@ -102,17 +100,16 @@
 - Do not summarize obvious completed actions.
 
 ## Execution Doctrine
-- Use focused subagents aggressively for independent research/execution.
-- After user correction: add a prevention rule to `./AGENTS.md`.
-- Prevention rule: when exploration reveals touched-scope standards violations, expand task to include immediate cleanup.
+- Use focused subagents when parallelism or deeper research clearly outweighs coordination overhead.
+- After repeated user corrections, add a durable prevention rule to `./AGENTS.md` if broadly reusable.
+- Prevention rule: when exploration reveals touched-scope issues, clean them up only if directly adjacent and low-risk.
 - Prevention rule: refactoring/simplification target is fewer lines and fewer branches; justify any growth as strictly necessary.
 - Prevention rule: when consolidating overlapping skills, delete redundant entrypoints; no alias/compatibility wrappers unless explicitly requested.
 - Prevention rule: if a URL contains an anchor fragment, treat it as potentially accidental; confirm scope by reading the full source unless section-only extraction was requested.
 - Prevention rule: naming-group proposals must preserve domain boundaries; e.g. security remains `security-*`, never absorbed into generic `review-*`.
 - Prevention rule: new infrastructure skills default to `infra-*`; avoid unscoped infra names.
 - Prevention rule: UI copy must prefer simple, user-facing language over internal/system terms; replace technical words like `anchor` with direct phrasing like `wake-up` or `bedtime` when accuracy is preserved.
-- Do not claim completion without proof: tests, logs, diff, or equivalent evidence.
-- For non-trivial work: run `code-simplifier` / elegance pass; re-implement if solution is hacky.
-- Completion gate: verification includes code-shape review, not only build/test success; simplify/relocate code if structure is wrong.
+- Do not claim pass/fix without proof; if verification was deferred, say so and give the exact command to verify.
+- Completion gate: verify code shape when touched code is materially complex or misplaced; avoid mandatory cleanup passes for minor diffs.
 - For bug reports: fix directly from evidence; minimize user context switching.
 - For CI failures: inspect logs, fix root cause, rerun until green.

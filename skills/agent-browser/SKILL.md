@@ -27,6 +27,16 @@ agent-browser wait --load networkidle
 agent-browser snapshot -i  # Check result
 ```
 
+## Sandbox Guardrail
+
+- If `agent-browser` fails with `Socket directory '~/.agent-browser' is not writable` or `Operation not permitted`, treat it as tool-runtime sandbox friction, not a page/app bug.
+- Do not keep retrying the same browser command under the same restriction.
+- First classify target:
+  - `localhost` / user-owned site / current debugging page: safe to request the needed unsandboxed browser run.
+  - Third-party site or unclear target: restate scope before escalating.
+- After an unrestricted run, verify browser context immediately with `agent-browser get url` or `snapshot -i`; stale/error pages are a common false signal.
+- When testing tiny controls, prefer `snapshot -i` + keyboard activation / explicit state reads if pointer clicks are flaky.
+
 ## Essential Commands
 
 ```bash

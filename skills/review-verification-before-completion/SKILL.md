@@ -1,181 +1,48 @@
 ---
 name: review-verification-before-completion
-description: Use when about to claim work is complete, fixed, or passing, before committing or creating PRs - requires running verification commands and confirming output before making any success claims; evidence before assertions always
+description: Use when about to claim work is complete, fixed, or passing, before handoff, commit, or PR updates
 ---
 
 # Verification Before Completion
 
-## Related Skills
-- `tuist-local-verification` when local Tuist/Xcode verification fails due tooling/auth/lock contention noise.
-- `code-simplifier` before completion for non-trivial code changes; default to invoking it unless the diff is already obviously minimal.
+Evidence before assertions.
 
-## Overview
+## When to Use
 
-Claiming work is complete without verification is dishonesty, not efficiency.
+- Before saying `done`, `fixed`, `passing`, `green`, `ready for review`, or equivalent.
+- After bug fixes, infra recovery, CI triage, or test-wrapper debugging.
+- When partial signals disagree: green sub-targets, failing aggregate command, stale browser state, misleading Xcode text.
 
-**Core principle:** Evidence before claims, always.
+## Required Flow
 
-**Violating the letter of this rule is violating the spirit of this rule.**
+1. Identify the actual completion claim.
+- What exactly is being claimed: code changed, bug fixed, tests passing, deploy live, browser behavior confirmed.
 
-## The Iron Law
+2. Run the matching proof.
+- Code/path change: targeted command or direct artifact inspection.
+- Test pass: exact repo command or explicitly scoped substitute if repo entrypoint is the proven blocker.
+- Browser/UI fix: live/browser confirmation, not source inspection alone.
+- CI/deploy: current run status on the relevant job/date, not prior success.
 
-```
-NO COMPLETION CLAIMS WITHOUT FRESH VERIFICATION EVIDENCE
-```
+3. Resolve contradictions before claiming success.
+- If targeted tests pass but aggregate command fails, report aggregate failure.
+- If wrapper fails but raw command passes, classify wrapper/tooling blocker; do not say suite is green.
+- If browser session is stale or on an error page, reopen and re-check before concluding.
 
-If you haven't run the verification command in this message, you cannot claim it passes.
+4. Report evidence compactly.
+- Include exact command or artifact checked.
+- Include exit code / decisive status / first failure line when relevant.
+- State clearly whether the result proves success, proves a blocker, or is still ambiguous.
 
-## The Gate Function
+## Guardrails
 
-```
-BEFORE claiming any status or expressing satisfaction:
+- Never infer `fixed` from code inspection alone.
+- Never collapse `product bug fixed` and `full verification green` into one claim unless both were proven.
+- Never omit deferred verification; name the missing command exactly.
+- Never let misleading tool text outrank stronger contradictory evidence.
 
-1. IDENTIFY: What command proves this claim?
-2. RUN: Execute the FULL command (fresh, complete)
-3. READ: Full output, check exit code, count failures
-4. VERIFY: Does output confirm the claim?
-   - If NO: State actual status with evidence
-   - If YES: Run a code-shape pass on touched code
-5. SIMPLIFY: Remove avoidable complexity; invoke `code-simplifier` for non-trivial code changes unless the diff is already trivially minimal
-6. STRUCTURE: Refactor if code sits in the wrong file/layer/module or violates KISS, DRY, clean-code expectations
-7. FALLBACK CHECK: Confirm diff does not introduce compatibility bridges, migration shims, silent fallbacks, dual-path behavior, or old-state glue unless explicitly requested and justified
-8. ONLY THEN: Make the claim
+## Output Pattern
 
-Skip any step = lying, not verifying
-```
-
-## Exit-Code Integrity (Required)
-
-For commands wrapped by runners (`just`, `tuist`, `xcodebuild`) or piped through `tee/rg/sed`, report the **real command exit** and avoid mixed signals like "`error code 65` + `EXIT:0`".
-
-Use this pattern:
-
-```bash
-LOG=/tmp/verify-$(date +%s).log
-<exact-command> > >(tee "$LOG") 2>&1
-CMD_EXIT=$?
-echo "EXIT:$CMD_EXIT"
-```
-
-Rules:
-- When using an actual pipeline, enable `set -o pipefail` before execution.
-- Never report wrapper text and a contradictory final `EXIT`.
-- When failure is noisy, include first actionable error line(s) plus log path.
-- For `xcodebuild`/simulator failures, separate:
-  - infra/runtime failures (bootstrapping, entitlement, simulator crash)
-  - test assertion failures
-
-## Common Failures
-
-| Claim | Requires | Not Sufficient |
-|-------|----------|----------------|
-| Tests pass | Test command output: 0 failures | Previous run, "should pass" |
-| Linter clean | Linter output: 0 errors | Partial check, extrapolation |
-| Build succeeds | Build command: exit 0 | Linter passing, logs look good |
-| Bug fixed | Test original symptom: passes | Code changed, assumed fixed |
-| Regression test works | Red-green cycle verified | Test passes once |
-| Agent completed | VCS diff shows changes | Agent reports "success" |
-| Requirements met | Line-by-line checklist | Tests passing |
-
-## Red Flags - STOP
-
-- Using "should", "probably", "seems to"
-- Expressing satisfaction before verification ("Great!", "Perfect!", "Done!", etc.)
-- About to commit/push/PR without verification
-- Trusting agent success reports
-- Relying on partial verification
-- Thinking "just this once"
-- Tired and wanting work over
-- **ANY wording implying success without having run verification**
-
-## Rationalization Prevention
-
-| Excuse | Reality |
-|--------|---------|
-| "Should work now" | RUN the verification |
-| "I'm confident" | Confidence ≠ evidence |
-| "Just this once" | No exceptions |
-| "Linter passed" | Linter ≠ compiler |
-| "Agent said success" | Verify independently |
-| "I'm tired" | Exhaustion ≠ excuse |
-| "Partial check is enough" | Partial proves nothing |
-| "Different words so rule doesn't apply" | Spirit over letter |
-
-## Key Patterns
-
-**Tests:**
-```
-✅ [Run test command] [See: 34/34 pass] "All tests pass"
-❌ "Should pass now" / "Looks correct"
-```
-
-**Regression tests (TDD Red-Green):**
-```
-✅ Write → Run (pass) → Revert fix → Run (MUST FAIL) → Restore → Run (pass)
-❌ "I've written a regression test" (without red-green verification)
-```
-
-**Build:**
-```
-✅ [Run build] [See: exit 0] "Build passes"
-❌ "Linter passed" (linter doesn't check compilation)
-```
-
-**Requirements:**
-```
-✅ Re-read plan → Create checklist → Verify each → Report gaps or completion
-❌ "Tests pass, phase complete"
-```
-
-**Code shape:**
-```
-✅ Build/test passes → run `code-simplifier` on non-trivial touched code → relocate/refactor misplaced logic → then claim completion
-❌ "Tests are green" while leaving duplication, wrong ownership, or obvious structural drift
-```
-
-**Hard-cut policy check:**
-```
-✅ Verify one canonical current-state path; fail-fast diagnostics + explicit recovery steps
-✅ If temporary compatibility path exists: verify same diff documents why needed, why canonical path is insufficient, exact deletion criteria, and tracking reference
-❌ Silent fallback chains, migration glue, or dual behavior carried "for safety"
-```
-
-**Agent delegation:**
-```
-✅ Agent reports success → Check VCS diff → Verify changes → Report actual state
-❌ Trust agent report
-```
-
-## Why This Matters
-
-From 24 failure memories:
-- your human partner said "I don't believe you" - trust broken
-- Undefined functions shipped - would crash
-- Missing requirements shipped - incomplete features
-- Time wasted on false completion → redirect → rework
-- Violates: "Honesty is a core value. If you lie, you'll be replaced."
-
-## When To Apply
-
-**ALWAYS before:**
-- ANY variation of success/completion claims
-- ANY expression of satisfaction
-- ANY positive statement about work state
-- Committing, PR creation, task completion
-- Moving to next task
-- Delegating to agents
-
-**Rule applies to:**
-- Exact phrases
-- Paraphrases and synonyms
-- Implications of success
-- ANY communication suggesting completion/correctness
-- Cases where tests pass but touched code is still overly complex, duplicated, or misplaced
-
-## The Bottom Line
-
-**No shortcuts for verification.**
-
-Run the command. Read the output. Simplify/refactor if needed. THEN claim the result.
-
-This is non-negotiable.
+- `Verified:` command/artifact + result.
+- `Not verified:` exact remaining command or blocker.
+- `Conclusion:` one sentence matching only what the evidence supports.
