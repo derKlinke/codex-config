@@ -1,0 +1,43 @@
+model = "gpt-5.4"
+model_reasoning_effort = "medium"
+
+sandbox_mode = "workspace-write"
+suppress_unstable_features_warning = true
+web_search = "live"
+personality = "pragmatic"
+approval_policy = "on-request"
+plan_mode_reasoning_effort = "xhigh"
+file_opener = "cursor"
+
+[sandbox_workspace_write]
+network_access = true
+
+[features]
+apply_patch_freeform = true
+shell_snapshot = true
+unified_exec = true
+responses_websockets_v2 = true
+prevent_idle_sleep = true
+voice_transcription = true
+realtime_conversation = true
+
+[tui]
+notifications = true
+theme = "github"
+
+[shell_environment_policy]
+ignore_default_excludes = true
+
+[mcp_servers.linear]
+url = "https://mcp.linear.app/mcp"
+
+[mcp_servers.supabase]
+bearer_token_env_var = "SUPABASE_ACCESS_TOKEN"
+url = "https://mcp.supabase.com/mcp?project_ref=wesvzzzxicieygbvrlwh&read_only=true"
+
+[mcp_servers.sentry]
+url = "https://mcp.sentry.dev/mcp"
+
+[mcp_servers.aws]
+command = "uvx"
+args = ["mcp-proxy-for-aws@latest", "https://aws-mcp.us-east-1.api.aws/mcp"]
