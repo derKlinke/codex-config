@@ -22,7 +22,6 @@ automations/**/memory.md
 state_5.sqlite-shm
 state_5.sqlite-wal
 
-config.toml
 session_index.jsonl
 /logs_1.sqlite
 /logs_1.sqlite-shm
