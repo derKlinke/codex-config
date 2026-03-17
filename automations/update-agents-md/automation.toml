@@ -2,11 +2,11 @@ version = 1
 id = "update-agents-md"
 name = "Update AGENTS.md"
 prompt = "Update AGENTS.md with newly discovered workflows and commands.\n\nConstraints:\n- Keep edits minimal, accurate, and grounded in repo usage.\n- Do not touch unrelated sections or auto-generated files.\n- If you are unsure, prefer adding a TODO with a short note rather than inventing."
-status = "ACTIVE"
+status = "PAUSED"
 rrule = "RRULE:FREQ=WEEKLY;BYHOUR=11;BYMINUTE=0;BYDAY=FR"
 execution_environment = "local"
 model = "gpt-5.4"
 reasoning_effort = "medium"
 cwds = ["/Users/fabianklinke/Developer/b90-industries/b90hq", "/Users/fabianklinke/Developer/b90-industries/zerre", "/Users/fabianklinke/Developer/klinke/marcus", "/Users/fabianklinke/Developer/klinke/klinke.studio"]
 created_at = 1773401588926
-updated_at = 1773401588926
+updated_at = 1773745093340

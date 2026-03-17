@@ -2,11 +2,11 @@ version = 1
 id = "daily-note-crossrefs"
 name = "Daily Note Crossrefs"
 prompt = "Scan the notes corpus for missing in-text wikilink cross references between related notes, limited to Wikipedia-style inline links in prose. Ignore manual related-notes sections, metadata lists, and explicit patterns like `(related to [[...]] )`. Propose or apply only small, local rewrites when they improve prose and naturally introduce a precise inline wikilink. Prefer canonical note slugs and avoid speculative or weak links. Report concrete note/file findings, suggested edits, and any applied rewrites."
-status = "ACTIVE"
+status = "PAUSED"
 rrule = "FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR,SA,SU;BYHOUR=9;BYMINUTE=0"
 execution_environment = "local"
 model = "gpt-5.4"
 reasoning_effort = "medium"
 cwds = ["/Users/fabianklinke/Developer/klinke/klinke.studio"]
 created_at = 1773487262284
-updated_at = 1773487275177
+updated_at = 1773745089815
