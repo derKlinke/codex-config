@@ -50,6 +50,7 @@
 - Keep `DESIGN.md` current for durable system-level design rules only.
 - Docs scope: architecture, behavior, interfaces/contracts, operations, troubleshooting.
 - Reuse existing docs layout; avoid placeholder or duplicate docs.
+- Do not persist implementation plans as Markdown docs; if durable documentation is warranted, document the approved design/architecture/behavior, not a task plan.
 - If behavior/interface/architecture/ops/constraints change, update docs in the same task.
 - Update docs when the change adds durable knowledge worth preserving.
 

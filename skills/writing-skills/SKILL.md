@@ -16,6 +16,7 @@ description: Use when creating/editing/verifying skills and enforce high-density
 - Restrict evidence extraction to assistant/user message bodies (`event_msg.agent_message`, `response_item.message`) to avoid system-instruction noise.
 - For broken-skill-link audits, derive candidate deleted skill IDs first, then scan markdown link/backtick patterns against that set.
 - Treat broad keyword hits as weak evidence; require at least one concrete transcript quote before editing a skill.
+- Before finalizing a skill edit, verify every referenced skill name resolves under `~/.codex/skills`.
 
 ## Language Density Contract (Mandatory)
 
@@ -38,7 +39,7 @@ Process: write pressure scenarios, observe baseline failure, write skill, verify
 
 **Core principle:** If you did not observe failure without the skill, you cannot confirm the skill teaches the needed behavior.
 
-**REQUIRED BACKGROUND:** You MUST understand `plan-tdd` (RED-GREEN-REFACTOR). This skill applies that cycle to documentation.
+**REQUIRED BACKGROUND:** You MUST understand RED-GREEN-REFACTOR discipline. This skill applies that cycle to documentation.
 
 **Official guidance:** See `anthropic-best-practices.md` for complementary authoring guidance.
 
@@ -333,9 +334,9 @@ rg -n "Welcome|This document explains|Remember to|You should" skills/path/SKILL.
 **When writing documentation that references other skills:**
 
 Use skill name only, with explicit requirement markers:
-- ✅ Good: `**REQUIRED SUB-SKILL:** Use plan-tdd`
-- ✅ Good: `**REQUIRED BACKGROUND:** You MUST understand systematic-debugging`
-- ❌ Bad: `See skills/testing/plan-tdd` (unclear if required)
+- ✅ Good: `**REQUIRED SUB-SKILL:** Use subagent-driven-development`
+- ✅ Good: `**REQUIRED BACKGROUND:** You MUST understand RED-GREEN-REFACTOR discipline`
+- ❌ Bad: `See skills/testing/plan-tdd` (stale/nonexistent skill reference)
 - ❌ Bad: `@skills/testing/plan-tdd/SKILL.md` (force-loads, burns context)
 
 **Why no @ links:** `@` syntax force-loads files immediately, consuming 200k+ context before you need them.
@@ -443,7 +444,7 @@ Edit skill without testing? Same violation.
 - Don't "adapt" while running tests
 - Delete means delete
 
-**REQUIRED BACKGROUND:** The plan-tdd skill explains why this matters. Same principles apply to documentation.
+**REQUIRED BACKGROUND:** Apply RED-GREEN-REFACTOR discipline here too. Same principles apply to documentation.
 
 ## Testing All Skill Types
 

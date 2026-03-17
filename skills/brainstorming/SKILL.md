@@ -27,8 +27,8 @@ You MUST create a task for each of these items and complete them in order:
 2. **Ask clarifying questions** — one at a time, understand purpose/constraints/success criteria
 3. **Propose 2-3 approaches** — with trade-offs and your recommendation
 4. **Present design** — in sections scaled to their complexity, get user approval after each section
-5. **Write design doc** — save to `docs/plans/YYYY-MM-DD-<topic>-design.md` and commit
-6. **Transition to implementation** — invoke plan-writing skill to create implementation plan
+5. **Write design doc if warranted** — persist only durable design/architecture/behavior docs in the normal docs structure; do not create plan files
+6. **Transition to implementation planning** — continue in the main flow; use `subagent-driven-development` only when the approved work cleanly decomposes into independent tasks
 
 ## Process Flow
 
@@ -39,20 +39,20 @@ digraph brainstorming {
     "Propose 2-3 approaches" [shape=box];
     "Present design sections" [shape=box];
     "User approves design?" [shape=diamond];
-    "Write design doc" [shape=box];
-    "Invoke plan-writing skill" [shape=doublecircle];
+    "Persist design doc (if warranted)" [shape=box];
+    "Begin implementation planning" [shape=doublecircle];
 
     "Explore project context" -> "Ask clarifying questions";
     "Ask clarifying questions" -> "Propose 2-3 approaches";
     "Propose 2-3 approaches" -> "Present design sections";
     "Present design sections" -> "User approves design?";
     "User approves design?" -> "Present design sections" [label="no, revise"];
-    "User approves design?" -> "Write design doc" [label="yes"];
-    "Write design doc" -> "Invoke plan-writing skill";
+    "User approves design?" -> "Persist design doc (if warranted)" [label="yes"];
+    "Persist design doc (if warranted)" -> "Begin implementation planning";
 }
 ```
 
-**The terminal state is invoking plan-writing.** Do NOT invoke frontend-design, mcp-builder, or any other implementation skill. The ONLY skill you invoke after brainstorming is plan-writing.
+**The terminal state is approved design plus an explicit implementation-planning handoff.** Do NOT jump straight into coding before approval. After approval, continue with normal execution flow and invoke `subagent-driven-development` only when parallel task decomposition is actually warranted.
 
 ## The Process
 
@@ -78,13 +78,14 @@ digraph brainstorming {
 ## After the Design
 
 **Documentation:**
-- Write the validated design to `docs/plans/YYYY-MM-DD-<topic>-design.md`
-- Use elements-of-style:writing-clearly-and-concisely skill if available
-- Commit the design document to git
+- Persist the validated design only when it adds durable value
+- Place it in the existing docs/design/architecture structure for the repo; create a design doc, not a plan file
+- Use a relevant existing writing skill if one materially improves the document
+- Commit the document when it belongs in repo history
 
 **Implementation:**
-- Invoke the plan-writing skill to create a detailed implementation plan
-- Do NOT invoke any other skill. plan-writing is the next step.
+- Turn the approved design into a concrete implementation plan in-thread, scaled to task complexity
+- Use `subagent-driven-development` only if the implementation naturally splits into independent tasks; otherwise continue directly
 
 ## Key Principles
 

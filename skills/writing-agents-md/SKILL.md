@@ -26,6 +26,7 @@ ls plugins/*/skills/*/SKILL.md 2>/dev/null
 ```
 
 Read each skill frontmatter to decide references.
+Verify every referenced skill exists before naming it in `AGENTS.md`.
 
 ## Density Contract (Mandatory)
 
@@ -66,7 +67,7 @@ Reference each discovered skill:
 Use the relevant existing database or platform skill for schema changes
 
 ## Testing
-Use `plan-tdd` skill. See `.codex/skills/plan-tdd/SKILL.md`
+If a repo-local testing skill exists, reference its exact current name. Otherwise state the canonical test command or verification path directly.
 ```
 
 ## Optional Sections
@@ -104,7 +105,7 @@ Use **pnpm**: `pnpm install`, `pnpm dev`
 Use the relevant existing database or platform skill
 
 ## Testing
-Use `plan-tdd` skill. See `.codex/skills/plan-tdd/SKILL.md`
+Reference the exact existing testing skill if one exists; otherwise state the repo's canonical test command
 
 ## CLI
 | Command | Description |
