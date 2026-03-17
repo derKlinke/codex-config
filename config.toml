@@ -20,6 +20,7 @@ responses_websockets_v2 = true
 prevent_idle_sleep = true
 voice_transcription = true
 realtime_conversation = true
+multi_agent = true
 
 [tui]
 notifications = true
@@ -41,3 +42,6 @@ url = "https://mcp.sentry.dev/mcp"
 [mcp_servers.aws]
 command = "uvx"
 args = ["mcp-proxy-for-aws@latest", "https://aws-mcp.us-east-1.api.aws/mcp"]
+
+[projects."/"]
+trust_level = "trusted"
