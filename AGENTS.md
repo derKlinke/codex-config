@@ -26,6 +26,9 @@ If applicable rules are skipped, usual failure mode: rework, style drift, unnece
 - Testing mandatory for bug fixes and important behavior; prefer meaningful coverage over blanket TDD.
 - Robust implementations only; no hacks or premature abstraction.
 - Prefer explicit code over clever code.
+- Optimize for readability first: extremely easy to consume, skimmable code.
+- Prefer straightforward control flow; avoid cleverness.
+- Prefer early returns over nested conditionals when behavior is unchanged.
 - Simplicity first: minimal safe diff.
 - Do not add fallback chains, duplicate guard rails, or impossible-state checks without evidence.
 - Root-cause remediation only; no symptom masking.

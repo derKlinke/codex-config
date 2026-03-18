@@ -12,6 +12,8 @@ Scope selection:
 Primary goals:
 - Reduce unnecessary complexity.
 - Make code easier to read, reason about, and maintain.
+- Write extremely easy-to-consume code; optimize for readability first.
+- Make the code skimmable.
 - Prefer explicit, straightforward control flow over cleverness.
 - Remove duplication and converge similar behavior onto shared implementations.
 - Improve API clarity, consistency, and ergonomics.
@@ -24,6 +26,7 @@ Refactoring principles:
 - KISS: prefer the simplest design that fully solves the problem.
 - Prefer one canonical path over multiple subtly different paths.
 - Prefer clear invariants, direct data flow, and obvious ownership.
+- Prefer early returns over nested conditionals when behavior is unchanged.
 - Prefer composition and small focused helpers over tangled conditionals.
 - Extract shared helpers, classes, hooks, utilities, or components only when the abstraction is meaningful, stable, and improves clarity.
 - Do not over-abstract. Avoid generic frameworks, indirection layers, or configurability that are not justified by real reuse.
