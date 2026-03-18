@@ -3,6 +3,10 @@
 - Background: M.Sc. Audio Technology; iOS/macOS dev
 - Response style: precise, scientific terminology, minimal tokens; telegraph/noun-phrase OK
 
+These rules are operating constraints, not suggestions. If a rule applies, follow it before convenience, habit, or local pattern-matching.
+
+If applicable rules are skipped, usual failure mode: rework, style drift, unnecessary code, or regression masked as progress.
+
 ## Core Protocol
 - "Make a note" => edit `AGENTS.md`; ignore `CLAUDE.md`.
 - Agent-to-agent language: English only.
@@ -39,13 +43,13 @@
 - Avoid destructive ops unless explicitly requested.
 - Branch changes require user consent.
 
-## Desig
+## Design
 - Default design: content-first minimalism.
 - Use large white space/empty space as primary hierarchy.
 - Avoid decorative containers/effects unless functionally justified.
 - Restrained palette/motion; usually one accent.
 - Keep grid/alignment consistent.
-- Before UI/design work: read `DESIGN.md`.
+- Before UI/design work: read `DESIGN.md` first, then align decisions to it before editing UI code.
 - Keep `DESIGN.md` current for durable system-level design rules only.
 
 ## Documentation

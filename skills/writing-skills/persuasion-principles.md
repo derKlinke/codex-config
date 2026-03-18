@@ -22,6 +22,7 @@ LLMs respond to the same persuasion principles as humans. Understanding this psy
 - Established best practices
 
 **Example:**
+
 ```markdown
 ✅ Write code before test? Delete it. Start over. No exceptions.
 ❌ Consider writing tests first when feasible.
@@ -41,6 +42,7 @@ LLMs respond to the same persuasion principles as humans. Understanding this psy
 - Accountability mechanisms
 
 **Example:**
+
 ```markdown
 ✅ When you find a skill, you MUST announce: "I'm using [Skill Name]"
 ❌ Consider letting your partner know which skill you're using.
@@ -60,6 +62,7 @@ LLMs respond to the same persuasion principles as humans. Understanding this psy
 - Preventing "I'll do it later"
 
 **Example:**
+
 ```markdown
 ✅ After completing a task, IMMEDIATELY request code review before proceeding.
 ❌ You can review code when convenient.
@@ -79,6 +82,7 @@ LLMs respond to the same persuasion principles as humans. Understanding this psy
 - Reinforcing standards
 
 **Example:**
+
 ```markdown
 ✅ Checklists without TodoWrite tracking = steps get skipped. Every time.
 ❌ Some people find TodoWrite helpful for checklists.
@@ -97,6 +101,7 @@ LLMs respond to the same persuasion principles as humans. Understanding this psy
 - Non-hierarchical practices
 
 **Example:**
+
 ```markdown
 ✅ We're colleagues working together. I need your honest technical judgment.
 ❌ You should probably tell me if I'm wrong.
@@ -125,12 +130,12 @@ LLMs respond to the same persuasion principles as humans. Understanding this psy
 
 ## Principle Combinations by Skill Type
 
-| Skill Type | Use | Avoid |
-|------------|-----|-------|
+| Skill Type           | Use                                   | Avoid               |
+| -------------------- | ------------------------------------- | ------------------- |
 | Discipline-enforcing | Authority + Commitment + Social Proof | Liking, Reciprocity |
-| Guidance/technique | Moderate Authority + Unity | Heavy authority |
-| Collaborative | Unity + Commitment | Authority, Liking |
-| Reference | Clarity only | All persuasion |
+| Guidance/technique   | Moderate Authority + Unity            | Heavy authority     |
+| Collaborative        | Unity + Commitment                    | Authority, Liking   |
+| Reference            | Clarity only                          | All persuasion      |
 
 ## Why This Works: The Psychology
 

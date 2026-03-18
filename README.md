@@ -1,41 +1,31 @@
 # Codex Workspace
 
-Portable Codex configuration and skills for local agent execution.
+Portable Codex workspace: agent instructions, reusable skills, prompts, and local execution scaffolding.
 
-## Source of Truth
+## Purpose
 
-- `AGENTS.md`: behavior, workflow, commit policy, docs policy.
-- `skills/`: reusable skill library (`SKILL.md` + optional helpers).
+This repo is the durable control plane for local Codex usage.
 
-## Repo Scope
+- `AGENTS.md`: global operating constraints, workflow rules, documentation policy, design defaults.
+- `skills/`: reusable task guides; each skill lives in its own directory with `SKILL.md` as entrypoint.
+- `prompts/`, `rules/`: supporting prompt/rule assets used by the workspace.
 
-Versioned:
+Runtime state also exists in this directory, but most of it is intentionally local/private rather than versioned.
 
-- `AGENTS.md`
-- `skills/`
-- `prompts/`
-- `rules/`
-- repo-level docs/config (`README.md`, lint/format config, license)
+## Operating Model
 
-Not versioned (local/private runtime state):
-
-- `config.toml`, auth/session/history/cache artifacts
-- sqlite/runtime state files
-- `sessions/`, `archived_sessions/`, `shell_snapshots/`, `tmp/`
-- `memories/`
-
-See [`.gitignore`](/Users/fabianklinke/.codex/.gitignore) for the exact list.
-
-## Maintenance Rules
-
-- Keep `AGENTS.md` current when workflow or constraints change.
+- Treat `AGENTS.md` as the primary source of truth for agent behavior.
+- Treat each `SKILL.md` as the source of truth for that skill's routing and execution guidance.
+- Keep durable docs aligned with actual behavior; do not leave stale workflow text behind.
+- When changing agent behavior, update the relevant instruction doc in the same task.
 - When changing skill behavior, update the corresponding `SKILL.md` in the same task.
-- Keep docs concise, operational, and aligned with actual repo state.
 
-## Tooling
+## Editing Guidance
 
-Primary local tools: `gh`, `bun`, `just`, `tuist`, `xcrun`, `python`, `prek`, `trash`.
+- Prefer concise, operational documentation over narrative explanation.
+- Preserve tracked docs; do not commit private runtime state.
+- Keep skills self-contained, cross-referenced where useful, and easy for agents to discover.
 
 ## License
 
-MIT. See [`LICENSE`](/Users/fabianklinke/.codex/LICENSE).
+MIT. See [LICENSE](/Users/fabianklinke/.codex/LICENSE).
