@@ -5,41 +5,41 @@
 ## Sources
 
 - Niggli (publisher page, edition metadata and scope):  
-  https://niggli.ch/products/rastersysteme-fur-die-visuelle-gestaltung
+  <https://niggli.ch/products/rastersysteme-fur-die-visuelle-gestaltung>
 - Neue Graphic (published excerpt attributed to *Grid Systems in Graphic Design*, 1981):  
-  https://www.neugraphic.com/muller-brockmann/muller-brockmann-text2.html
+  <https://www.neugraphic.com/muller-brockmann/muller-brockmann-text2.html>
 - Interaction Design Foundation (modern grid taxonomy and digital adaptation patterns):  
-  https://www.interaction-design.org/literature/topics/grid-systems
+  <https://www.interaction-design.org/literature/topics/grid-systems>
 
 ## Core Learnings (Reusable)
 
 1. Grid as control system, not ornament
-- A grid is a planning and decision framework for text, image, diagram, and color placement.
-- It externalizes layout logic so compositions are reproducible, testable, and easier to maintain.
+   - A grid is a planning and decision framework for text, image, diagram, and color placement.
+   - It externalizes layout logic so compositions are reproducible, testable, and easier to maintain.
 
 2. Objectivity through constraints
-- Restricting placement to grid fields reduces arbitrary decisions and improves structural coherence.
-- Constraint-based placement improves scan predictability and perceived trust.
+   - Restricting placement to grid fields reduces arbitrary decisions and improves structural coherence.
+   - Constraint-based placement improves scan predictability and perceived trust.
 
 3. Content hierarchy first, geometry second
-- Grid choice follows content complexity and hierarchy demands, not visual preference.
-- Field spans should encode information priority (primary content gets larger/clearer spans).
+   - Grid choice follows content complexity and hierarchy demands, not visual preference.
+   - Field spans should encode information priority (primary content gets larger/clearer spans).
 
 4. Baseline rhythm is a cognition aid
-- Shared vertical rhythm across columns improves cross-column readability and retention.
-- Baseline alignment is especially relevant when dense text and data must be compared quickly.
+   - Shared vertical rhythm across columns improves cross-column readability and retention.
+   - Baseline alignment is especially relevant when dense text and data must be compared quickly.
 
 5. Modularity scales across artifacts
-- A single underlying system should support multiple outputs (for example page, component, or campaign variants) while preserving identity and clarity.
-- This principle maps directly to modern responsive systems with columns, gutters, margins, and breakpoints/container logic.
+   - A single underlying system should support multiple outputs (for example page, component, or campaign variants) while preserving identity and clarity.
+   - This principle maps directly to modern responsive systems with columns, gutters, margins, and breakpoints/container logic.
 
 6. Economy and speed are first-order benefits
-- Grid systems reduce iteration cost and shorten production cycles by narrowing valid layout states.
-- Teams gain faster review loops because decisions can be validated against explicit structure.
+   - Grid systems reduce iteration cost and shorten production cycles by narrowing valid layout states.
+   - Teams gain faster review loops because decisions can be validated against explicit structure.
 
 7. "Aid, not guarantee" rule
-- A grid increases probability of clarity but does not replace typographic judgment, contrast control, and semantic ordering.
-- If strict grid adherence harms comprehension, adjust the system; do not force content into an unsuitable matrix.
+   - A grid increases probability of clarity but does not replace typographic judgment, contrast control, and semantic ordering.
+   - If strict grid adherence harms comprehension, adjust the system; do not force content into an unsuitable matrix.
 
 ## Practical Translation for UI Work
 

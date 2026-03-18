@@ -1,55 +1,22 @@
 ---
 name: design
 description: Use for any UI-facing task (design, implementation, review, refactor, bugfix) as the primary design entrypoint; then route to specialized design skills based on task shape.
-license: Apache 2.0. Based on Anthropic's frontend-design skill. See NOTICE.md for attribution.
 ---
 
-## Cross-Platform Applicability
-- Treat this skill as interface-principle guidance across web, iOS, Android, and desktop surfaces.
-- Translate implementation snippets to platform-native primitives; do not copy web syntax literally into native stacks.
+Use this skill FIRST for any UI-facing task. Do not jump straight to implementation patterns, component tweaks, or styling edits before setting design direction and applying these guardrails.
 
-## Mandatory Invocation
-- Invoke this skill first for every UI/visual task.
-- Pair with [design-audit](../design-audit/SKILL.md) in the same turn.
-- Add [design-interaction-motion-craft](../design-interaction-motion-craft/SKILL.md) only when motion, gesture, or transition behavior matters.
+If this skill applies and you skip it, generic UI is the usual result: weak hierarchy, default-library aesthetics, and interaction quality that feels assembled rather than designed.
 
 ## Related Skills
-- [design-audit](../design-audit/SKILL.md): mandatory visual/accessibility quality checks
 - [design-interaction-motion-craft](../design-interaction-motion-craft/SKILL.md): motion behavior validation
 - [copywriting](../writing-copy/SKILL.md): marketing copy generation and rewrite support
 - [humanizer](../writing-humanizer/SKILL.md): remove AI-writing artifacts in UI copy
 
-## Integrated Product-Interface Protocol (from former `design-interface`)
-- Default use-case: product interfaces (dashboards, admin tools, settings, operational UIs).
-- If task is marketing-first rather than product-interface-first, keep this skill as entrypoint but bias into expressive frontend sections below.
-- Before visual execution, make intent explicit:
-  - user context (`who`, immediately previous task, next task)
-  - primary verb (`what must be completed`)
-  - experiential target (`what this should feel like`)
-- If these are unknown in a high-risk direction change, ask; do not silently default.
-
-Required pre-direction outputs (all four):
-1. `Domain`: at least 5 domain concepts/metaphors/vocabulary items.
-2. `Color world`: at least 5 colors grounded in the domain.
-3. `Signature`: one structural/visual/interaction element unique to the product.
-4. `Default replacements`: at least 3 common template defaults explicitly replaced.
-
-Direction proposal must explicitly include:
-- explored domain concepts
-- chosen color world elements
-- signature element
-- replacements for each default
-
-Suggestion protocol:
-- Lead with recommendation and rationale, then request directional confirmation before large implementation divergence.
-- Keep reasoning concrete: explain why this hierarchy/layout/material choice supports the primary user verb.
-
-Pre-present checks (mandatory):
-- `Swap test`: replacing fonts/layout with common defaults should materially harm identity.
-- `Squint test`: hierarchy remains readable without harsh visual jumps.
-- `Signature test`: signature is visible in at least 5 concrete UI locations.
-- `Token test`: variable naming reflects product world, not generic naming.
-- `Purpose-without-name test`: if product name is removed, intent should still be inferable from structure and language.
+Routing discipline:
+- Announce design-skill usage before substantial UI work.
+- Establish design direction before writing or revising UI code.
+- Route specialized subproblems immediately after direction-setting: motion to `design-interaction-motion-craft`; marketing copy to `copywriting`; anti-slop copy polish to `humanizer`.
+- Keep shared goal explicit: we want interfaces that feel intentional, usable, and specific to the product.
 
 Craft foundations:
 - Use subtle layering: surfaces should differ just enough to express hierarchy.
@@ -58,13 +25,8 @@ Craft foundations:
 - Typography is structural; semantics and hierarchy outrank decoration.
 - Controls and data require full state coverage: default, hover/focus/active/disabled, plus loading/empty/error/success for data flows.
 
-## Integrated Web Execution Guardrails (from former `design-taste-frontend`)
+## Integrated Web Execution Guardrails
 Use this block when implementing web UI code.
-
-Baseline dials:
-- `DESIGN_VARIANCE=2`
-- `MOTION_INTENSITY=6`
-- `VISUAL_DENSITY=2`
 
 Architecture + dependency rules:
 - Verify dependencies in `package.json` before importing third-party packages.
@@ -99,36 +61,6 @@ Anti-generic enforcement (critical examples):
 - Avoid centered-template bias for higher-variance layouts (`DESIGN_VARIANCE > 4`): prefer split or asymmetric compositions.
 - For dense dashboard contexts, avoid unnecessary card boxing; use spacing/dividers when elevation is not semantically needed.
 
-## Integrated UI/UX Corpus Workflow (from former `design-ui-ux-pro`)
-Use corpus lookup when requirements are ambiguous, domain-specific, or stack-specific.
-
-Required sequence:
-1. Run design-system lookup first:
-```bash
-python3 skills/design/tools/uiux-corpus/scripts/search.py "<product> <industry> <keywords>" --design-system
-```
-2. Add domain lookups only as needed:
-```bash
-python3 skills/design/tools/uiux-corpus/scripts/search.py "<keyword>" --domain <domain> [-n <max_results>]
-```
-3. Add stack lookup (default `html-tailwind`):
-```bash
-python3 skills/design/tools/uiux-corpus/scripts/search.py "<keyword>" --stack html-tailwind
-```
-
-Persistence contract (when project doctrine should be retained):
-```bash
-python3 skills/design/tools/uiux-corpus/scripts/search.py "<query>" --design-system --persist -p "Project Name" [--page "dashboard"]
-```
-- Writes `design-system/MASTER.md` and optional `design-system/pages/<page>.md`.
-- Retrieval precedence: page override file > master file.
-
-Domain catalog:
-- `product`, `style`, `typography`, `color`, `landing`, `chart`, `ux`, `react`, `web`, `prompt`
-
-Stack catalog:
-- `html-tailwind` (default), `react`, `nextjs`, `vue`, `svelte`, `swiftui`, `react-native`, `flutter`, `shadcn`, `jetpack-compose`
-
 Priority order for fixes when tradeoffs exist:
 1. Accessibility
 2. Touch/interaction correctness
@@ -149,22 +81,15 @@ Pre-delivery checks:
 - motion timing stays in controlled ranges and avoids novelty fatigue
 - light/dark readability and border legibility are verified
 
-## Routing
-- Review, critique, and sign-off: [design-audit](../design-audit/SKILL.md)
-- Motion, transitions, gestures, and choreography: [design-interaction-motion-craft](../design-interaction-motion-craft/SKILL.md)
-- UI copy and microcopy support: [copywriting](../writing-copy/SKILL.md), [humanizer](../writing-humanizer/SKILL.md)
-
-This skill guides creation of distinctive, production-grade frontend interfaces that avoid generic "AI slop" aesthetics. Implement real working code with exceptional attention to aesthetic details and creative choices.
-
 ## Design Direction
 
-Commit to a BOLD aesthetic direction:
+Before implementation, commit to a BOLD aesthetic direction:
 - **Purpose**: What problem does this interface solve? Who uses it?
 - **Tone**: Pick an extreme: brutally minimal, maximalist chaos, retro-futuristic, organic/natural, luxury/refined, playful/toy-like, editorial/magazine, brutalist/raw, art deco/geometric, soft/pastel, industrial/utilitarian, etc. There are so many flavors to choose from. Use these for inspiration but design one that is true to the aesthetic direction.
 - **Constraints**: Technical requirements (framework, performance, accessibility).
 - **Differentiation**: What makes this UNFORGETTABLE? What's the one thing someone will remember?
 
-**CRITICAL**: Choose a clear conceptual direction and execute it with precision. Bold maximalism and refined minimalism both work—the key is intentionality, not intensity.
+**CRITICAL**: Choose a clear conceptual direction and execute it with precision before coding major UI structure. Bold maximalism and refined minimalism both work; uncommitted middle-ground usually reads as template output.
 
 Then implement working code that is:
 - Production-grade and functional
