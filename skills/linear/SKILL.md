@@ -23,6 +23,7 @@ This skill provides a structured workflow for managing issues, projects & team w
 
 - For any Linear-related request, invoke this `linear` skill first.
 - As soon as active implementation work starts on a Linear issue, immediately set that issue status to `In Progress`.
+- After finishing work tied to a Linear issue, always add a closing comment with a brief summary of the original problem and how it was addressed.
 
 ### Step 0: Set up Linear MCP (if not already configured)
 
@@ -58,6 +59,10 @@ Execute Linear MCP tool calls in logical batches:
 
 ### Step 4
 Summarize results, call out remaining gaps or blockers, and propose next actions (additional issues, label changes, assignments, or follow-up comments).
+
+If work on a specific Linear issue was completed in this session, add a comment before wrapping up. Keep it short and include:
+- what the problem was
+- how it was addressed
 
 ## Available Tools
 
