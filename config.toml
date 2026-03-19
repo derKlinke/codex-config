@@ -2,25 +2,23 @@ model = "gpt-5.4"
 model_reasoning_effort = "medium"
 
 sandbox_mode = "workspace-write"
-suppress_unstable_features_warning = true
 web_search = "live"
 personality = "friendly"
 approval_policy = "on-request"
-plan_mode_reasoning_effort = "xhigh"
-file_opener = "cursor"
+file_opener = "vscode"
 
 [sandbox_workspace_write]
 network_access = true
 
 [features]
-apply_patch_freeform = true
-shell_snapshot = true
-unified_exec = true
-responses_websockets_v2 = true
 prevent_idle_sleep = true
 voice_transcription = true
-realtime_conversation = true
-multi_agent = true
+smart_approvals = true
+prevent_idle_sleep = true
+
+[agents]
+max_threads = 6
+max_depth = 2
 
 [tui]
 notifications = true
@@ -43,5 +41,5 @@ url = "https://mcp.sentry.dev/mcp"
 command = "uvx"
 args = ["mcp-proxy-for-aws@latest", "https://aws-mcp.us-east-1.api.aws/mcp"]
 
-[projects."/"]
+[projects."/Developer"]
 trust_level = "trusted"
