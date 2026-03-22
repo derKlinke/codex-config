@@ -31,8 +31,8 @@ ignore_default_excludes = true
 url = "https://mcp.linear.app/mcp"
 
 [mcp_servers.supabase]
-bearer_token_env_var = "SUPABASE_ACCESS_TOKEN"
 url = "https://mcp.supabase.com/mcp?project_ref=wesvzzzxicieygbvrlwh&read_only=true"
+bearer_token_env_var = "SUPABASE_ACCESS_TOKEN"
 
 [mcp_servers.sentry]
 url = "https://mcp.sentry.dev/mcp"
@@ -41,5 +41,5 @@ url = "https://mcp.sentry.dev/mcp"
 command = "uvx"
 args = ["mcp-proxy-for-aws@latest", "https://aws-mcp.us-east-1.api.aws/mcp"]
 
-[projects."/Developer"]
+[projects."/"]
 trust_level = "trusted"
