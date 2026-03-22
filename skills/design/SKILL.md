@@ -8,6 +8,7 @@ Use this skill FIRST for any UI-facing task. Do not jump straight to implementat
 If this skill applies and you skip it, generic UI is the usual result: weak hierarchy, default-library aesthetics, and interaction quality that feels assembled rather than designed.
 
 ## Related Skills
+- [design-audit](../design-audit/SKILL.md): pre-delivery UI sign-off and failure detection
 - [design-interaction-motion-craft](../design-interaction-motion-craft/SKILL.md): motion behavior validation
 - [copywriting](../writing-copy/SKILL.md): marketing copy generation and rewrite support
 - [humanizer](../writing-humanizer/SKILL.md): remove AI-writing artifacts in UI copy
@@ -16,6 +17,7 @@ Routing discipline:
 - Announce design-skill usage before substantial UI work.
 - Establish design direction before writing or revising UI code.
 - Route specialized subproblems immediately after direction-setting: motion to `design-interaction-motion-craft`; marketing copy to `copywriting`; anti-slop copy polish to `humanizer`.
+- Before final delivery of substantial new or changed UI, run `design-audit` or apply its gates explicitly.
 - Keep shared goal explicit: we want interfaces that feel intentional, usable, and specific to the product.
 
 Craft foundations:
@@ -24,6 +26,13 @@ Craft foundations:
 - Pick one depth strategy per screen family (borders-only, subtle shadows, or layered shadows), do not mix arbitrarily.
 - Typography is structural; semantics and hierarchy outrank decoration.
 - Controls and data require full state coverage: default, hover/focus/active/disabled, plus loading/empty/error/success for data flows.
+
+Working model for visually led UI:
+- Before building, write three things: `visual thesis`, `content plan`, `interaction thesis`.
+- `visual thesis`: one sentence on mood, material, energy.
+- `content plan`: hero, support, detail, proof, final CTA for marketing pages; working surface, status, actions for product UI.
+- `interaction thesis`: 2-3 motion ideas that improve feel or hierarchy.
+- Each section gets one job, one dominant visual idea, and one primary takeaway or action.
 
 ## Integrated Web Execution Guardrails
 Use this block when implementing web UI code.
@@ -91,11 +100,32 @@ Before implementation, commit to a BOLD aesthetic direction:
 
 **CRITICAL**: Choose a clear conceptual direction and execute it with precision before coding major UI structure. Bold maximalism and refined minimalism both work; uncommitted middle-ground usually reads as template output.
 
+For branded landing pages and promotional surfaces:
+- The first viewport must read as one composition, not a dashboard.
+- The brand or product name must be hero-level and unmistakable without relying on nav chrome.
+- Prefer a full-bleed hero or dominant visual plane by default.
+- Keep hero budget tight: usually one brand signal, one headline, one short support line, one CTA group, and one dominant visual.
+- Do not use hero cards, stat strips, badge clusters, floating promo chips, or detached callout overlays by default.
+- Default to cardless layout; use cards only when they materially support interaction or comprehension.
+- Treat the first viewport as a poster, not a document.
+
+For imagery and copy:
+- Use a real visual anchor: product, place, atmosphere, or context. Decorative gradients alone do not count.
+- Prefer in-situ or believable imagery over abstract filler.
+- Ground the page in real content, product context, and actual user intent before inventing copy.
+- For dashboards/apps/admin tools, default to utility copy over marketing copy: headings should orient, scope, or enable action.
+
 Then implement working code that is:
 - Production-grade and functional
 - Visually striking and memorable
 - Cohesive with a clear aesthetic point-of-view
 - Meticulously refined in every detail
+
+Before sign-off, verify:
+- hierarchy/grouping reads correctly at a glance
+- state coverage exists for real user flows, not only happy paths
+- accessibility, responsiveness, and reduced-motion behavior hold
+- the result avoids template fingerprints and has one memorable differentiator
 
 ## Contrasting Aesthetics Protocol
 → *Consult [contrasting aesthetics reference](reference/articles/rauno-contrasting-aesthetics.md) when composing mixed visual languages.*

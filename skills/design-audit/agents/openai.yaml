@@ -1,0 +1,4 @@
+interface:
+  display_name: "Design Audit"
+  short_description: "UI sign-off gates"
+  default_prompt: "Use $design-audit to review this interface for hierarchy, state coverage, responsiveness, accessibility, motion quality, and anti-generic design failures before sign-off."

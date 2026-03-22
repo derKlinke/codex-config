@@ -93,6 +93,7 @@ Apply interaction and animation craft as a behavior system, not decoration. Moti
 - For implementation tasks: include `intent map`, selected principles, and timing rationale.
 - For reviews: list failures by severity and provide direct remediation.
 - Always state reduced-motion handling.
+- After substantial motion changes, route final sign-off through `design-audit`.
 
 ## Related Skills
 
