@@ -1,5 +1,5 @@
 model = "gpt-5.4"
-model_reasoning_effort = "medium"
+model_reasoning_effort = "high"
 
 sandbox_mode = "workspace-write"
 web_search = "live"
@@ -8,6 +8,8 @@ approval_policy = "on-request"
 file_opener = "vscode"
 approvals_reviewer = "guardian_subagent"
 
+suppress_unstable_features_warning = true
+
 [sandbox_workspace_write]
 network_access = true
 
@@ -15,6 +17,9 @@ network_access = true
 prevent_idle_sleep = true
 voice_transcription = true
 guardian_approval = true
+js_repl = true
+tui_app_server = true
+memory_tool = true
 
 [agents]
 max_threads = 6
@@ -37,9 +42,9 @@ bearer_token_env_var = "SUPABASE_ACCESS_TOKEN"
 [mcp_servers.sentry]
 url = "https://mcp.sentry.dev/mcp"
 
-[mcp_servers.aws]
-command = "uvx"
-args = ["mcp-proxy-for-aws@latest", "https://aws-mcp.us-east-1.api.aws/mcp"]
-
 [projects."/"]
 trust_level = "trusted"
+
+[projects."~/Developer/"]
+trust_level = "trusted"
+
