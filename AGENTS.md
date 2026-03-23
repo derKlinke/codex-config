@@ -52,6 +52,7 @@ If applicable rules are skipped, usual failure mode: rework, style drift, unnece
 - Avoid decorative containers/effects unless functionally justified.
 - Restrained palette/motion; usually one accent.
 - Keep grid/alignment consistent.
+- Treat padding and spacing adjustments as meaningful hierarchy changes; when asked to increase or decrease them, default to a clearly visible step rather than a 2-4px nudge.
 - For substantial UI work: use `design` first to set direction; route motion/gesture problems to `design-interaction-motion-craft`; do not ship before an explicit audit of hierarchy, states, responsiveness, accessibility, reduced motion, and anti-generic quality.
 - For branded landing pages: first viewport should read as one composition with brand-first hierarchy, one dominant visual anchor, cardless-by-default layout, and one clear job per section.
 - Before UI/design work: read `DESIGN.md` first, then align decisions to it before editing UI code.
