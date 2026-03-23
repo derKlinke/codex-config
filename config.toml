@@ -19,7 +19,7 @@ voice_transcription = true
 guardian_approval = true
 js_repl = true
 tui_app_server = true
-memory_tool = true
+memories = true
 
 [agents]
 max_threads = 6
@@ -42,9 +42,15 @@ bearer_token_env_var = "SUPABASE_ACCESS_TOKEN"
 [mcp_servers.sentry]
 url = "https://mcp.sentry.dev/mcp"
 
+[mcp_servers.sketch]
+url = "http://localhost:31126/mcp"
+
 [projects."/"]
 trust_level = "trusted"
 
 [projects."~/Developer/"]
+trust_level = "trusted"
+
+[projects."/Users/fabianklinke/Desktop/hci-wise-25"]
 trust_level = "trusted"
 
