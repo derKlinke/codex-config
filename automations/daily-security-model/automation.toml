@@ -1,0 +1,12 @@
+version = 1
+id = "daily-security-model"
+name = "Daily Security Model"
+prompt = "Create and maintain the canonical app threat model in `/Users/fabianklinke/Developer/b90-industries/b90hq/SECURITY.md` for this repository. Start by reading `/Users/fabianklinke/Developer/b90-industries/b90hq/AGENTS.md` and then use [$security-threat-model](/Users/fabianklinke/.codex/skills/security-threat-model/SKILL.md), [$security-review](/Users/fabianklinke/.codex/skills/security-review/SKILL.md), and [$security-best-practices](/Users/fabianklinke/.codex/skills/security-best-practices/SKILL.md) together to produce a full current-state security assessment of the app across iOS, web, API, infra, auth, storage, and database surfaces. If `/Users/fabianklinke/Developer/b90-industries/b90hq/SECURITY.md` does not exist, create it. If it exists, update that same file in place; do not create backups, archive copies, alternate versions, or secondary security documents. Keep resolved threats in the document and mark them clearly as resolved instead of deleting them. Preserve one canonical document only. The document should stay concise but complete: system scope, assets, trust boundaries, attacker model, threat inventory, mitigations, residual risks, and resolved threats. For each threat, record status such as `Open`, `Mitigated`, or `Resolved`, plus the relevant surface, impact, and concrete evidence from the codebase. On subsequent runs, review the existing file first, diff it against the current repository state, and update only what changed while preserving prior resolved items. Prefer root-cause analysis and repo-grounded evidence; avoid speculative claims. Write all results only to `/Users/fabianklinke/Developer/b90-industries/b90hq/SECURITY.md`."
+status = "ACTIVE"
+rrule = "FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR,SA,SU;BYHOUR=9;BYMINUTE=0"
+execution_environment = "local"
+model = "gpt-5.4"
+reasoning_effort = "high"
+cwds = ["/Users/fabianklinke/Developer/b90-industries/b90hq"]
+created_at = 1774264221392
+updated_at = 1774264244540
