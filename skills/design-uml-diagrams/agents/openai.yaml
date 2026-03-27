@@ -1,0 +1,4 @@
+interface:
+  display_name: "UML Diagram Design"
+  short_description: "Clarity-first technical diagrams"
+  default_prompt: "Use $design-uml-diagrams to create or refine this UML, flow, or process diagram for clarity, visual hierarchy, straight-line routing, and low-text-density readability."

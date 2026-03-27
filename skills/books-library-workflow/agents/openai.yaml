@@ -1,0 +1,4 @@
+interface:
+  display_name: "Books Library Workflow"
+  short_description: "Wishlist and library book maintenance"
+  default_prompt: "Use $books-library-workflow to add a book to the wishlist or move it into the library."
