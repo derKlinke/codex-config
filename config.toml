@@ -1,10 +1,10 @@
 model = "gpt-5.4"
-model_reasoning_effort = "medium"
+model_reasoning_effort = "xhigh"
 
-sandbox_mode = "workspace-write"
+sandbox_mode = "danger-full-access"
 web_search = "live"
-personality = "friendly"
-approval_policy = "on-request"
+personality = "pragmatic"
+approval_policy = "never"
 file_opener = "vscode"
 approvals_reviewer = "guardian_subagent"
 
@@ -53,4 +53,28 @@ trust_level = "trusted"
 
 [projects."/Users/fabianklinke/Desktop/hci-wise-25"]
 trust_level = "trusted"
+
+[projects."/Users/fabianklinke/Developer/b90-industries/b90hq"]
+trust_level = "trusted"
+
+[plugins."vercel@openai-curated"]
+enabled = true
+
+[plugins."github@openai-curated"]
+enabled = true
+
+[plugins."linear@openai-curated"]
+enabled = true
+
+[plugins."sentry@openai-curated"]
+enabled = true
+
+[plugins."build-ios-apps@openai-curated"]
+enabled = true
+
+[plugins."build-web-apps@openai-curated"]
+enabled = true
+
+[plugins."hugging-face@openai-curated"]
+enabled = true
 
