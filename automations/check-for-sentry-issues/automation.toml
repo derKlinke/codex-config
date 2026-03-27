@@ -1,7 +1,7 @@
 version = 1
 id = "check-for-sentry-issues"
 name = "Check for sentry issues"
-prompt = "look for crashes with [$sentry](/Users/fabianklinke/.codex/skills/sentry/SKILL.md) using the Sentry MCP tools and implement fixes for each. after applying the fix mark the sentry issue as resolved in the next semver."
+prompt = "look for crashes with the Sentry MCP tools and implement fixes for each. after applying the fix mark the sentry issue as resolved in the next semver. when seeing new sentry issues that already appear resolved in current code, mark them as resolved in the next semver as well."
 status = "ACTIVE"
 rrule = "RRULE:FREQ=WEEKLY;BYHOUR=9;BYMINUTE=0;BYDAY=SU,MO,TU,WE,TH,FR,SA"
 execution_environment = "local"
@@ -9,4 +9,4 @@ model = "gpt-5.4"
 reasoning_effort = "high"
 cwds = ["/Users/fabianklinke/Developer/b90-industries/b90hq"]
 created_at = 1772118119770
-updated_at = 1773874037736
+updated_at = 1774353859352
