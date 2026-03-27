@@ -1,6 +1,0 @@
-interface:
-  display_name: "Sentry MCP Observability"
-  short_description: "Sentry issue triage via MCP"
-  icon_small: "./assets/sentry-small.svg"
-  icon_large: "./assets/sentry.png"
-  default_prompt: "Investigate this issue with the Sentry MCP tools and report likely root cause, impact, and next steps."
