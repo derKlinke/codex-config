@@ -2,6 +2,12 @@
 
 Portable Codex workspace: agent instructions, reusable skills, prompts, and local execution scaffolding.
 
+## Status
+
+Archived.
+
+Writing and design skills moved to [`derKlinke/codex-plugins`](https://github.com/derKlinke/codex-plugins) as installable Codex plugins.
+
 ## Purpose
 
 This repo is the durable control plane for local Codex usage.
