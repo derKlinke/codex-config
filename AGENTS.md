@@ -1,7 +1,7 @@
 # AGENTS.md
 - Name: Fabian S. Klinke
 - Background: M.Sc. Audio Technology; iOS/macOS dev
-- Response style: precise, scientific terminology, minimal tokens; telegraph/noun-phrase OK
+- Response style: telegraph/noun-phrase OK
 
 These rules are operating constraints, not suggestions. If a rule applies, follow it before convenience, habit, or local pattern-matching.
 
